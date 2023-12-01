@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #DDD;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+header {
+    background-image: url('./picture/header.png'); 
+    background-position:center; /* 控制背景图片的位置 */
+    background-size: cover;
+    background-repeat: no-repeat; /* 防止背景图重复 */
+    margin: 0 100px;
+    padding: 1px 1px; /* 设置一些内边距 */
+    height: 150px;
+}
+
+header h1 {
+    text-align: left;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 1);
+    color: #ffffff;
+    padding: 20px 100px;
+    font-size: 40px;
+}
+
+/* 导航栏 navigation*/
+nav {
+    background-color: rgb(23, 118, 137);
+    padding: 0px 100px;
+}
+
+/* 无序列表 */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+nav li {
+    float: left;
+    border-left:1px solid #bbb;
+}
+
+nav a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 5px 20px;
+    text-decoration: none;
+}
+
+nav a:hover:not(.active) {
+    background-color: rgb(87, 156, 166);
+}
+
+section {
+    padding: 20px 100px;
+}
+
+.centered-image-container{
+    text-align: center;
+}
+
+.centered-image-container img{
+    display: inline-block;  /* 让容器变成块状元素，以适应图片大小 */
+    max-width: 100%;        /* 图片最大宽度不超过容器宽度 */
+}
+
+.log-entry p:first-child {
+    font-weight: bold;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 4px;
+    bottom: 0;
+}
