@@ -1,12 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     var sections = document.querySelectorAll("section");
     var navLinks = document.querySelectorAll("nav a");
+    var subMenuLinks = document.querySelectorAll(".submenu a");
 
-    var logContent = document.getElementById("logContent");
-    var pagination = document.getElementById("pagination");
-
-    var logsPerPage = 5; // 每页显示的日志条目数
+    var logsPerPage = 1; // 每页显示的日志条目数
     var currentPage = 1;
+    var totalPages = 0; // 初始化 totalPages
+
+    var initialLogFile = 'log1.txt'; // 举例，您需要根据实际情况来设置这个值
+    var currentLogFile = initialLogFile; // 初始化为初始日志文件
+
+    // 在全局声明 logContent 和 pagination
+    var logContent;
+    var pagination;
 
     // 隐藏除第一个文章区域之外的所有区域
     for (var i = 1; i < sections.length; i++) {
@@ -14,21 +20,60 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 为每个链接添加点击事件监听器
-    navLinks.forEach(function (link, index) {
+    navLinks.forEach(function (link) {
         link.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            var targetSection = link.getAttribute("href").slice(1);
+
             sections.forEach(function (section) {
-                section.style.display = "none";
+                if (section.id === targetSection) {
+                    section.style.display = "block";
+                    // 在这里获取 logContent 和 pagination 元素
+                    logContent = section.querySelector('.logContent-' + targetSection);
+                    pagination = section.querySelector('.pagination-' + targetSection);
+                } else {
+                    section.style.display = "none";
+                }
             });
-            sections[index].style.display = "block";
         });
     });
 
-    // 加载日志内容
-    function loadLogs() {
-        fetch('./logs/log.txt')
+    subMenuLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            var targetSection = link.getAttribute("href").slice(1);
+            var logFile = link.getAttribute("data-logfile");
+
+            sections.forEach(function (section) {
+                if (section.id === targetSection) {
+                    section.style.display = "block";
+
+                    // 在这里获取 logContent 和 pagination 元素
+                    logContent = section.querySelector('.logContent-' + targetSection);
+                    pagination = section.querySelector('.pagination-' + targetSection);
+
+                    if (logFile) {
+                        loadLogs(logFile); // 加载相应的日志文件
+                    }
+
+                    currentLogFile = logFile; // 更新当前日志文件变量
+                    currentPage = 1;
+
+                } else {
+                    section.style.display = "none";
+                }
+            });
+        });
+    });
+
+    function loadLogs(logFile) {
+        fetch(`./logs/${logFile}`)
             .then(response => response.text())
             .then(data => {
                 displayLogs(data);
+                displayPagination(totalPages); // 移到这里
             })
             .catch(error => console.error('Error loading logs:', error));
     }
@@ -38,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var logs = logText.split('##');
         logs.shift(); // 移除第一个空元素，因为日志以##开头
 
-        var totalPages = Math.ceil(logs.length / logsPerPage);
+        totalPages = Math.ceil(logs.length / logsPerPage); // 将 totalPages 定义为全局变量
 
         // 根据当前页码和每页显示的日志条目数计算起始和结束索引
         var startIndex = (currentPage - 1) * logsPerPage;
@@ -62,28 +107,41 @@ document.addEventListener("DOMContentLoaded", function () {
         return `<div class="log-entry"><p>${formattedTime}</p><p>${lines.join('<br>')}</p></div>`;
     }
 
-    // 显示分页
-    function displayPagination(totalPages) {
-        pagination.innerHTML = '';
-
-        // 添加第一页链接
-        pagination.innerHTML += `<a href="#" onclick="changePage(1)">第一页</a> | `;
-
-        // 添加中间页码链接
-        for (var i = 1; i <= totalPages; i++) {
-            pagination.innerHTML += `<a href="#" onclick="changePage(${i})">${i}</a> | `;
-        }
-
-        // 添加最后一页链接
-        pagination.innerHTML += `<a href="#" onclick="changePage(${totalPages})">最后一页</a>`;
-    }
-
     // 切换页码
-    window.changePage = function (page) {
+    function changePage(page) {
         currentPage = page;
-        loadLogs();
+        loadLogs(currentLogFile); // 直接调用 loadLogs
     };
 
+    // 显示分页
+    function displayPagination(totalPages) {
+        pagination.innerHTML = ''; // 清空前一次的内容
+    
+        // 添加第一页链接
+        createPageLink('第一页', 1);
+    
+        // 添加中间页码链接
+        for (var i = 1; i <= totalPages; i++) {
+            createPageLink(i, i);
+        }
+    
+        // 添加最后一页链接
+        createPageLink('最后一页', totalPages);
+    }
+
+    function createPageLink(text, pageNumber) {
+        var pageLink = document.createElement('a');
+        pageLink.href = '#';
+        pageLink.textContent = text;
+        pageLink.addEventListener('click', function () {
+            changePage(pageNumber);
+        });
+        pagination.appendChild(pageLink);
+    
+        var separator = document.createTextNode(' | ');
+        pagination.appendChild(separator);
+    }
+
     // 初始化加载日志
-    loadLogs();
+    loadLogs(initialLogFile);
 });

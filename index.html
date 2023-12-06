@@ -17,42 +17,58 @@
     <nav>
         <ul>
             <li><a href="#mainpage">首页</a></li>
-            <li><a href="#log">日志</a></li>
+            <li>
+                <a href="#log">日志</a>
+                <ul class="submenu">
+                    <li><a href="#log-sub1" data-logfile="log1.txt">日志子菜单1</a></li>
+                    <li><a href="#log-sub2" data-logfile="log2.txt">日志子菜单2</a></li>
+                    <li><a href="#log-sub3" data-logfile="log3.txt">日志子菜单3</a></li>
+                    <li><a href="#log-sub4" data-logfile="log4.txt">日志子菜单4</a></li>
+                    <!-- 添加更多子菜单项 -->
+                </ul>
+            </li>
             <li><a href="#blog">文章</a></li>
             <li><a href="#picture">图片</a></li>
             <li style="border-right:1px solid #bbb;"><a href="#music">乐谱</a></li>
         </ul>
     </nav>
 
-    <section>
-        
-        <h1>你好</h1>
-        <p>这里是新大陆发现部，是旨在探索人类和宇宙的站点。</p>
-        <p>这个站点由实验室唯一弟中弟中弟开辟。用于存放一些电子化的笔记，好康的图片，喜欢的一些乐谱。</p>
-        <p>—— 向着世界旋转的反方向前进</p>
-        <div class="centered-image-container">
-            <img src="./picture/hello.png" width="60%">
-        </div>
 
-        <h1>内容</h1>
-        <ul>
-            <li>文章</li>
-            <p>文章采用固定模板的静态网页，涉及任何有意思的领域，用于总结探索世界获得的知识。</p>
-            <li>图片</li>
-            <p>直接什么好康放什么</p>
-            <li>乐谱</li>
-            <p>放上一些哨笛乐谱</p>
-        </ul>
-        <div class="centered-image-container">
-            <img src="./picture/byebye.png" width="60%">
-        </div>
+    
+    <section id="mainpage">
+        <div id="helloPage"></div>
+        <script>loadHTMLContent('./helloPage.html', 'helloPage');</script>
     </section>
 
     <section id="log">
         <h1>日志展示</h1>
-        <div id="pagination"></div>
-        <div id="logContent"></div>
     </section>
+
+    <section id="log-sub1">
+        <h1>日志展示1</h1>
+        <div class="pagination-log-sub1"></div>
+        <div class="logContent-log-sub1"></div>
+    </section>
+    
+    <section id="log-sub2">
+        <h1>日志展示2</h1>
+        <div class="pagination-log-sub2"></div>
+        <div class="logContent-log-sub2"></div>
+    </section>
+
+    <section id="log-sub3">
+        <h1>日志展示3</h1>
+        <div class="pagination-log-sub3"></div>
+        <div class="logContent-log-sub3"></div>
+    </section>
+    
+    <section id="log-sub4">
+        <h1>日志展示4</h1>
+        <div class="pagination-log-sub4"></div>
+        <div class="logContent-log-sub4"></div>
+    </section>
+
+    
 
     <section id="blog">
 
@@ -69,6 +85,21 @@
     <footer>
         &copy; 2023 some rights reserved
     </footer>
+
+    <script>
+        // 动态加载 HTML 内容的函数
+        function loadHTMLContent(filename, targetElementId) {
+            fetch(filename)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById(targetElementId).innerHTML = html;
+                })
+                .catch(error => console.error('Error loading HTML content:', error));
+        }
+
+        // 调用函数来加载内容
+        loadHTMLContent('./helloPage.html', 'helloPage');
+    </script>
     
 </body>
 </html>

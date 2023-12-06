@@ -55,6 +55,42 @@ nav a:hover:not(.active) {
     background-color: rgb(87, 156, 166);
 }
 
+/* 子菜单样式 */
+.submenu {
+    display: none;
+    position: absolute;
+    background-color: rgb(23, 118, 137); /* 子菜单背景颜色，可根据需要调整 */
+    min-width: 120px; /* 设置子菜单的最小宽度 */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* 添加一些阴影效果 */
+    z-index: 1; /* 确保子菜单在其他内容上方显示 */
+}
+
+/* 子菜单中的每个项 */
+.submenu li {
+    float: none; /* 确保子菜单项竖直排列 */
+    border-bottom: 1px solid #bbb; /* 为每个子菜单项添加底部边框 */
+}
+
+/* 子菜单中的链接样式 */
+.submenu a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* 悬停时显示子菜单 */
+nav li:hover .submenu {
+    display: block;
+}
+
+/* 子菜单项悬停效果 */
+.submenu a:hover {
+    background-color: rgb(87, 156, 166); /* 悬停时的背景颜色，可根据需要调整 */
+}
+
+
 section {
     padding: 20px 100px;
 }
