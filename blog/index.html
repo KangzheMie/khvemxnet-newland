@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>使用数值差分法计算简谐振子并分析误差</title>
+
+  <!-- 博客用风格脚本 -->
+  <link rel="stylesheet" href="blog.css" />
+
+  <!-- KaTeX库 -->
+  <link rel="stylesheet" href="katex.min.css" />
+  <script defer="" src="katex.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var mathElements = document.getElementsByClassName("math");
+      var macros = [];
+      for (var i = 0; i < mathElements.length; i++) {
+        var texText = mathElements[i].firstChild;
+        if (mathElements[i].tagName == "SPAN") {
+          katex.render(texText.data, mathElements[i], {
+            displayMode: mathElements[i].classList.contains('display'),
+            throwOnError: false,
+            macros: macros,
+            fleqn: false
+          });
+        }
+      }
+    });
+  </script>
+
+  <!-- highlight.js库 -->
+  <!-- 在官网可以找到不同的代码风格，替换这里的css -->
+  <link rel="stylesheet" href="ir-black.min.css">
+  <!-- 关于语言和渲染的js库 -->
+  <script src="highlight.min.js"></script>
+  <script src="go.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+</head>
+
+<!-- 正文部分直接使用pandoc --katex生成 -->
+<!-- 其中代码部分需要按照<pre><code class="C">来进行 -->
+
+<body>
+<h2
+id="使用数值差分法计算简谐振子并分析误差">使用数值差分法计算简谐振子并分析误差</h2>
+<p>忽略质量，谐振子的动量和位置之间有如下的关系</p>
+<blockquote>
+<p><span class="math display">\left\{ \begin{array}{r}
+\dot{x} = p \\
+\dot{p} = - \omega^{2}x
+\end{array} \right.\ </span></p>
+</blockquote>
+<p>消元可得<span class="math inline">\ddot{x} = -
+\omega^{2}x</span>，解得实数通解<span class="math inline">x =
+A\cos{(\omega t + \varphi)}</span></p>
+<p>在本案例中使用简单的初始条件:</p>
+<blockquote>
+<p><span class="math display">\left\{ \begin{array}{r}
+x(0) = A \\
+p(0) = 0
+\end{array} \right.\ </span></p>
+</blockquote>
+<p>现在使用差分的方法数字求解上述问题。</p>
+<p>有如下的几种方法</p>
+<blockquote>
+<p><span class="math display">\left\{ \begin{array}{r}
+x_{n + 1} = x_{n} + p_{n}\Delta t \\
+p_{n + 1} = p_{n} - \omega^{2}x_{n}\Delta t
+\end{array} \right.\ \ \ \ \ \ \ \ \ \ \left\{ \begin{array}{r}
+x_{n + 1} = x_{n} + p_{n}\Delta t \\
+p_{n + 1} = p_{n} - \omega^{2}x_{n + 1}\Delta t
+\end{array} \right.\ </span></p>
+</blockquote>
+<p>只需要保证以上的各种方法在<span class="math inline">\Delta t
+\rightarrow
+0</span>时与微分方程之间的误差趋于0，就可以认为是可行的差分方法。</p>
+<p>比如方法二中：</p>
+<blockquote>
+<p><span class="math display">p_{n + 1} = p_{n} - \omega^{2}x_{n +
+1}\Delta t</span></p>
+<p><span class="math display">= p_{n} - \omega^{2}\left( x_{n} +
+p_{n}\Delta t \right)\Delta t</span></p>
+<p><span class="math display">= p_{n} - \omega^{2}x_{n}\Delta t -
+\omega^{2}p_{n}\Delta t^{2}</span></p>
+<p><span class="math display">\dot{p} = \lim_{\Delta t \rightarrow
+0}\frac{p_{n + 1} - p_{n}}{\Delta t} = \lim_{\Delta t \rightarrow 0} -
+\omega^{2}x_{n} - \omega^{2}p_{n}\Delta t = - \omega^{2}x</span></p>
+</blockquote>
+<p>分析第一种方法</p>
+<blockquote>
+<p><span class="math display">\left\{ \begin{array}{r}
+x_{n + 1} = x_{n} + p_{n}\Delta t \\
+p_{n + 1} = p_{n} - \omega^{2}x_{n}\Delta t
+\end{array} \right.\ </span></p>
+<p><span class="math display">\frac{x_{n + 2} - x_{n + 1}}{\Delta t} =
+\frac{x_{n + 1} - x_{n}}{\Delta t} - \omega^{2}x_{n}\Delta t</span></p>
+<p><span class="math display">x_{n + 2} = 2x_{n + 1} - \left( 1 +
+\omega^{2}\Delta t^{2} \right)x_{n}</span></p>
+</blockquote>
+<p>设解具有如下形式</p>
+<blockquote>
+<p><span class="math display">x_{n} = z^{n}</span></p>
+<p><span class="math display">z^{n + 2} = 2z^{n + 1} - \left( 1 +
+\omega^{2}\Delta t^{2} \right)z^{n}</span></p>
+<p><span class="math display">z^{2} = 2z - \left( 1 + \varepsilon^{2}
+\right)</span></p>
+<p><span class="math display">z = 1 \pm i\varepsilon</span></p>
+</blockquote>
+<p>所以该差分方程的通解是两个情况的线性组合</p>
+<blockquote>
+<p><span class="math display">x_{n} = C_{1}(1 + i\varepsilon)^{n} +
+C_{2}(1 - i\varepsilon)^{n}</span></p>
+<p><span class="math display">= C_{1}\left( \sqrt{1 + \varepsilon^{2}}
+\right)^{n}\exp{(in\ \arctan\varepsilon)} + C_{2}\left( \sqrt{1 +
+\varepsilon^{2}} \right)^{n}\exp{( - in\ \arctan\varepsilon)}</span></p>
+<p><span class="math display">= C_{1}\left( \sqrt{1 + \varepsilon^{2}}
+\right)^{n}\exp{(in\ \varphi)} + C_{2}\left( \sqrt{1 + \varepsilon^{2}}
+\right)^{n}\exp{( - in\ \varphi)}</span></p>
+</blockquote>
+<p>由于最终限定为实数解，所以解需要有如下的形式</p>
+<blockquote>
+<p><span class="math display">x_{n} = C_{1}\left( \sqrt{1 +
+\varepsilon^{2}} \right)^{n}\exp{(in\ \varphi)} + C_{1}^{*}\left(
+\sqrt{1 + \varepsilon^{2}} \right)^{n}\exp{( - in\ \varphi)}</span></p>
+<p><span class="math display">= \left| C_{1} \right|\left( \sqrt{1 +
+\varepsilon^{2}} \right)^{n}\exp{(in\ \varphi + \theta)} + \left| C_{1}
+\right|\left( \sqrt{1 + \varepsilon^{2}} \right)^{n}\exp{( - in\ \varphi
+- \theta)}</span></p>
+<p><span class="math display">= |C|\left( \sqrt{1 + \omega^{2}\Delta
+t^{2}} \right)^{n}\cos{(n\ \arctan\omega\Delta t + \theta)}</span></p>
+</blockquote>
+<p>可以分析相位和幅度的误差：</p>
+<p>可以看出随着计算次数<span
+class="math inline">n</span>的增大，幅度项<span
+class="math inline">|C|\left( 1 + \omega^{2}\Delta t^{2}
+\right)^{\frac{n}{2}}\ \sim\ |C|(\omega\Delta
+t)^{n}</span>会指数增大，并且增大的程度与差分间隔<span
+class="math inline">\Delta t</span>有关。</p>
+<p>相位项<span class="math inline">n\ \arctan\omega\Delta t = \ n\left(
+\omega\Delta t - \frac{1}{3}(\omega\Delta t)^{3} + ο(\Delta t^{3})
+\right) = n\omega\Delta t - \frac{n}{3}(\omega\Delta t)^{3} + ο(\Delta
+t^{3})</span>，其误差项为<span class="math inline">-
+\frac{n}{3}(\omega\Delta t)^{3} + ο(\Delta
+t^{3})</span>随着计算次数<span
+class="math inline">n</span>的增大线性增加，并且增大的程度与差分间隔<span
+class="math inline">\Delta t</span>有关。</p>
+<p>可见，上式中<span class="math inline">\varepsilon = \omega\Delta
+t</span>决定了随着计算次数<span
+class="math inline">n</span>增大后，数值计算与实际之间的误差。</p>
+<p>可以发现，在<span class="math inline">\Delta t \rightarrow
+0</span>时，所有类型的误差都将趋近于0。这表明这如果不考虑运算的精度，只要无限的缩短差分间隔，就可以让计算的结果与实际的结果之间的误差任意的小。</p>
+<p>分析其他方法，例如方法二，考虑改良误差。</p>
+<blockquote>
+<p><span class="math display">\left\{ \begin{array}{r}
+x_{n + 1} = x_{n} + p_{n}\Delta t \\
+p_{n + 1} = p_{n} - \omega^{2}x_{n + 1}\Delta t
+\end{array} \right.\ </span></p>
+<p><span class="math display">\frac{x_{n + 2} - x_{n + 1}}{\Delta t} =
+\frac{x_{n + 1} - x_{n}}{\Delta t} - \omega^{2}x_{n + 1}\Delta
+t</span></p>
+<p><span class="math display">x_{n + 2} = {(2 - \omega^{2}\Delta
+t^{2})x}_{n + 1} - x_{n}</span></p>
+</blockquote>
+<p>设解具有如下形式</p>
+<blockquote>
+<p><span class="math display">x_{n} = z^{n}</span></p>
+<p><span class="math display">z^{2} = \left( 2 - \omega^{2}\Delta t^{2}
+\right)z - 1</span></p>
+<p><span class="math display">z = \frac{{2 - \omega}^{2}\Delta t^{2}}{2}
+\pm i\frac{\sqrt{4\omega^{2}\Delta t^{2} - \omega^{4}\Delta
+t^{4}}}{2}</span></p>
+</blockquote>
+<p>所以该差分方程的通解是两个情况的线性组合</p>
+<blockquote>
+<p><span class="math display">x_{n} = C_{1}\left( \frac{{2 -
+\omega}^{2}\Delta t^{2}}{2} + i\frac{\sqrt{4\omega^{2}\Delta t^{2} -
+\omega^{4}\Delta t^{4}}}{2} \right)^{n} + C_{2}\left( \frac{{2 -
+\omega}^{2}\Delta t^{2}}{2} - i\frac{\sqrt{4\omega^{2}\Delta t^{2} -
+\omega^{4}\Delta t^{4}}}{2} \right)^{n}</span></p>
+</blockquote>
+<p>分析幅度项误差</p>
+<blockquote>
+<p><span class="math display">|z| = \sqrt{\left( \frac{{2 -
+\omega}^{2}\Delta t^{2}}{2} \right)^{2} + \left(
+\frac{\sqrt{4\omega^{2}\Delta t^{2} - \omega^{4}\Delta t^{4}}}{2}
+\right)^{2}}</span></p>
+<p><span class="math display">= \sqrt{\frac{{4 - 4\omega}^{2}\Delta
+t^{2} + \omega^{4}\Delta t^{4}}{4} + \frac{4\omega^{2}\Delta t^{2} -
+\omega^{4}\Delta t^{4}}{4}}</span></p>
+<p><span class="math display">= 1</span></p>
+</blockquote>
+<p>说明本算法在幅度上没有误差。</p>
+<p>分析相位项误差</p>
+<blockquote>
+<p><span
+class="math display">n\arctan\frac{\frac{\sqrt{4\omega^{2}\Delta t^{2} -
+\omega^{4}\Delta t^{4}}}{2}}{\frac{{2 - \omega}^{2}\Delta t^{2}}{2}}\  =
+n\arctan\frac{\sqrt{4\omega^{2}\Delta t^{2} - \omega^{4}\Delta
+t^{4}}}{{2 - \omega}^{2}\Delta t^{2}}</span></p>
+<p><span class="math display">= n\arctan\sqrt{\frac{4\omega^{2}\Delta
+t^{2} - \omega^{4}\Delta t^{4}}{{4 - 4\omega}^{2}\Delta t^{2} +
+\omega^{4}\Delta t^{4}}}</span></p>
+</blockquote>
+<p>大概与方法一是一个数量级</p>
+<p>验证如下：</p>
+
+<pre><code class="C">
+  x = zeros(1,1000);                                                    
+  p = zeros(1,1000);                                                    
+  x(1) = 1;                                                             
+  p(1) = 0;                                                             
+  dt = 0.01;                                                            
+  N = 80000;                                                            
+  for n = 1:N-1                                                         
+  x(n+1) = x(n) + p(n)\*dt;                                             
+  p(n+1) = p(n) - x(n)\*dt;                                             
+  %p(n+1) = p(n) - x(n+1)\*dt;                                          
+  end                                                                  
+  n = 1:N;                                                              
+  plot(n,x,\'LineWidth\',0.8);                                          
+  hold on                                                               
+  plot(n,cos(dt\*n),\'LineWidth\',0.8);                                 
+  plot(n,+sqrt(1+dt\^2).\^n);                                           
+  plot(n,-sqrt(1+dt\^2).\^n);                                           
+  gca_h = gca;                                                          
+  set(gca_h, \'YGrid\', \'on\')                                         
+  set(gca_h, \'YMinorGrid\', \'on\')                                    
+  set(gca_h, \'XGrid\', \'on\')                                         
+  set(gca_h, \'XMinorGrid\', \'on\')  
+</code></pre>
+
+<pre><code class="C">
+  for n = 1:N-1                                                         
+  x(n+1) = x(n) + p(n)\*dt;                                             
+  %p(n+1) = p(n) - x(n)\*dt;                                            
+  p(n+1) = p(n) - x(n+1)\*dt;                                           
+  end                                                                   
+  n = 1:N;                                                              
+  plot(n,x,\'LineWidth\',0.8);                                          
+  hold on                                                               
+  plot(n,cos(dt\*n),\'LineWidth\',0.8); 
+</code></pre>
+
+</body>
+</html>

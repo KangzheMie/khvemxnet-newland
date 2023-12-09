@@ -7,6 +7,23 @@
     <script src="script.js"></script>
 
     <title>新大陆发现部</title>
+
+    <script>
+        // 动态加载 HTML 内容的函数
+        function loadHTMLContent(filename, targetElementId) {
+            fetch(filename)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById(targetElementId).innerHTML = html;
+                })
+                .catch(error => console.error('Error loading HTML content:', error));
+        }
+
+        // 调用函数来加载内容
+        loadHTMLContent('helloPage.html', 'helloPage');
+        loadHTMLContent('blogPage.html', 'blog');
+        loadHTMLContent('blogPage.html', 'blog-sub1');
+    </script>
 </head>
 <body>
 
@@ -27,79 +44,63 @@
                     <!-- 添加更多子菜单项 -->
                 </ul>
             </li>
-            <li><a href="#blog">文章</a></li>
+            <li><a href="#blog">文章</a>
+                <ul class="submenu">
+                    <li><a href="#blog-sub1">数学</a></li>
+                    <li><a href="#blog-sub2">物理</a></li>
+                    <li><a href="#blog-sub3">电子</a></li>
+                    <li><a href="#blog-sub4">软件</a></li>
+                    <li><a href="#blog-sub5">发癫</a></li>
+                    <!-- 添加更多子菜单项 -->
+                </ul>
+            </li>
             <li><a href="#picture">图片</a></li>
             <li style="border-right:1px solid #bbb;"><a href="#music">乐谱</a></li>
         </ul>
     </nav>
 
+    <!-- 需要注意的是，一下<section>的次序必须按照<nav>中的次序，一一对应 -->
 
-    
-    <section id="mainpage">
-        <div id="helloPage"></div>
-        <script>loadHTMLContent('./helloPage.html', 'helloPage');</script>
-    </section>
+    <section id="mainpage"><div id="helloPage"></div></section>
 
     <section id="log">
         <h1>日志展示</h1>
+        <p>点击子菜单显示日志</p>
     </section>
-
     <section id="log-sub1">
         <h1>日志展示1</h1>
         <div class="pagination-log-sub1"></div>
         <div class="logContent-log-sub1"></div>
-    </section>
-    
+    </section> 
     <section id="log-sub2">
         <h1>日志展示2</h1>
         <div class="pagination-log-sub2"></div>
         <div class="logContent-log-sub2"></div>
     </section>
-
     <section id="log-sub3">
         <h1>日志展示3</h1>
         <div class="pagination-log-sub3"></div>
         <div class="logContent-log-sub3"></div>
     </section>
-    
     <section id="log-sub4">
         <h1>日志展示4</h1>
         <div class="pagination-log-sub4"></div>
         <div class="logContent-log-sub4"></div>
     </section>
 
+    <section id="blog"></section>
+    <section id="blog-sub1"></section>  <!-- 数学 -->
+    <section id="blog-sub2"></section>  <!-- 物理 -->
+    <section id="blog-sub3"></section>  <!-- 电子 -->
+    <section id="blog-sub4"></section>  <!-- 软件 -->
+    <section id="blog-sub5"></section>  <!-- 发癫 -->
+
+    <section id="picture"></section>
     
-
-    <section id="blog">
-
-    </section>
-
-    <section id="picture">
-
-    </section>
-
-    <section id="music">
-
-    </section>
+    <section id="music"></section>
 
     <footer>
         &copy; 2023 some rights reserved
     </footer>
-
-    <script>
-        // 动态加载 HTML 内容的函数
-        function loadHTMLContent(filename, targetElementId) {
-            fetch(filename)
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById(targetElementId).innerHTML = html;
-                })
-                .catch(error => console.error('Error loading HTML content:', error));
-        }
-
-        // 调用函数来加载内容
-        loadHTMLContent('./helloPage.html', 'helloPage');
-    </script>
-    
 </body>
 </html>

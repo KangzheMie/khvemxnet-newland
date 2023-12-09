@@ -5,7 +5,12 @@ body {
     padding: 0px;
 }
 
+p {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
 
+/* ----------------------------------头图区域------------------------------------ */
 header {
     background-image: url('./picture/header.png'); 
     background-position:center; /* 控制背景图片的位置 */
@@ -24,7 +29,7 @@ header h1 {
     font-size: 40px;
 }
 
-/* 导航栏 navigation*/
+/* ----------------------------------导航栏------------------------------------ */
 nav {
     background-color: rgb(23, 118, 137);
     padding: 0px 100px;
@@ -74,7 +79,7 @@ nav a:hover:not(.active) {
 /* 子菜单中的链接样式 */
 .submenu a {
     color: white;
-    padding: 12px 16px;
+    padding: 5px 20px;
     text-decoration: none;
     display: block;
     text-align: left;
@@ -90,11 +95,12 @@ nav li:hover .submenu {
     background-color: rgb(87, 156, 166); /* 悬停时的背景颜色，可根据需要调整 */
 }
 
-
+/* ----------------------------------内容区域------------------------------------ */
 section {
     padding: 20px 100px;
 }
 
+/* 居中图片 */
 .centered-image-container{
     text-align: center;
 }
@@ -107,6 +113,8 @@ section {
 .log-entry p:first-child {
     font-weight: bold;
 }
+
+/* ----------------------------------底部------------------------------------ */
 
 footer {
     background-color: #333;

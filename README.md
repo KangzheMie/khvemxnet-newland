@@ -19,3 +19,5 @@
 **2023.11.29**: v0.1 第一个稳定运行版本 
 
 **2023.12.06**: v0.2 增加了子菜单功能, 让日志可以在子菜单页面上显示 
+
+**2023.12.09**: v0.3 新增blog模块。使用[pandoc](https://github.com/jgm/pandoc)转换md文件到html，使用[KaTeX](https://github.com/KaTeX/KaTeX)和[HighLight.js](https://github.com/highlightjs/highlight.js)库对blog文章中的公式和代码渲染。
