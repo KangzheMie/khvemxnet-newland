@@ -3,11 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var navLinks = document.querySelectorAll("nav a");
     var subMenuLinks = document.querySelectorAll(".submenu a");
 
-    var logsPerPage = 1; // 每页显示的日志条目数
+    var logsPerPage = 30; // 每页显示的日志条目数
     var currentPage = 1;
     var totalPages = 0; // 初始化 totalPages
 
-    var initialLogFile = 'log1.txt'; // 举例，您需要根据实际情况来设置这个值
+    var initialLogFile = 'log.md'; // 举例，您需要根据实际情况来设置这个值
     var currentLogFile = initialLogFile; // 初始化为初始日志文件
 
     // 在全局声明 logContent 和 pagination

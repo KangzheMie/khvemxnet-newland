@@ -7,11 +7,11 @@
   <title>使用数值差分法计算简谐振子并分析误差</title>
 
   <!-- 博客用风格脚本 -->
-  <link rel="stylesheet" href="blog.css" />
+  <link rel="stylesheet" href="../_lib/blog.css" />
 
   <!-- KaTeX库 -->
-  <link rel="stylesheet" href="katex.min.css" />
-  <script defer="" src="katex.min.js"></script>
+  <link rel="stylesheet" href="../_lib/katex.min.css" />
+  <script defer="" src="../_lib/katex.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       var mathElements = document.getElementsByClassName("math");
@@ -32,16 +32,16 @@
 
   <!-- highlight.js库 -->
   <!-- 在官网可以找到不同的代码风格，替换这里的css -->
-  <link rel="stylesheet" href="ir-black.min.css">
+  <link rel="stylesheet" href="../_lib/ir-black.min.css">
   <!-- 关于语言和渲染的js库 -->
-  <script src="highlight.min.js"></script>
-  <script src="go.min.js"></script>
+  <script src="../_lib/highlight.min.js"></script>
+  <script src="../_lib/go.min.js"></script>
   <script>hljs.highlightAll();</script>
 
 </head>
 
 <!-- 正文部分直接使用pandoc --katex生成 -->
-<!-- 其中代码部分需要按照<pre><code class="C">来进行 -->
+<!-- 其中代码部分需要按照<pre><code class="">来进行 -->
 
 <body>
 <h2
@@ -207,41 +207,44 @@ t^{2} - \omega^{4}\Delta t^{4}}{{4 - 4\omega}^{2}\Delta t^{2} +
 <p>大概与方法一是一个数量级</p>
 <p>验证如下：</p>
 
-<pre><code class="C">
+<pre><code class="MATLAB">
   x = zeros(1,1000);                                                    
   p = zeros(1,1000);                                                    
   x(1) = 1;                                                             
   p(1) = 0;                                                             
   dt = 0.01;                                                            
-  N = 80000;                                                            
+  N = 80000;      
+                                                        
   for n = 1:N-1                                                         
-  x(n+1) = x(n) + p(n)\*dt;                                             
-  p(n+1) = p(n) - x(n)\*dt;                                             
-  %p(n+1) = p(n) - x(n+1)\*dt;                                          
-  end                                                                  
+    x(n+1) = x(n) + p(n)*dt;                                             
+    p(n+1) = p(n) - x(n)*dt;                                             
+    //%p(n+1) = p(n) - x(n+1)*dt;                                          
+  end             
+
   n = 1:N;                                                              
-  plot(n,x,\'LineWidth\',0.8);                                          
+  plot(n,x,'LineWidth',0.8);                                          
   hold on                                                               
-  plot(n,cos(dt\*n),\'LineWidth\',0.8);                                 
-  plot(n,+sqrt(1+dt\^2).\^n);                                           
-  plot(n,-sqrt(1+dt\^2).\^n);                                           
+  plot(n,cos(dt*n),'LineWidth',0.8);                                 
+  plot(n,+sqrt(1+dt^2).^n);                                           
+  plot(n,-sqrt(1+dt^2).^n);                                           
   gca_h = gca;                                                          
-  set(gca_h, \'YGrid\', \'on\')                                         
-  set(gca_h, \'YMinorGrid\', \'on\')                                    
-  set(gca_h, \'XGrid\', \'on\')                                         
-  set(gca_h, \'XMinorGrid\', \'on\')  
+  set(gca_h, 'YGrid', 'on')                                         
+  set(gca_h, 'YMinorGrid', 'on')                                    
+  set(gca_h, 'XGrid', 'on')                                         
+  set(gca_h, 'XMinorGrid', 'on')  
 </code></pre>
 
-<pre><code class="C">
+<pre><code class="MATLAB">
   for n = 1:N-1                                                         
-  x(n+1) = x(n) + p(n)\*dt;                                             
-  %p(n+1) = p(n) - x(n)\*dt;                                            
-  p(n+1) = p(n) - x(n+1)\*dt;                                           
-  end                                                                   
+    x(n+1) = x(n) + p(n)*dt;                                             
+    %p(n+1) = p(n) - x(n)*dt;                                            
+    p(n+1) = p(n) - x(n+1)*dt;                                           
+  end         
+
   n = 1:N;                                                              
-  plot(n,x,\'LineWidth\',0.8);                                          
+  plot(n,x,'LineWidth',0.8);                                          
   hold on                                                               
-  plot(n,cos(dt\*n),\'LineWidth\',0.8); 
+  plot(n,cos(dt*n),'LineWidth',0.8); 
 </code></pre>
 
 </body>

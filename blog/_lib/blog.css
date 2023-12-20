@@ -1,11 +1,11 @@
 html {
   color: #fff;
-  background-color: #222;
+  background-color: #111;
 }
 
 body {
   margin: 0 auto;
-  max-width: 70%;
+  max-width: 1000px;
   padding-left: 50px;
   padding-right: 50px;
   padding-top: 50px;
@@ -14,6 +14,7 @@ body {
   overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
   font-kerning: normal;
+  background-color: #222;
 }
 
 @media (max-width: 600px) {
@@ -170,26 +171,4 @@ header {
 
 #TOC a:not(:hover) {
   text-decoration: none;
-}
-
-code{white-space: pre-wrap;}
-
-span.smallcaps{font-variant: small-caps;}
-
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-
-div.column{flex: auto; overflow-x: auto;}
-
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-
-/* The extra [class] is a hack that increases specificity enough to
-   override a similar rule in reveal.js */
-
-ul.task-list[class]{list-style: none;}
-
-ul.task-list li input[type="checkbox"] {
-  font-size: inherit;
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
-  vertical-align: middle;
 }
