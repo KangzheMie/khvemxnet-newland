@@ -1,5 +1,6 @@
 <p align="center">
-<img src="./picture/NewLand.png" width=400px></p>
+<img src="./picture/NewLand.png" width=400px>
+</p>
 <h2 align="center"> 放在实验室服务器上的小型网页 </h2>
 <br/> 
 

@@ -185,6 +185,10 @@ section {
     margin-top: 20px;
 }
 
+.log-entry {
+    margin-bottom: 100px;
+}
+
 /* ----------------------------------底部------------------------------------ */
 
 footer {
@@ -208,7 +212,7 @@ footer p{
     width: 400px;
 }
 #helloPage-img-uni{
-    width: 200px;
+    width: 250px;
 }
 #helloPage-img-xr{
     width: 600px;

@@ -1,6 +1,6 @@
 html {
   color: #fff;
-  background-color: #111;
+  background-color: #222;
 }
 
 body {
@@ -15,6 +15,7 @@ body {
   text-rendering: optimizeLegibility;
   font-kerning: normal;
   background-color: #222;
+  font-size: 18px;
 }
 
 @media (max-width: 600px) {
