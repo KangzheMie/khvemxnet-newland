@@ -1,0 +1,44 @@
+/* ----------------------------------头图区域------------------------------------ */
+header {
+    margin: auto;
+    padding: 0px;
+    height: 150px;
+    width: 1000px;
+    border-left:1px solid var(--border-color);
+    border-right:1px solid var(--border-color);
+}
+
+header h1 {
+    text-align: left;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 1);
+    color: #fff;
+    margin: 0px;
+    padding-top: 30px;
+    padding-left: 100px;
+    padding-right: 100px;
+    font-size: 40px;
+}
+
+header p{
+    color: #fff;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+    text-indent: 0em;
+    padding-left: 100px;
+}
+
+
+@media (max-width: 600px) {
+    header{
+        height: 100px;
+        width: auto;
+    }
+    header h1 {
+        padding: 1px 10px;
+        font-size: 25px;
+    }
+    header p{
+        text-indent: 0em;
+        padding-left: 10px;
+        font-size: 14px;
+    }
+}

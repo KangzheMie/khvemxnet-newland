@@ -1,0 +1,21 @@
+:root {
+    --background-color:#f2fcfd;
+    --border-color:#EEE;
+    --section-color: #fffffc;
+    --nav-color: #ffcfe0; 
+    --nav-a-color: #D9F8FA;
+    --nav-text-color:#330724;
+    --h1-color:#205F61;
+    --h2-color:#4E9294;
+    --p-color:#073233;
+    --footer-color:#BBB;
+    --footer-text-color:#FFF;
+    --a-color:#ff4794;
+}
+
+header {
+    background-image: url('../picture/theme_Elysia/Main_Elysia.png'); 
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat; 
+}

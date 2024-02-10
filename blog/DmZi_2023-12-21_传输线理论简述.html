@@ -1,0 +1,193 @@
+<h1 id="传输线理论简述">传输线理论简述</h1>
+<h2 id="导行电磁波在传输线中的行为">1. 导行电磁波在传输线中的行为</h2>
+<p>导行电磁场在一维导体中能量以及介质的相互作用，简化建模为一维电压电流场以及一维的阻抗分布参量。</p>
+<p>此时电压电流场的方程是一维含时间的线性常系数偏微分方程（称之为电报方程）。根据线性系统的特性，该系统的特征解系是复指数函数。</p>
+<p>电报方程 <span class="math display">
+\frac{\partial v}{\partial x} = -Ri-L\frac{\partial i}{\partial t}
+</span> <span class="math display">
+\frac{\partial i}{\partial x} = -Gv-C\frac{\partial v}{\partial t}
+</span></p>
+<p>上述变量中，<span
+class="math inline">u(x,t),i(x,t)</span>是时间和空间的函数，代表导行电磁场。
+一般认为我们研究的对象是均匀的工业产品，所以上边的阻抗系数可以认为是在空间中处处相等的常数。量纲都是<span
+class="math inline">\Omega/\mathrm{m}</span>。</p>
+<p>如果要记忆这个方程：随着空间传输的方向，电磁场的强度是在减小的，所以他们关于空间的偏导数都是负数。然后所有的阻抗参数都有出场，在电压的方程中都是<span
+class="math inline">\mathrm{V/m}</span>的量纲。在电流方程中都是<span
+class="math inline">\mathrm{A/m}</span>的量纲。</p>
+<p>比如：<span class="math inline">\displaystyle L\frac{\partial
+i}{\partial t}(\mathrm{V/m})</span></p>
+<p><br></br></p>
+<p>如果我们只<strong>研究简谐稳态解</strong>的时候，直接使用相量法化简上述方程：
+<span class="math display">
+\frac{\mathrm{d}V}{\mathrm{d}x} = -(R+j\omega L)I
+</span> <span class="math display">
+\frac{\mathrm{d}I}{\mathrm{d}x} = -(G+j\omega C)V
+</span></p>
+<p>互相带入得： <span class="math display">
+\frac{\mathrm{d^2}V}{\mathrm{d}x^2} - \gamma^2 V=0
+</span> <span class="math display">
+\frac{\mathrm{d^2}I}{\mathrm{d}x^2} - \gamma^2 I=0
+</span> <span class="math display">
+\gamma = \sqrt{(R+j\omega L)(G+j\omega C)} = \alpha + j\beta
+</span></p>
+<p>显然这个常数中，<span
+class="math inline">\alpha</span>代表了衰减的系数，<span
+class="math inline">\beta</span>代表了传播的频率。</p>
+<p>由二阶常微分方程的解可以得知： <span class="math display">
+V(x) = V_0^+\exp(-\gamma x) + V_0^-\exp(+\gamma x)
+</span> <span class="math display">
+I(x) = I_0^+\exp(-\gamma x) + I_0^-\exp(+\gamma x)
+</span> <span class="math display">
+I(x) = \frac{V_0^+}{Z_0}\exp(-\gamma x) - \frac{V_0^-}{Z_0}\exp(+\gamma
+x)
+</span> <span class="math display">
+Z_0=\frac{V^+_0}{I^+_0} = -\frac{V^-_0}{I^-_0} = \sqrt{\frac{R+j\omega
+L}{G+j\omega C}}
+</span>
+如何理解其中的负号呢。因为电压的取法是，传输线上的电势对于地平面上的电势。无论是正向还是反向的电磁波，这一点都不会有改变。而电流的取法是和传输方向同向的电流为正方向。所以对于反向的电流波<span
+class="math inline">I^-</span>，实际上电流方向已经和正方向相反了，是负数。而<span
+class="math inline">I^+=V^+/Z_0</span>实际上代表的是正方向的电流。所以应该有<span
+class="math inline">I^- = -V^-/Z_0</span></p>
+<p><br></br></p>
+<p>把电压化成时域， <span class="math display">
+\begin{aligned}
+v(x,t) &amp;= |V_0^+|\cos(\omega t - \beta x + \varphi^+)\exp(-ax) \\
+&amp;+|V_0^-|\cos(\omega t + \beta x + \varphi^+)\exp(+ax)
+\end{aligned}
+</span></p>
+<p>波传播的方向与坐标正方向相同的量是<span
+class="math inline">^+</span>。显然，随着波的传播，他们的幅度都在减小，他们的速度与频率有关。
+<span class="math display">
+\lambda = \frac{2\pi}{\beta},\ v_p=\frac{\omega}{\beta}
+</span></p>
+<p>对于无损传输线： <span class="math display">
+R = 0,
+G = 0,
+\gamma = j\beta = j\omega\sqrt{LC}
+</span> <span class="math display">
+Z = \sqrt{\frac{L}{C}},
+v_p = \frac{1}{\sqrt{LC}}
+</span></p>
+<p><br></br></p>
+<p>以上的分析和解都是建立在稳态的基础上的，并且没有限定时间和空间的边界条件。不过由于波的传播速度是有限的，对于有限长度的传输线，在某一瞬态，他也不会知道前方是否是无穷远的边解条件，也会按照当前各种参数<span
+class="math inline">(\alpha,\ \beta,\ Z,\ v_p)</span>向前传播。</p>
+<p>对于这个偏微分方程，由于没有时空的边界条件，所以得到的是一组通解。当导行电磁波在一段稳定介质<span
+class="math inline">(\gamma,\
+Z)</span>的传输线中传播时。首先分解为各个频率分量，然后各个频率分量再按照上式给出的解传播。</p>
+<p>特别的，对于无损耗的传输线，由于波传递的速度和频率没有关系，那么可以认为是波在整体按照<span
+class="math inline">v_p</span>传播。</p>
+<p><br></br></p>
+<h2 id="源-传输线-负载">2. 源-传输线-负载</h2>
+<p>传输线是一个线模型，建立一个这样的线模型是有其明确的目的的。</p>
+<p>因为工程中<strong>需要将电磁波从一个器件传播到另一个器件</strong>。在集总参数模型电路中，我们就这样认为其中的电磁波无损地瞬间传输了过去。而传输线模型是一种彻底但是很实用的电磁波模型。
+传输线模型要实现准确描述电信号在不同器件之间传播这个目的。对这个过程进行了简化：源-线-负载。</p>
+<p>其中源和负载都还是点模型，而连接源和负载之间的是一个带有距离参数的线模型。</p>
+<p>从上一节的讨论中可以看出，在这个线的模型中，线中<strong>传播的正向电磁波</strong>电压和电流处处满足一定的约束<span
+class="math inline">\displaystyle
+Z_0=\frac{V^+}{I^+}</span>。一般认为实际情况中的产品是均匀的，所以在两个点之间的这条线上，这个关系应该得到满足。</p>
+<p>而在两个点处，这个关系就不一定会满足了。最简单的考虑是，如果在负载处其阻抗是<span
+class="math inline">Z_L</span>。那么在其两端的电压和电流的关系就一定要是<span
+class="math inline">\displaystyle Z_L=\frac{V}{I}</span>。当<span
+class="math inline">Z_L \not
+={Z_0}</span>此时在负载的点处<strong>正向的电磁波</strong>就一定没法满足两种完全不同的边界条件，从而需要产生反射。</p>
+<p>在负载的点上有： <span class="math display">
+\begin{aligned}
+    Z_L &amp;= \frac{V}{I} = \frac{V^+ + V^-}{I^+ + I^-} \\
+    &amp;= \frac{V^+ + V^-}{V^+/Z_0 - V^-/Z_0} = \frac{V^+ + V^-}{V^+ -
+V^-}Z_0
+\end{aligned}
+</span> <span class="math display">
+\begin{aligned}
+    Z_L &amp;= \frac{V}{I} = \frac{V^+ + V^-}{I^+ + I^-} \\
+    &amp;= \frac{I^+Z_0 - I^-Z_0}{I^+ + I^-} = \frac{I^+ - I^-}{I^+ +
+I^-}Z_0
+\end{aligned}
+</span> <span class="math display">
+\varGamma = \frac{V^-}{V^+}= \frac{Z_L-Z_0}{Z_L+Z_0}
+</span></p>
+<p>传输线的一些重要结论：</p>
+<p>向前的功率和向后的功率 <span class="math display">
+\begin{aligned}
+P^+ &amp;=\frac{1}{2}\frac{|V_0^+|^2}{Z_0}, \\
+P^- &amp;=\frac{1}{2}\frac{|V_0^+|^2}{Z_0}|\Gamma|^2, \\
+RL &amp;= -10\lg\frac{P^-}{P^+} = -20\lg|\Gamma|
+\end{aligned}
+</span></p>
+<p>给下一个传输线的透射率：在交界点处电压相等 <span
+class="math display">
+\begin{aligned}
+V_1^+ &amp;= V_0^+ + V_0^- = (1+\varGamma\ )V_0^+, \\
+T &amp;= \frac{V_1^+}{V_0^+} = 1 +\varGamma, \\
+IL &amp;= -10\lg\frac{P^+_1}{P^+_0} = -20\lg|T|
+\end{aligned}
+</span></p>
+<p>阻抗变换：在距离负载一定远处，将之后的<strong>所有传输线连同负载都看成点负载模型</strong>，此时得到阻抗（稳态情况下）：
+<span class="math display">
+Z(-l) = Z_0 \frac{Z_L+jZ_0\tan\beta l}{Z_0+jZ_L\tan\beta l}
+</span> 这样，就可以在电源的视角下看之后的阻抗是什么情况了。</p>
+<p><br></br></p>
+<p>值得注意的是，以上的各种东西都是<strong>来自于相量法以及阻抗模型</strong>。这里的一部分的结论的通用的，而另一部分，例如阻抗，是依赖于频率而定义的。对于一般的波形，比如阶跃函数，其傅里叶变换甚至都不收敛，所以不要企图使用这里的结论去推广到所有电磁波在导行导体中的行为。</p>
+<p>通用的部分例如：关于反射率的定义。</p>
+<p><br></br></p>
+<p>之前我们只讨论了传输线和之后的负载的交互情况。在这个模型中，传输线与负载的「接口」只是讨论在一点处必须满足的阻抗条件，因为电压和电流之间的关系确定了阻抗的最基本的定义。现在如果我们认为只知道阻抗，那么就必须要约束电压和电流按照这样的方式联系在一起。</p>
+<p>这样的处理导致了，把一点之后的传输线都可以看作是一个阻抗的点模型。因为对于前边的模型而言，他只负责与当前的这个点的接口交互。而这个点之后的所有物理信息，只能通过这个接口呈现出来。不能跨过接口与之后的所有物理信息进行交流。</p>
+<p>此时我们把视角聚焦在传送线的源上。对于源来说，之后的不管是传输线还是之后的负载，都相当于一个点阻抗模型<span
+class="math inline">Z_{in}=Z(-l)</span>。</p>
+<p>而源自身是可以进行戴维南等效的，等效的结果是一个电压激励源<span
+class="math inline">V_s</span>以及一个串联阻抗<span
+class="math inline">Z_s</span>。此时就可以计算得到实际进入传输线上的输入电压：
+<span class="math display">
+V_{in} = V(-l) = V_s\frac{Z_{in}}{Z_{in}+Z_s}
+</span></p>
+<p>现在考虑源端的反射。对于一个电路的模型来说，外部信号向源看进去的等效阻抗就是内阻<span
+class="math inline">Z_s</span>。所以源端的反射系数依旧是激爽的： <span
+class="math display">
+\varGamma_s = \frac{Z_s-Z_0}{Z_s+Z_0}
+</span></p>
+<p><br></br></p>
+<h2 id="数字信号在传输线上的反射过程">3.
+数字信号在传输线上的反射过程</h2>
+<p>以上的结论只完全适用于稳态。因为在实现的世界中，信息的传送的有时间的。稳态代表了接口之后所有的信息经历了无限长的时间充分的展现在了接口上。而对于瞬态来说，在当前时刻接口只能部分反应传输线的信息。</p>
+<p>现在又这样的一个模型：激励源直流<span class="math inline">V_s,\
+Z_s</span>，传输线<span class="math inline">Z_0</span>，负载<span
+class="math inline">Z_l</span>；</p>
+<p>在<span
+class="math inline">t=0</span>的时刻，直流激励源启动。此时在传输线的输入端<span
+class="math inline">V(-l)</span>有如下的关系： <span
+class="math display">
+V(-l,t=0) = \frac{Z_0}{Z_0+Z_s}V_s
+</span></p>
+<p>此时电磁波才刚刚传输，对于源来说，之后的传输线如同无限的长。所以负载的阻抗不会反应在接口上边。对于传输线上传输的电磁波来说，感觉就像是行走在处处电压和电流关系相同的地方上。</p>
+<p>之前的结论中的反射系数都可以使用。接下来电磁波就会在负载和源之间来回的反射。传输线上的电压会保持稳定，可以根据无穷级数求出。
+<span class="math display">
+\varGamma_s = \frac{Z_s-Z_0}{Z_s+Z_0}, \ \
+\varGamma_l = \frac{Z_l-Z_0}{Z_l+Z_0}
+</span></p>
+<p>显然，只要阻抗是匹配的，那么就不会在这个点发生反射，整个过程将会终止。
+最终的稳态电压是： <span class="math display">
+V_0 = \frac{1+\varGamma_l}{1-\varGamma_s\varGamma_l} \cdot
+\frac{Z_0}{Z_0+Z_s}V_s
+</span></p>
+<h2 id="理论的实践案例">4. 理论的实践案例</h2>
+<blockquote>
+<p>在核电子学实的信号中，核粒子的探测信号的特性是一个一个随机的脉冲信号。脉冲信号的面积代表了这个粒子转换的能量，脉冲信号的形状可能代表了不同的粒子种类。这样的脉冲信号的特点是：在脉冲信号的上升阶段速度快，在下降阶段速度慢。可以利用反射波来解决压缩波形。</p>
+</blockquote>
+<blockquote>
+<p>具体的操作是，对于传输线上的一点来说，其电压随时间变化是同向波于反射波的叠加。当一个脉冲过来，首先出现在这个点上的电压是来自于同向波，过了一会之后反射波就会到来。当反射波于原来的电压极性相反，就可以快速抵消同向波中的下降部分。达到波形整形的效果。</p>
+</blockquote>
+<blockquote>
+<p>此时利用的电路为：匹配源——传输线——取信号点——传输线——低阻抗负载
+___</p>
+</blockquote>
+<blockquote>
+<p>通过之前的结论知道了，如果阻抗比较高，那么反射的极性是相同的，如果阻抗比较低，那么反射的极性是相反的。</p>
+</blockquote>
+<blockquote>
+<p>对于没有匹配的CMOS数字信号系统来说，其接收端基本上是高阻态的，直接认为是开路简化讨论。此时分为两种情况：</p>
+</blockquote>
+<blockquote>
+<p>当驱动是低阻（反正比传输线低），那么进入传输线的电压反正高于Vs/2。当信号达到接收端，被完全反射，会在接收端的点产生2倍传输线的电压。显然此时的电压就高于驱动源的电压了。然后信号反射回去，到源端会产生极性相反的波。在接收端过一段时间后又会发现电压下降。最终表现为电压的振铃。</p>
+</blockquote>
+<blockquote>
+<p>当驱动的高阻态，那么进入传输线的电压就会小。来回反射的电压都是正极性。所以最终表现的接收端的电压会缓慢阶梯爬升。</p>
+</blockquote>

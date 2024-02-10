@@ -1,136 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+<title>新大陆发现部</title>
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="./_lib/css_theme.css">
+<link rel="stylesheet" href="./_lib/css_text.css">
 
-    <title>新大陆发现部</title>
+<link rel="stylesheet" href="./_lib/css_header.css">
+<link rel="stylesheet" href="./_lib/css_nav.css">
+<link rel="stylesheet" href="./_lib/css_section.css">
+<link rel="stylesheet" href="./_lib/css_footer.css">
 
-    <script>
-        // 动态加载 HTML 内容的函数
-        function loadHTMLContent(filename, targetElementId) {
-            fetch(filename)
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById(targetElementId).innerHTML = html;
-                })
-                .catch(error => console.error('Error loading HTML content:', error));
-        }
-
-        // 调用函数来加载内容
-        loadHTMLContent('helloPage.html', 'helloPage');
-        loadHTMLContent('./blog/Math_blog.html', 'blog-sub1');
-        loadHTMLContent('./blog/Phys_blog.html', 'blog-sub2');
-        loadHTMLContent('./blog/Elec_blog.html', 'blog-sub3');
-        loadHTMLContent('./blog/Soft_blog.html', 'blog-sub4');
-        loadHTMLContent('./blog/Soci_blog.html', 'blog-sub5');
-        loadHTMLContent('./blog/Imsb_blog.html', 'blog-sub6');
-    </script>
-
-    <!-- KaTeX库 -->
-    <link rel="stylesheet" href="./blog/_lib/katex.min.css" />
-    <script defer="" src="./blog/_lib/katex.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-        var mathElements = document.getElementsByClassName("math");
-        var macros = [];
-        for (var i = 0; i < mathElements.length; i++) {
-            var texText = mathElements[i].firstChild;
-            if (mathElements[i].tagName == "SPAN") {
-            katex.render(texText.data, mathElements[i], {
-                displayMode: mathElements[i].classList.contains('display'),
-                throwOnError: false,
-                macros: macros,
-                fleqn: false
-            });
-            }
-        }
-        });
-    </script>
-
+<link rel="stylesheet" href="./_lib/css_spicial.css">
+<link rel="stylesheet" href="./_lib/css_highlight.css">
+<link rel="stylesheet" href="./_lib/katex/katex.min.css" />
+<script src="./_lib/katex/katex.min.js"></script>
 </head>
+
 <body>
+    <div id="header"></div>
+    <div id="navbar"></div>
+    <section><div id="content"></div><br></br></section>
+    <div id="footer"></div>
 
-    <header>
-        <h1>新大陆发现部</h1>
-    </header>
-
-    <nav>
-        <ul>
-            <li><a href="#mainpage">首页</a></li>
-            <li>
-                <a>文章</a>
-                <ul class="submenu">
-                    <li><a href="#blog-sub1">数学</a></li>
-                    <li><a href="#blog-sub2">物理</a></li>
-                    <li><a href="#blog-sub3">电子</a></li>
-                    <li><a href="#blog-sub4">软件</a></li>
-                    <li><a href="#blog-sub5">社会</a></li>
-                    <li><a href="#blog-sub6">发癫</a></li>
-                    <!-- 添加更多子菜单项 -->
-                </ul>
-            </li>
-            <li>
-                <a>生活</a>
-                <ul class="submenu">
-                    <li><a href="#picture">图片</a></li>
-                    <li><a href="#music">音乐</a></li>
-                </ul>
-            </li>
-            <li>
-                <a>日志</a>
-                <ul class="submenu">
-                    <li><a href="#log-sub1" data-logfile="log.md">日常</a></li>
-                    <li><a href="#log-sub2" data-logfile="useful.md">常用</a></li>
-                    <li><a href="#log-sub3" data-logfile="knowledge.md">知识</a></li>
-                    <li><a href="#log-sub4" data-logfile="note.md">笔记</a></li>
-                </ul>
-            </li>
-            <li style="border-right:1px solid #bbb;"><a href="#project">项目</a></li>
-        </ul>
-    </nav>
-
-
-    <section id="mainpage">
-        <div id="helloPage"></div>
-    </section>
-
-        <section id="blog-sub1"></section>  <!-- 数学 -->
-        <section id="blog-sub2"></section>  <!-- 物理 -->
-        <section id="blog-sub3"></section>  <!-- 电子 -->
-        <section id="blog-sub4"></section>  <!-- 软件 -->
-        <section id="blog-sub5"></section>  <!-- 社会 -->
-        <section id="blog-sub6"></section>  <!-- 发癫 -->
-
-    <section id="picture"></section>
-    <section id="music"></section>
-    <section id="project"></section>
-
-        <section id="log-sub1">
-            <h1>日志展示</h1>
-            <div class="pagination-log-sub1"></div>
-            <div class="logContent-log-sub1"></div>
-        </section> 
-        <section id="log-sub2">
-            <h1>常用结论</h1>
-            <div class="pagination-log-sub2"></div>
-            <div class="logContent-log-sub2"></div>
-        </section>
-        <section id="log-sub3">
-            <h1>杂散的知识</h1>
-            <div class="pagination-log-sub3"></div>
-            <div class="logContent-log-sub3"></div>
-        </section>
-        <section id="log-sub4">
-            <h1>网络笔记</h1>
-            <div class="pagination-log-sub4"></div>
-            <div class="logContent-log-sub4"></div>
-        </section>
-
-    <footer>
-        <p>&copy; 2023 some rights reserved</p>
-    </footer>
+    <script src="./_lib/script.js"></script>
 </body>
 </html>
