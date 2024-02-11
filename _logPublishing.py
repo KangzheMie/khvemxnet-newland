@@ -69,7 +69,7 @@ for log_name in log_name_list:
             # 使用os.path.splitext去除文件扩展名
             titles.append(os.path.splitext(filename)[0])
     # 为每个分类生成HTML文件
-    filepath = f'./module/log_{log_name}.html'
+    filepath = f'./log/log_{log_name}.html'
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write('<div class="timeline">\n')
         f.write(f'    <h2>{log_titles.get(log_name, "通用标题")}</h2>\n')

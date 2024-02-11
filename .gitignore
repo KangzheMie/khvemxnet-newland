@@ -1,2 +1,7 @@
 node_modules/
-log/
+log/*.md
+log/backup/
+log/RiCh/
+log/BiJi/
+log/ChYs/
+log/ZiSi/

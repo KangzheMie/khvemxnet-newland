@@ -105,7 +105,7 @@ for filename in os.listdir('./blog'):
 
 # 为每个分类生成HTML文件
 for category, events in categories.items():
-    filepath = f'./module/blog_{category}.html'
+    filepath = f'./blog/blog_{category}.html'
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write('<div class="timeline">\n')
         f.write(f'    <h2>{category_titles.get(category, "通用标题")}</h2>\n')

@@ -19,3 +19,10 @@ header {
     background-size: cover;
     background-repeat: no-repeat; 
 }
+
+#blankPage-img{
+    background-image: url('../picture/theme_Elysia/404.jpg'); 
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat; 
+}

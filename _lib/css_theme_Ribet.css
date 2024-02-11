@@ -1,0 +1,28 @@
+:root {
+    --background-color:#171818;
+    --border-color:#fff;
+    --section-color: #252629;
+    --nav-color: #7be; 
+    --nav-a-color: #7d9192;
+    --nav-text-color:#fff;
+    --h1-color:#ee9;
+    --h2-color:#ffd;
+    --p-color:#fff;
+    --footer-color:#666;
+    --footer-text-color:#FFF;
+    --a-color:#aae;
+}
+
+header {
+    background-image: url('../picture/theme_Ribet/Main_Ribet.png'); 
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat; 
+}
+
+#blankPage-img{
+    background-image: url('../picture/theme_Ribet/404.jpg'); 
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat; 
+}

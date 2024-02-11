@@ -51,6 +51,16 @@ document.body.addEventListener('click', function(event) {
     }
 });
 
+// 监听header a点击事件
+document.body.addEventListener('click', function(event) {
+    if (event.target.matches('header a')) {
+        event.preventDefault(); // 阻止链接默认行为
+        const contentUrl = event.target.getAttribute('href') || './module/blank.html';
+        loadContent(contentUrl);
+    }
+});
+
+
 // 监听timeline点击事件
 document.body.addEventListener('click', function(event) {
     if (event.target.matches('.timeline a')) {
@@ -59,3 +69,24 @@ document.body.addEventListener('click', function(event) {
         loadContent(contentUrl);
     }
 });
+
+// 切换主题
+// 在页面加载时检查并应用保存的主题
+document.addEventListener('DOMContentLoaded', (event) => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        switchTheme(savedTheme, false); // 应用保存的主题，不重新保存到localStorage
+    }
+});
+
+function switchTheme(themeFileName, save = true) {
+    // 更改主题
+    var themeLink = document.getElementById('theme-css');
+    if (themeLink) {
+        themeLink.href = themeFileName;
+    }
+    // 如果需要，保存主题偏好到 localStorage
+    if (save) {
+        localStorage.setItem('theme', themeFileName);
+    }
+}
