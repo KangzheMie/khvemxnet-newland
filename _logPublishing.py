@@ -59,7 +59,7 @@ log_flowers = {
 }
 
 for log_name in log_name_list:
-    parse_file_and_generate_html(f"./log/{log_name}.md", f"./log/{log_name}/")
+    parse_file_and_generate_html(f"./source/{log_name}.md", f"./log/{log_name}/")
 
     # 初始化一个列表来收集所有合适的文件名
     titles = []

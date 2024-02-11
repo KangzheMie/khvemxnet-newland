@@ -1,7 +1,7 @@
 node_modules/
-log/*.md
 log/backup/
 log/RiCh/
 log/BiJi/
 log/ChYs/
 log/ZiSi/
+source/*.md
