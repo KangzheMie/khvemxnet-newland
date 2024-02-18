@@ -20,6 +20,11 @@ h3 {
     color: var(--h2-color);
 }
 
+h4 {
+    font-size: 18px;
+    color: var(--h2-color);
+}
+
 p {
     line-height: 1.5em;
     margin-top: 1px;

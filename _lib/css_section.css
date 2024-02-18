@@ -12,9 +12,17 @@ section p {
     text-indent: 2em;
 }
 
+section li {
+  font-size: 18px;
+}
+
+.sourceCode{
+  font-size: 17px;
+}
+
 .math{
   color: var(--p-color);
-  font-size: 18px;
+  font-size: 17px;
   max-width: 100%;
 }
 
@@ -30,7 +38,6 @@ section p {
     }
     .math {
       color: var(--p-color);
-      font-size: 17px;
     }
 }
 
@@ -120,7 +127,34 @@ blockquote {
 
 @media(max-width: 600px){
   .timeline {
-    width: 100%;
     padding: 5px;
   }
+}
+
+/* 文章markdown列表 */
+table {
+  padding: 2em;
+  border-collapse: collapse;
+  width: auto;
+  overflow-x: auto;
+  display: block;
+}
+table caption {
+  margin-bottom: 0.75em;
+}
+tbody {
+  margin-top: 0.5em;
+  border-top: 1px solid var(--p-color);
+  border-bottom: 1px solid var(--p-color);
+}
+th {
+  border-top: 1px solid var(--p-color);
+  padding: 0.25em 0.5em 0.25em 0.5em;
+  color: var(--p-color);
+  font-size: 17px;
+}
+td {
+  padding: 0.125em 0.5em 0.25em 0.5em;
+  color: var(--p-color);
+  font-size: 17px;
 }

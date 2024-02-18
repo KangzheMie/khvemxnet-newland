@@ -1,5 +1,6 @@
 import os
 import re
+from pathlib import Path
 
 def parse_file_and_generate_html(input_file_path, output_dir):
     # 确保输出目录存在，如果不存在，则创建
@@ -38,28 +39,72 @@ def parse_file_and_generate_html(input_file_path, output_dir):
             f.write(html_content)
         print(f"文件 {full_path} 已生成。")
 
+def add_script_to_html_log(directory_path, log_name):
+    # 遍历指定目录下的所有HTML文件
+    for html_file in Path(directory_path).glob('*.html'):
+        with open(html_file, 'r+', encoding='utf-8') as file:
+            content = file.read()
+            script = f"""
+<script>
+  if (window.location.href.indexOf('?page={html_file.stem}') === -1) {{
+    window.location.href = '/subpage/wangkangzhe/index.html?page=./log/{log_name}/{html_file.stem}.html';
+  }}
+</script>
+"""
+            # 检查文件是否已包含该脚本
+            if script.strip() not in content:
+                # 在文件内容开头添加脚本
+                content = script + content
+                # 移动文件指针到文件开头
+                file.seek(0)
+                # 写入修改后的内容
+                file.write(content)
+                # 截断文件，移除原始内容之后的任何内容
+                file.truncate()
+    print("脚本添加完成！")
+
+def add_script_to_html(directory_path):
+    # 遍历指定目录下的所有HTML文件
+    for html_file in Path(directory_path).glob('*.html'):
+        with open(html_file, 'r+', encoding='utf-8') as file:
+            content = file.read()
+            script = f"""
+<script>
+  if (window.location.href.indexOf('?page={html_file.stem}') === -1) {{
+    window.location.href = '/subpage/wangkangzhe/index.html?page=./log/{html_file.stem}';
+  }}
+</script>
+"""
+            # 检查文件是否已包含该脚本
+            if script.strip() not in content:
+                # 在文件内容开头添加脚本
+                content = script + content
+                # 移动文件指针到文件开头
+                file.seek(0)
+                # 写入修改后的内容
+                file.write(content)
+                # 截断文件，移除原始内容之后的任何内容
+                file.truncate()
+    print("脚本添加完成！")
+
 # 获取脚本所在目录的绝对路径   更改当前工作目录
 script_path = os.path.abspath(os.path.dirname(__file__))
 os.chdir(script_path)
 
 # 执行脚本
 
-log_name_list = ['RiCh','ChYs','ZiSi','BiJi']
+log_name_list = ['RiCh','BiJi']
 log_titles = {
     'RiCh': '宇宙随时可以打败我，但不是今天',
-    'ChYs': '集结大家的力量，与宇宙对决',
-    'ZiSi': '一路的积累，绝不会背叛我',
     'BiJi': '赛博笔记，记录随手记录'
 }
 log_flowers = {
     'RiCh': '🌻',
-    'ChYs': '🌸',
-    'ZiSi': '🍀',
     'BiJi': '🌺'
 }
 
 for log_name in log_name_list:
-    parse_file_and_generate_html(f"./source/{log_name}.md", f"./log/{log_name}/")
+    parse_file_and_generate_html(f"./source/log/{log_name}.md", f"./log/{log_name}/")
 
     # 初始化一个列表来收集所有合适的文件名
     titles = []
@@ -83,3 +128,6 @@ for log_name in log_name_list:
         f.write('    </ul>\n')
         f.write('</div>\n')
     print(f"log_{log_name}.html生成完毕。")
+    add_script_to_html_log(f'./log/{log_name}/',log_name)
+
+add_script_to_html('./log')

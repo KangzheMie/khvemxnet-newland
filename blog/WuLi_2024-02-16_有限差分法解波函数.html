@@ -1,0 +1,203 @@
+
+<script>
+  if (window.location.href.indexOf('?page=WuLi_2024-02-16_有限差分法解波函数') === -1) {
+    window.location.href = '/subpage/wangkangzhe/index.html?page=./blog/WuLi_2024-02-16_有限差分法解波函数.html';
+  }
+</script>
+<h1 id="有限差分法解波函数">有限差分法解波函数</h1>
+<h2 id="一维方程">一维方程</h2>
+<p>一维薛定谔波动方程为： <span class="math display">\hat{H}\psi(x) =
+\left[
+        -\frac{\hbar^2}{2m}\frac{\mathrm{d}^2}{\mathrm{d}x^2}
+        + V(x) \right] \psi(x)
+    = E \psi(x)</span></p>
+<p>这里举例用最简单的无限深势阱模型来做数值计算的验证。此时量子的势函数为：
+<span class="math display">
+V(x) =
+    \begin{cases}
+        \displaystyle 0\ \qquad |x|&lt;\frac{a}{2} \\
+        \displaystyle \infty \qquad |x| \geq \frac{a}{2}
+\end{cases}
+</span></p>
+<p>所以有: <span class="math display">\psi(\pm \frac{a}{2}) =
+0</span></p>
+<p>有解析解： <span class="math display">
+\psi_n(x) = \begin{cases}
+    \displaystyle \sqrt{\frac{2}{a}}\cos\frac{n\pi x}{a}, \quad n\ in\
+odd\\
+    \displaystyle \sqrt{\frac{2}{a}}\sin\frac{n\pi x}{a}, \quad n\ in\
+even
+\end{cases}
+</span></p>
+<p>波函数<span class="math inline">\psi_n(x)</span>对应的能级为： <span
+class="math display">E_n = \frac{n^2 \pi^2 \hbar^2}{2 m a^2}</span></p>
+<p>用有限差分法，将上述的微分方程模型离散化。求本征函数和本征值的问题，转化为了矩阵的本征值和本征向量的问题。</p>
+<p>此时哈密顿算符可以表示为以下的形式： <span class="math display">
+\mathbf{\hat{H} \psi }
+=
+\left(
+-\frac{\hbar^2}{2m(\delta x)^2}
+\begin{bmatrix}  
+  -2 &amp; 1 &amp; \cdots &amp; 0 \\  
+  1 &amp; -2 &amp; \cdots &amp; 0 \\  
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\  
+  0 &amp; 0 &amp; \cdots &amp; -2  
+\end{bmatrix}
++ \begin{bmatrix}  
+  V_1 &amp; 0 &amp; \cdots &amp; 0 \\  
+  0 &amp; V_2 &amp; \cdots &amp; 0 \\  
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\  
+  0 &amp; 0 &amp; \cdots &amp; V_n  
+\end{bmatrix}
+\right)
+\begin{bmatrix}
+\psi_1\\
+\psi_2\\
+\vdots\\
+\psi_n
+\end{bmatrix}
+=
+E \psi
+</span></p>
+<p>设置一个参数<span class="math inline">\displaystyle E_R =
+\frac{\hbar^2}{2m(\delta x)^2}</span>具有能量的量纲。</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% 本函数用于仿真指定势能函数的一维量子点波函数</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">hbar</span> <span class="op">=</span> <span class="fl">1.05457168e-34</span><span class="op">;</span> <span class="co">% J s</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">m</span> <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> <span class="fl">9.1093826e-31</span><span class="op">;</span> <span class="co">% kg</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">dx</span> <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> <span class="fl">1e-9</span><span class="op">;</span> <span class="co">% m</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">eV</span> <span class="op">=</span> <span class="fl">1.60217653e-19</span><span class="op">;</span> <span class="co">% J</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">E_R</span> <span class="op">=</span> (<span class="va">hbar</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span>(<span class="fl">2</span><span class="op">*</span><span class="va">m</span><span class="op">*</span><span class="va">dx</span><span class="op">^</span><span class="fl">2</span>))<span class="op">/</span><span class="va">eV</span><span class="op">;</span> <span class="co">% eV</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">N</span> <span class="op">=</span> <span class="va">int32</span>(<span class="fl">100</span> <span class="op">*</span> <span class="fl">1e-9</span> <span class="op">/</span> <span class="va">dx</span>)<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">=</span> <span class="va">linspace</span>(<span class="op">-</span><span class="fl">50</span><span class="op">,</span><span class="fl">50</span><span class="op">,</span><span class="va">N</span>)<span class="op">;</span> <span class="co">% nm</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">V</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="va">N</span><span class="op">,</span> <span class="fl">1</span>)<span class="op">;</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">% 势能 eV</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="va">V</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">400</span>) <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="va">V</span>(<span class="fl">400</span><span class="op">:</span><span class="fl">500</span>) <span class="op">=</span> <span class="va">linspace</span>(<span class="fl">1</span><span class="op">,</span><span class="fl">0</span><span class="op">,</span><span class="fl">101</span>)<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="va">V</span>(<span class="fl">500</span><span class="op">:</span><span class="fl">600</span>) <span class="op">=</span> <span class="va">linspace</span>(<span class="fl">0</span><span class="op">,</span><span class="fl">1</span><span class="op">,</span><span class="fl">101</span>)<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="va">V</span>(<span class="fl">600</span><span class="op">:</span><span class="fl">1000</span>) <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">% 哈密顿算子</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="va">H</span> <span class="op">=</span> <span class="va">E_R</span> <span class="op">*</span> (<span class="fl">2</span> <span class="op">*</span> <span class="va">eye</span>(<span class="va">N</span>) <span class="op">-</span> <span class="va">diag</span>(<span class="va">ones</span>(<span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">,</span><span class="fl">1</span>)<span class="op">,</span> <span class="fl">1</span>) <span class="op">-</span> <span class="va">diag</span>(<span class="va">ones</span>(<span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">,</span><span class="fl">1</span>)<span class="op">,</span> <span class="op">-</span><span class="fl">1</span>)) <span class="op">+</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="va">diag</span>(<span class="va">V</span>)<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">% 本征值和本征波函数</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>[<span class="va">psi</span><span class="op">,</span> <span class="va">E</span>] <span class="op">=</span> <span class="va">eig</span>(<span class="va">H</span>)<span class="op">;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="va">E</span> <span class="op">=</span> <span class="va">diag</span>(<span class="va">E</span>)<span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="va">E</span>(<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="va">subplot</span>(<span class="fl">211</span>)<span class="op">;</span><span class="va">plot</span>(<span class="va">x</span><span class="op">,</span><span class="va">psi</span>(<span class="op">:,</span><span class="fl">4</span>))<span class="op">;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>(<span class="ss">&#39;一维量子点波函数（未归一化） &#39;</span>)<span class="op">;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="va">xlabel</span>(<span class="ss">&#39;长度/nm&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="va">grid</span> <span class="va">on</span><span class="op">;</span> <span class="va">grid</span> <span class="va">minor</span><span class="op">;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="va">legend</span>(<span class="ss">&#39;\psi_4(x)&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="va">subplot</span>(<span class="fl">212</span>)<span class="op">;</span><span class="va">plot</span>(<span class="va">x</span><span class="op">,</span><span class="va">V</span>)<span class="op">;</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>(<span class="ss">&#39;势函数&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="va">xlabel</span>(<span class="ss">&#39;长度/nm&#39;</span>)<span class="op">;</span> <span class="va">ylabel</span>(<span class="ss">&#39;能量/eV&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="va">grid</span> <span class="va">on</span><span class="op">;</span> <span class="va">grid</span> <span class="va">minor</span><span class="op">;</span></span></code></pre></div>
+<h2 id="二维方程">二维方程</h2>
+<p>二维的定态薛定谔方程是： <span class="math display">
+    \hat{H}\psi(x,y) = \left[
+        -\frac{\hbar^2}{2m}\left(
+        \frac{\partial^2}{\partial x^2}
+        + \frac{\partial ^2}{\partial y^2}\right)
+        + V(x,y) \right] \psi(x,y)
+    = E \psi(x,y)
+</span></p>
+<p>因为是二维的波函数，本来波函数是二维矩阵，这样不利于我们求本征值和本征向量。所以将正方形中的波函数逐行放入到一个向量之中。如果正方形被分割成了<span
+class="math inline">N\times N</span>个点，那么这个向量就有<span
+class="math inline">N\times N</span>行<span
+class="math inline">1</span>列。</p>
+<p>此时二阶求导算符以及哈密顿算符的规模就是<span
+class="math inline">N\times N</span>行<span class="math inline">N\times
+N</span>列。
+根据点是在边界还是在内部可以构造出二阶求导算符，配合势能函数最终组成哈密顿算符。</p>
+<p>参考一维的波函数解法： <span class="math display">
+    \mathbf{\hat{H} \psi} = (E_R \mathbf{\hat{D}}
+    + \mathbf{\hat{V}}) \psi
+    = E \psi
+</span></p>
+<p>其中: <span class="math display">
+    E_R = \frac{\hbar^2}{2m\delta^2}
+</span></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">% 本函数用于仿真指定二维势函数下的二维量子波函数和对应的能量本征值</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">clc</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">clear</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">close</span> <span class="va">all</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">% 参数</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="va">hbar</span> <span class="op">=</span> <span class="fl">1.05457168e-34</span><span class="op">;</span> <span class="co">% J s</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="va">m</span> <span class="op">=</span> <span class="fl">9.1093826e-31</span><span class="op">;</span> <span class="co">% kg</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="va">L</span> <span class="op">=</span> <span class="fl">10</span> <span class="op">*</span> <span class="fl">1e-9</span><span class="op">;</span> <span class="co">% nm</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="va">N</span> <span class="op">=</span> <span class="fl">50</span><span class="op">;</span> <span class="co">% 二维网络各维度栅格点数</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="va">d</span> <span class="op">=</span> <span class="va">L</span> <span class="op">/</span> <span class="va">N</span><span class="op">;</span> <span class="co">% nm</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="va">eV</span> <span class="op">=</span> <span class="fl">1.60217653e-19</span><span class="op">;</span> <span class="co">% J</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="va">E_R</span> <span class="op">=</span> <span class="va">hbar</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span>(<span class="fl">2</span><span class="op">*</span><span class="va">m</span><span class="op">*</span><span class="va">d</span><span class="op">^</span><span class="fl">2</span>)<span class="op">/</span><span class="va">eV</span><span class="op">;</span> <span class="co">% eV</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">% 将二维的波函数视作为(N*N,1)的向量，此时需要构造该向量的微分算符 D</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="va">D</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="va">N</span> <span class="op">*</span> <span class="va">N</span><span class="op">,</span> <span class="va">N</span> <span class="op">*</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="va">i</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">for</span> <span class="va">j</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      <span class="va">idx</span> <span class="op">=</span> (<span class="va">i</span> <span class="op">-</span> <span class="fl">1</span>) <span class="op">*</span> <span class="va">N</span> <span class="op">+</span> <span class="va">j</span><span class="op">;</span> <span class="co">%(N*N,1)向量中第 idx 个点（i 行 j 列）</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>      <span class="va">D</span>(<span class="va">idx</span><span class="op">,</span> <span class="va">idx</span>) <span class="op">=</span> <span class="fl">4</span><span class="op">;</span> <span class="co">%本身</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">i</span> <span class="op">&gt;</span> <span class="fl">1</span> <span class="co">%如果不在上边界，有向上的差分</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>      <span class="va">D</span>(<span class="va">idx</span><span class="op">,</span> <span class="va">idx</span> <span class="op">-</span> <span class="va">N</span>) <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">i</span> <span class="op">&lt;</span> <span class="va">N</span> <span class="co">%如果不在下边界，有向下的差分</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      <span class="va">D</span>(<span class="va">idx</span><span class="op">,</span> <span class="va">idx</span> <span class="op">+</span> <span class="va">N</span>) <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">j</span> <span class="op">&gt;</span> <span class="fl">1</span> <span class="co">%如果不在左边界，有向左的差分</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>      <span class="va">D</span>(<span class="va">idx</span><span class="op">,</span> <span class="va">idx</span> <span class="op">-</span> <span class="fl">1</span>) <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">j</span> <span class="op">&lt;</span> <span class="va">N</span> <span class="co">%如果不在右边界，有向右的差分</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      <span class="va">D</span>(<span class="va">idx</span><span class="op">,</span> <span class="va">idx</span> <span class="op">+</span> <span class="fl">1</span>) <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">% 势函数</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="va">V</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="va">N</span><span class="op">*</span><span class="va">N</span><span class="op">,</span><span class="va">N</span><span class="op">*</span><span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="va">i</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="kw">for</span> <span class="va">j</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>      <span class="va">idx</span> <span class="op">=</span> (<span class="va">i</span> <span class="op">-</span> <span class="fl">1</span>) <span class="op">*</span> <span class="va">N</span> <span class="op">+</span> <span class="va">j</span><span class="op">;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">sqrt</span>((<span class="va">i</span><span class="op">-</span><span class="va">N</span><span class="op">/</span><span class="fl">2</span>)<span class="op">^</span><span class="fl">2</span><span class="op">+</span>(<span class="va">j</span><span class="op">-</span><span class="va">N</span><span class="op">/</span><span class="fl">2</span>)<span class="op">^</span><span class="fl">2</span>) <span class="op">&lt;</span> <span class="fl">20</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>      <span class="va">V</span>(<span class="va">idx</span><span class="op">,</span><span class="va">idx</span>) <span class="op">=</span> <span class="fl">0</span><span class="op">;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>      <span class="va">V</span>(<span class="va">idx</span><span class="op">,</span><span class="va">idx</span>) <span class="op">=</span> <span class="fl">1e+10</span><span class="op">;</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">% 哈密顿算符</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="va">H</span> <span class="op">=</span> <span class="va">E_R</span> <span class="op">*</span> <span class="va">D</span> <span class="op">+</span> <span class="va">V</span><span class="op">;</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co">% 求解薛定谔方程的本征值和本征矢</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>[<span class="va">psi</span><span class="op">,</span> <span class="va">E</span>] <span class="op">=</span> <span class="va">eig</span>(<span class="va">H</span>)<span class="op">;</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="va">E</span> <span class="op">=</span> <span class="va">diag</span>(<span class="va">E</span>)<span class="op">;</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co">%% 绘制</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co">% 势函数</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="va">V</span> <span class="op">=</span> <span class="va">reshape</span>(<span class="va">diag</span>(<span class="va">V</span>)<span class="op">,</span><span class="va">N</span><span class="op">,</span><span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="va">surf</span>(<span class="va">V</span>)<span class="op">;</span><span class="va">title</span>(<span class="ss">&#39;势函数/eV&#39;</span>)<span class="op">;</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="co">% 绘制波函数</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="va">figure</span><span class="op">;</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">=</span> <span class="va">linspace</span>(<span class="fl">0</span><span class="op">,</span> <span class="va">L</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="va">y</span> <span class="op">=</span> <span class="va">linspace</span>(<span class="fl">0</span><span class="op">,</span> <span class="va">L</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>[<span class="va">X</span><span class="op">,</span> <span class="va">Y</span>] <span class="op">=</span> <span class="va">meshgrid</span>(<span class="va">x</span><span class="op">,</span> <span class="va">y</span>)<span class="op">;</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="va">psi2D_1</span> <span class="op">=</span> <span class="va">reshape</span>((<span class="op">-</span><span class="va">psi</span>(<span class="op">:,</span> <span class="fl">1</span>))<span class="op">,</span> <span class="va">N</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="va">psi2D_3</span> <span class="op">=</span> <span class="va">reshape</span>((<span class="va">psi</span>(<span class="op">:,</span> <span class="fl">3</span>))<span class="op">,</span> <span class="va">N</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="va">psi2D_6</span> <span class="op">=</span> <span class="va">reshape</span>((<span class="op">-</span><span class="va">psi</span>(<span class="op">:,</span> <span class="fl">6</span>))<span class="op">,</span> <span class="va">N</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="va">psi2D_7</span> <span class="op">=</span> <span class="va">reshape</span>((<span class="va">psi</span>(<span class="op">:,</span> <span class="fl">7</span>))<span class="op">,</span> <span class="va">N</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="va">subplot</span>(<span class="fl">221</span>)<span class="op">;</span><span class="va">surf</span>(<span class="va">psi2D_1</span>)<span class="op">;</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>([<span class="ss">&#39;基态波函数&#39;</span><span class="op">,</span> <span class="ss">&#39;E_1 = &#39;</span><span class="op">,</span><span class="va">num2str</span>(<span class="va">E</span>(<span class="fl">1</span>))<span class="op">,</span><span class="ss">&#39;eV&#39;</span>])<span class="op">;</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="va">subplot</span>(<span class="fl">222</span>)<span class="op">;</span><span class="va">surf</span>(<span class="va">psi2D_3</span>)<span class="op">;</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>([<span class="ss">&#39;E_3 波函数&#39;</span> <span class="op">,</span> <span class="ss">&#39;E_3 = &#39;</span><span class="op">,</span><span class="va">num2str</span>(<span class="va">E</span>(<span class="fl">3</span>))<span class="op">,</span><span class="ss">&#39;eV&#39;</span>])<span class="op">;</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a><span class="va">subplot</span>(<span class="fl">223</span>)<span class="op">;</span><span class="va">surf</span>(<span class="va">psi2D_6</span>)<span class="op">;</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>([<span class="ss">&#39;E_6 波函数&#39;</span> <span class="op">,</span> <span class="ss">&#39;E_6 = &#39;</span><span class="op">,</span><span class="va">num2str</span>(<span class="va">E</span>(<span class="fl">6</span>))<span class="op">,</span><span class="ss">&#39;eV&#39;</span>])<span class="op">;</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="va">subplot</span>(<span class="fl">224</span>)<span class="op">;</span><span class="va">surf</span>(<span class="va">psi2D_7</span>)<span class="op">;</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>([<span class="ss">&#39;E_7 波函数&#39;</span> <span class="op">,</span> <span class="ss">&#39;E_7 = &#39;</span><span class="op">,</span><span class="va">num2str</span>(<span class="va">E</span>(<span class="fl">7</span>))<span class="op">,</span><span class="ss">&#39;eV&#39;</span>])<span class="op">;</span></span></code></pre></div>

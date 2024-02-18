@@ -1,0 +1,282 @@
+
+<script>
+  if (window.location.href.indexOf('?page=SuXt_2024-02-16_常微分方程求解器') === -1) {
+    window.location.href = '/subpage/wangkangzhe/index.html?page=./blog/SuXt_2024-02-16_常微分方程求解器.html';
+  }
+</script>
+<h1 id="常微分方程求解器">常微分方程求解器</h1>
+<h2 id="求解器目录">求解器目录</h2>
+<p>在 MATLAB
+中，有多个用于解决常微分方程（ODEs）的函数，它们各自适用于不同类型的问题。以下是一些常用的
+MATLAB ODE 解算器及其特点：</p>
+<ol type="1">
+<li><strong>ode45</strong>：
+<ul>
+<li>适用于大多数非刚性问题。</li>
+<li>基于显式 Runge-Kutta（4,5）公式。</li>
+<li>是初学者最常用的选择。</li>
+</ul></li>
+<li><strong>ode23</strong>：
+<ul>
+<li>也适用于非刚性问题。</li>
+<li>基于显式 Runge-Kutta（2,3）配对公式。</li>
+<li>比 ode45 更快但可能不如其精确。</li>
+</ul></li>
+<li><strong>ode113</strong>：
+<ul>
+<li>适用于非刚性问题。</li>
+<li>基于 Adams-Bashforth-Moulton 公式。</li>
+<li>适用于解平滑或者刚性较低的问题，对于高精度要求的长时间区间问题效果更好。</li>
+</ul></li>
+<li><strong>ode15s</strong>：
+<ul>
+<li>适用于刚性问题和某些微分代数方程（DAEs）。</li>
+<li>基于数值微分公式（NDFs）。</li>
+<li>当问题存在快速变化的解时表现良好。</li>
+</ul></li>
+<li><strong>ode23s</strong>：
+<ul>
+<li>适用于刚性问题。</li>
+<li>基于改进的 Rosenbrock 公式。</li>
+<li>对于中等精度要求的刚性问题是一个好的选择。</li>
+</ul></li>
+<li><strong>ode23t</strong>：
+<ul>
+<li>适用于轻微刚性问题。</li>
+<li>基于梯形规则。</li>
+<li>当 ode45 遇到困难时是一个好的备选。</li>
+</ul></li>
+<li><strong>ode23tb</strong>：
+<ul>
+<li>适用于刚性问题。</li>
+<li>基于梯形规则和后退差分公式。</li>
+<li>适用于较粗糙的刚性问题。</li>
+</ul></li>
+</ol>
+<p>每种方法的选择依赖于问题的具体特性，例如问题的刚性、所需的精度、求解区间的长度等。通常，非刚性问题可以从使用
+ode45 或 ode23 开始尝试，而刚性问题则可能需要使用 ode15s
+或其他刚性求解器。在实践中，您可能需要尝试几种不同的方法来找到对您的特定问题最有效的求解器。</p>
+<p>虽然 <code>ode15s</code> 可以处理 <code>ode45</code>
+能处理的问题，包括非刚性和刚性问题，但这并不意味着 <code>ode15s</code>
+总是 <code>ode45</code>
+的最佳替代品。这两种方法各有优势和最适用的场景，选择哪一个取决于您正在解决的特定问题的性质。以下是两者的主要区别和优势：</p>
+<h3 id="ode45">ode45</h3>
+<ul>
+<li><strong>方法</strong>：基于显式 Runge-Kutta (4,5) 方法。</li>
+<li><strong>适用情况</strong>：主要用于求解非刚性问题。</li>
+<li><strong>优势</strong>：
+<ul>
+<li><strong>速度</strong>：对于非刚性问题，<code>ode45</code> 通常比
+<code>ode15s</code> 更快，尤其是当问题可以通过较少的步骤解决时。</li>
+<li><strong>简单性</strong>：对于大多数常规的非刚性问题，<code>ode45</code>
+是一个简单且高效的选择。</li>
+</ul></li>
+</ul>
+<h3 id="ode15s">ode15s</h3>
+<ul>
+<li><strong>方法</strong>：基于隐式数值微分方程（NDF）和后退微分方程（BDF）公式。</li>
+<li><strong>适用情况</strong>：主要用于求解刚性问题和某些微分代数方程（DAE）。</li>
+<li><strong>优势</strong>：
+<ul>
+<li><strong>适用范围</strong>：能够有效处理刚性问题，这些问题在使用显式方法（如
+<code>ode45</code>）时可能难以解决或需要非常小的时间步长。</li>
+<li><strong>灵活性</strong>：对于复杂的、具有挑战性的问题（如高度振荡的系统或含有刚性成分的系统），<code>ode15s</code>
+提供了更好的稳定性和可靠性。</li>
+</ul></li>
+</ul>
+<h3 id="选择建议">选择建议</h3>
+<ul>
+<li>对于大多数常规和非刚性的常微分方程问题，<code>ode45</code>
+是一个很好的起点。它通常能够快速且有效地提供解决方案。</li>
+<li>如果您发现使用 <code>ode45</code>
+解决问题时需要非常小的步长，或者它无法有效地收敛到一个稳定的解，那么尝试
+<code>ode15s</code>
+是合理的，特别是当您怀疑问题可能具有刚性特性时。</li>
+<li>对于刚性问题，<code>ode15s</code>
+通常是更好的选择，因为它专门为处理这类问题而设计。</li>
+</ul>
+<p>总结来说，虽然 <code>ode15s</code> 更加通用，但</p>
+<p>在许多情况下，<code>ode45</code>
+由于其对非刚性问题的高效性而成为首选。使用 <code>ode45</code> 和
+<code>ode15s</code>
+的关键是理解您的问题的性质以及选择最适合该问题的求解器。在实际应用中，您可能需要根据问题的特性和求解器的性能来做出选择。</p>
+<h2 id="求解器使用例程">求解器使用例程</h2>
+<p>很好，我可以为您提供四个 MATLAB 示例，分别展示如何使用
+<code>ode45</code> 和 <code>ode15s</code>
+来求解线性微分方程和方程组。每个示例都包含相应的微分方程（或方程组）定义，以及使用这些求解器的方法。</p>
+<h3 id="使用-ode45-求解线性微分方程">1. 使用 <code>ode45</code>
+求解线性微分方程</h3>
+<h4 id="微分方程">微分方程</h4>
+<p>考虑一个简单的一阶线性微分方程<span class="math inline">\displaystyle
+\frac{dy}{dt} = -ay</span>，其中<span class="math inline">\displaystyle
+a</span> 是一个常数。</p>
+<h4 id="matlab-代码">MATLAB 代码</h4>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="va">dydt</span> <span class="op">=</span> <span class="va">odefun</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">a</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span>  <span class="co">% 定义常数 a</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">dydt</span> <span class="op">=</span> <span class="op">-</span><span class="va">a</span> <span class="op">*</span> <span class="va">y</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>[<span class="va">t</span><span class="op">,</span> <span class="va">y</span>] <span class="op">=</span> <span class="va">ode45</span>(<span class="op">@</span><span class="va">odefun</span><span class="op">,</span> [<span class="fl">0</span> <span class="fl">5</span>]<span class="op">,</span> <span class="fl">1</span>)<span class="op">;</span> <span class="co">% 时间区间从 0 到 5，初始值为 1</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>)<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">xlabel</span>(<span class="ss">&#39;Time&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="va">ylabel</span>(<span class="ss">&#39;Solution y&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>(<span class="ss">&#39;Solution of linear ODE using ode45&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<h3 id="使用-ode15s-求解线性微分方程">2. 使用 <code>ode15s</code>
+求解线性微分方程</h3>
+<h4 id="微分方程-1">微分方程</h4>
+<p>同样的方程<span class="math inline">\displaystyle \frac{dy}{dt} =
+-ay</span>。</p>
+<h4 id="matlab-代码-1">MATLAB 代码</h4>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="va">dydt</span> <span class="op">=</span> <span class="va">odefun</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">a</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span>  <span class="co">% 定义常数 a</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">dydt</span> <span class="op">=</span> <span class="op">-</span><span class="va">a</span> <span class="op">*</span> <span class="va">y</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>[<span class="va">t</span><span class="op">,</span> <span class="va">y</span>] <span class="op">=</span> <span class="va">ode15s</span>(<span class="op">@</span><span class="va">odefun</span><span class="op">,</span> [<span class="fl">0</span> <span class="fl">5</span>]<span class="op">,</span> <span class="fl">1</span>)<span class="op">;</span> <span class="co">% 时间区间从 0 到 5，初始值为 1</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>)<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="va">xlabel</span>(<span class="ss">&#39;Time&#39;</span>)<span class="op">;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="va">ylabel</span>(<span class="ss">&#39;Solution y&#39;</span>)<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>(<span class="ss">&#39;Solution of linear ODE using ode15s&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<h3 id="使用-ode45-求解线性微分方程组">3. 使用 <code>ode45</code>
+求解线性微分方程组</h3>
+<h4 id="微分方程组">微分方程组</h4>
+<p>考虑方程组<span class="math inline">\displaystyle \frac{dy_1}{dt} =
+-3y_1 + 4y_2</span>，<span class="math inline">\displaystyle
+\frac{dy_2}{dt} = -2y_1 + 3y_2</span>。</p>
+<h4 id="matlab-代码-2">MATLAB 代码</h4>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="va">dydt</span> <span class="op">=</span> <span class="va">odefun</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">dydt</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="fl">2</span><span class="op">,</span><span class="fl">1</span>)<span class="op">;</span>    <span class="co">% 创建一个列向量</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">dydt</span>(<span class="fl">1</span>) <span class="op">=</span> <span class="op">-</span><span class="fl">3</span><span class="op">*</span><span class="va">y</span>(<span class="fl">1</span>) <span class="op">+</span> <span class="fl">4</span><span class="op">*</span><span class="va">y</span>(<span class="fl">2</span>)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">dydt</span>(<span class="fl">2</span>) <span class="op">=</span> <span class="op">-</span><span class="fl">2</span><span class="op">*</span><span class="va">y</span>(<span class="fl">1</span>) <span class="op">+</span> <span class="fl">3</span><span class="op">*</span><span class="va">y</span>(<span class="fl">2</span>)<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>[<span class="va">t</span><span class="op">,</span> <span class="va">y</span>] <span class="op">=</span> <span class="va">ode45</span>(<span class="op">@</span><span class="va">odefun</span><span class="op">,</span> [<span class="fl">0</span> <span class="fl">5</span>]<span class="op">,</span> [<span class="fl">1</span><span class="op">;</span> <span class="fl">0</span>])<span class="op">;</span> <span class="co">% 时间区间从 0 到 5，初始值为 [1; 0]</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>)<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="va">xlabel</span>(<span class="ss">&#39;Time&#39;</span>)<span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="va">ylabel</span>(<span class="ss">&#39;Solutions y1 and y2&#39;</span>)<span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>(<span class="ss">&#39;Solution of linear ODE system using ode45&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<h3 id="使用-ode15s-求解线性微分方程组">4. 使用 <code>ode15s</code>
+求解线性微分方程组</h3>
+<h4 id="微分方程组-1">微分方程组</h4>
+<p>同样的方程组<span class="math inline">\displaystyle \frac{dy_1}{dt} =
+-3y_1 + 4y_2</span>，<span
+class="math inline">\displaystyle\frac{dy_2}{dt} = -2y_1 +
+3y_2</span>。</p>
+<h4 id="matlab-代码-3">MATLAB 代码</h4>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="va">dydt</span> <span class="op">=</span> <span class="va">odefun</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">dydt</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="fl">2</span><span class="op">,</span><span class="fl">1</span>)<span class="op">;</span>    <span class="co">% 创建一个列向量</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">dydt</span>(<span class="fl">1</span>) <span class="op">=</span> <span class="op">-</span><span class="fl">3</span><span class="op">*</span><span class="va">y</span>(<span class="fl">1</span>) <span class="op">+</span> <span class="fl">4</span><span class="op">*</span><span class="va">y</span>(<span class="fl">2</span>)<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">dydt</span>(<span class="fl">2</span>) <span class="op">=</span> <span class="op">-</span><span class="fl">2</span><span class="op">*</span><span class="va">y</span>(<span class="fl">1</span>) <span class="op">+</span> <span class="fl">3</span><span class="op">*</span><span class="va">y</span>(<span class="fl">2</span>)<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>[<span class="va">t</span><span class="op">,</span> <span class="va">y</span>] <span class="op">=</span> <span class="va">ode15s</span>(<span class="op">@</span><span class="va">odefun</span><span class="op">,</span> [<span class="fl">0</span> <span class="fl">5</span>]<span class="op">,</span> [<span class="fl">1</span><span class="op">;</span> <span class="fl">0</span>])<span class="op">;</span> <span class="co">% 时间区间从 0 到 5，初始值为 [1; 0]</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>)<span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="va">xlabel</span>(<span class="ss">&#39;Time&#39;</span>)<span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="va">ylabel</span>(<span class="ss">&#39;Solutions y1 and y2&#39;</span>)<span class="op">;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>(<span class="ss">&#39;Solution of linear ODE system using ode15s&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<p>在这些示例中，函数 <code>odefun</code>
+定义了微分方程或方程组，<code>[t, y] = ode45(@odefun, [0 5], 1);</code>
+和 <code>[t, y] = ode15s(@odefun, [0 5], 1);</code>
+是调用求解器的代码行，其中 <code>ode45</code> 或 <code>ode15s</code>
+是求解器的名称，<code>[0 5]</code> 是时间区间，<code>1</code>
+是初始条件（对于方程组，是</p>
+<p>一个初始条件向量）。最后，使用 <code>plot</code>
+函数绘制了解的图形。</p>
+<h2 id="求解器解高次常系数线性方程">求解器解高次常系数线性方程</h2>
+<p>对于二阶或更高阶的微分方程，通常的做法是将其转换为一阶微分方程组。这是因为
+MATLAB 的 ODE
+求解器是设计来处理一阶微分方程组的。转换的基本思想是引入新变量来代表每个阶的导数。我将通过一个示例来展示如何进行这种转换和求解。</p>
+<h3
+id="示例将二阶微分方程转换为一阶方程组">示例：将二阶微分方程转换为一阶方程组</h3>
+<p>假设我们有一个二阶微分方程，如下所示：</p>
+<p><span class="math display">y&#39;&#39;(t) + p y&#39;(t) + q y(t) =
+g(t) </span></p>
+<p>为了使用 MATLAB 的 ODE
+求解器，我们可以将其转换为一阶微分方程组。我们引入 <span
+class="math inline">\displaystyle u_1(t) = y(t)</span> 和 <span
+class="math inline">\displaystyle u_2(t) =
+y&#39;(t)</span>，则原方程可转化为：</p>
+<ol type="1">
+<li><span class="math inline">\displaystyle u_1&#39;(t) = y&#39;(t) =
+u_2(t)</span></li>
+<li><span class="math inline">\displaystyle u_2&#39;(t) = y&#39;&#39;(t)
+= g(t) - p y&#39;(t) - q y(t) = g(t) - p u_2(t) - q u_1(t)</span></li>
+</ol>
+<p>因此，原二阶方程等价于下面的一阶方程组：</p>
+<p><span class="math display">
+\begin{align}
+u_1&#39;(t) &amp;= u_2(t) \\
+u_2&#39;(t) &amp;= g(t) - p u_2(t) - q u_1(t)
+\end{align}
+</span></p>
+<h4 id="matlab-代码示例">MATLAB 代码示例</h4>
+<p>假设 <span class="math inline">\displaystyle p = 1</span>，<span
+class="math inline">\displaystyle q = 2</span>，并且 <span
+class="math inline">\displaystyle g(t) =
+\sin(t)</span>，我们可以这样编写 MATLAB 代码：</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="va">dudt</span> <span class="op">=</span> <span class="va">odefun</span>(<span class="va">t</span><span class="op">,</span> <span class="va">u</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">p</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span>  <span class="co">% 定义 p</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">q</span> <span class="op">=</span> <span class="fl">2</span><span class="op">;</span>  <span class="co">% 定义 q</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">g</span> <span class="op">=</span> <span class="va">sin</span>(<span class="va">t</span>)<span class="op">;</span> <span class="co">% 定义 g(t)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">dudt</span> <span class="op">=</span> [<span class="va">u</span>(<span class="fl">2</span>)<span class="op">;</span> <span class="va">g</span> <span class="op">-</span> <span class="va">p</span><span class="op">*</span><span class="va">u</span>(<span class="fl">2</span>) <span class="op">-</span> <span class="va">q</span><span class="op">*</span><span class="va">u</span>(<span class="fl">1</span>)]<span class="op">;</span>  <span class="co">% u(1) = y, u(2) = y&#39;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>[<span class="va">t</span><span class="op">,</span> <span class="va">u</span>] <span class="op">=</span> <span class="va">ode45</span>(<span class="op">@</span><span class="va">odefun</span><span class="op">,</span> [<span class="fl">0</span> <span class="fl">10</span>]<span class="op">,</span> [<span class="fl">1</span><span class="op">;</span> <span class="fl">0</span>])<span class="op">;</span> <span class="co">% 时间区间从 0 到 10，初始条件 y(0) = 1, y&#39;(0) = 0</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="va">plot</span>(<span class="va">t</span><span class="op">,</span> <span class="va">u</span>(<span class="op">:,</span><span class="fl">1</span>))<span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="va">xlabel</span>(<span class="ss">&#39;Time&#39;</span>)<span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="va">ylabel</span>(<span class="ss">&#39;Solution y&#39;</span>)<span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="va">title</span>(<span class="ss">&#39;Solution of second order ODE using ode45&#39;</span>)<span class="op">;</span></span></code></pre></div>
+<p>在此代码中，<code>odefun</code>
+定义了转换后的一阶方程组，<code>[t, u] = ode45(@odefun, [0 10], [1; 0]);</code>
+调用 <code>ode45</code> 求解器来求解方程组，初始条件设置为 <span
+class="math inline">\displaystyle y(0) = 1</span> 和 <span
+class="math inline">\displaystyle y&#39;(0) =
+0</span>。这个方法同样适用于更高阶的微分方程。</p>
+<h2 id="关于匿名函数">关于匿名函数</h2>
+<p>您提到的这种函数定义方式在 MATLAB 中被称为“匿名函数”（Anonymous
+Functions）。这是一种快捷而简洁的方法，用于创建小型的、无需额外文件的函数。匿名函数通常用于表示简单的数学表达式或执行小规模的操作。</p>
+<h3 id="匿名函数的基本结构">匿名函数的基本结构</h3>
+<p>匿名函数的基本语法结构是：</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">f</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">argument_list</span>) <span class="va">expression</span><span class="op">;</span></span></code></pre></div>
+<p>其中 <code>f</code> 是函数句柄，<code>@(argument_list)</code>
+定义了函数的输入参数（可以是多个参数），而 <code>expression</code>
+是这些参数的函数体。例如：</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">f</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">x</span>) <span class="va">sin</span>(<span class="va">x</span>)<span class="op">;</span></span></code></pre></div>
+<p>这行代码创建了一个函数 <code>f</code>，它接受一个参数 <code>x</code>
+并返回 <code>sin(x)</code> 的值。</p>
+<h3 id="在-ode-求解器中使用匿名函数">在 ODE 求解器中使用匿名函数</h3>
+<p>在使用如 <code>ode45</code> 这样的 ODE
+求解器时，您可以通过匿名函数来定义微分方程。例如，考虑一阶微分方程 <span
+class="math inline">\displaystyle y&#39; =
+-2y</span>，您可以这样定义：</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">dydt</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">t</span><span class="op">,</span> <span class="va">y</span>) <span class="op">-</span><span class="fl">2</span> <span class="op">*</span> <span class="va">y</span><span class="op">;</span></span></code></pre></div>
+<p>然后将这个函数句柄传递给 <code>ode45</code>：</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>[<span class="va">t</span><span class="op">,</span> <span class="va">y</span>] <span class="op">=</span> <span class="va">ode45</span>(<span class="va">dydt</span><span class="op">,</span> [<span class="fl">0</span> <span class="fl">5</span>]<span class="op">,</span> <span class="fl">1</span>)<span class="op">;</span>  <span class="co">% 时间区间从 0 到 5，初始值为 1</span></span></code></pre></div>
+<h3 id="优点">优点</h3>
+<ul>
+<li><strong>简洁性</strong>：匿名函数允许您在一行代码内定义函数，无需单独的函数文件。</li>
+<li><strong>便捷性</strong>：适合定义简单的、一次性的函数，特别是在需要传递函数作为参数时（如传递给
+ODE 求解器）。</li>
+</ul>
+<h3 id="限制">限制</h3>
+<ul>
+<li><strong>功能性</strong>：由于它们的简洁性，匿名函数适用于简单的操作。对于更复杂的函数，创建标准的函数文件可能更合适。</li>
+<li><strong>局限性</strong>：在匿名函数内部，您只能访问传入的参数和全局变量。匿名函数不能包含多行代码、循环或复杂的逻辑。</li>
+</ul>
+<p>总结来说，匿名函数是 MATLAB
+中一个非常方便的功能，特别适用于快速定义小型函数。在 ODE
+求解器中使用匿名函数可以使代码更加简洁明了。</p>

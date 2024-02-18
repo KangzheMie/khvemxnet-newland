@@ -4,6 +4,7 @@ import subprocess
 import glob
 import yaml
 from collections import defaultdict
+from pathlib import Path
 
 def read_yaml_front_matter(file_path):
     """读取并解析Markdown文件的YAML前置块"""
@@ -16,13 +17,13 @@ def read_yaml_front_matter(file_path):
         else:
             return None
 
-def convert_md_to_html(source_file):
+def convert_md_to_html(source_file, output_file):
     """转换Markdown文件到HTML，文件名根据YAML头部信息生成"""
     data = read_yaml_front_matter(source_file)
     if data:
         # 根据YAML头部信息构造输出文件名
-        output_file = f"{data['categories']}_{data['date']}_{data['title']}.html"
-        output_file = os.path.join('./blog', output_file)  # 确保文件在同一目录
+        output_file_yaml = f"{data['categories']}_{data['date']}_{data['title'].replace(' ', '-')}.html"
+        output_file = os.path.join(output_file, output_file_yaml)
 
         # 构建Pandoc命令
         command = ['pandoc', source_file, '-o', output_file, '--katex']
@@ -68,18 +69,42 @@ def sync_files(src_dir, dest_dir):
     
     print("同步完成！")
 
+def add_script_to_html(directory_path):
+    # 遍历指定目录下的所有HTML文件
+    for html_file in Path(directory_path).glob('*.html'):
+        with open(html_file, 'r+', encoding='utf-8') as file:
+            content = file.read()
+            script = f"""
+<script>
+  if (window.location.href.indexOf('?page={html_file.stem}') === -1) {{
+    window.location.href = '/subpage/wangkangzhe/index.html?page=./blog/{html_file.stem}.html';
+  }}
+</script>
+"""
+            # 检查文件是否已包含该脚本
+            if script.strip() not in content:
+                # 在文件内容开头添加脚本
+                content = script + content
+                # 移动文件指针到文件开头
+                file.seek(0)
+                # 写入修改后的内容
+                file.write(content)
+                # 截断文件，移除原始内容之后的任何内容
+                file.truncate()
+    print("脚本添加完成！")
+
 
 # 获取脚本所在目录的绝对路径   更改当前工作目录
 script_path = os.path.abspath(os.path.dirname(__file__))
 os.chdir(script_path)
 # 查找指定路径下所有的*.md文件
-md_files = glob.glob(os.path.join('./source', '*.md'))
+md_files = glob.glob(os.path.join('./source/blog', '*.md'))
 # 遍历找到的md文件列表 并将所有文件移动到finish中
 for md_file in md_files:
-    convert_md_to_html(md_file)
-    shutil.move(md_file, os.path.join('./source/finish', os.path.basename(md_file)))
+    convert_md_to_html(md_file, './blog')
+    shutil.move(md_file, os.path.join('./source/blog/finish', os.path.basename(md_file)))
 # 同步md所需要的依赖文件到html工程中
-sync_files('./source/picture/blog', './picture/blog')
+sync_files('./source/blog/picture/blog', './picture/blog')
 
 # 用于存储分类数据的字典
 categories = defaultdict(list)
@@ -118,3 +143,5 @@ for category, events in categories.items():
         f.write('    </ul>\n')
         f.write('</div>\n')
     print(f"blog_{category}.html生成完毕。")
+
+add_script_to_html('./blog')
