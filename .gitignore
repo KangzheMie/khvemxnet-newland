@@ -1,2 +1,4 @@
-log/
-source/
+log/*
+!log/.gitkeep
+source/*
+!source/.gitkeep
