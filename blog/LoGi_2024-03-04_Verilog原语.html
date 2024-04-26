@@ -1,0 +1,90 @@
+
+<script>
+  if (window.location.href.indexOf('?page=LoGi_2024-03-04_Verilog原语') === -1) {
+    window.location.href = '/index.html?page=./blog/LoGi_2024-03-04_Verilog原语.html';
+  }
+</script>
+<h1 id="verilog原语">Verilog原语</h1>
+<h2 id="原语是什么">原语是什么</h2>
+<p>Xilinx FPGA的原语（Primitives）是构成Xilinx
+FPGA硬件的最基础、不可再分的逻辑和电路单元。这些原语是FPGA设计中的基石，它们直接映射到FPGA芯片上的物理资源。使用原语可以让设计者更加精确地控制硬件实现，实现对性能、资源使用和功耗的优化。以下是一些Xilinx
+FPGA中常见的原语类型：</p>
+<ol type="1">
+<li><p><strong>查找表（LUTs）</strong>：在FPGA中，查找表是实现逻辑功能的基本单元，可以配置为实现任何逻辑函数。LUT是实现组合逻辑的关键。</p></li>
+<li><p><strong>触发器（Flip-Flops）</strong>：用于存储位信息，实现时序逻辑。触发器通常与LUT集成在同一个逻辑单元中。</p></li>
+<li><p><strong>输入/输出块（IOBs）</strong>：负责与FPGA外部的物理接口，支持多种I/O标准。</p></li>
+<li><p><strong>DSP切片（DSP
+Slices）</strong>：专为执行数值密集型操作而设计，如乘法、累加运算等，广泛应用于数字信号处理。</p></li>
+<li><p><strong>Block
+RAM（BRAM）</strong>：提供较大的存储容量，用于实现高速存储和缓冲功能。</p></li>
+<li><p><strong>时钟管理原语</strong>，如PLL（Phase-Locked
+Loop）和MMCM（Mixed-Mode Clock
+Manager）：用于生成和管理时钟信号，实现时钟域之间的转换和时钟频率的调整。</p></li>
+<li><p><strong>串行收发器（SerDes）</strong>：用于高速串行通信，支持多种高速数据传输标准。</p></li>
+</ol>
+<p>通过将这些原语以灵活多变的方式组合，设计者可以在Xilinx
+FPGA上实现从简单逻辑电路到复杂系统级设计的广泛应用。了解这些原语及其功能对于优化设计和充分利用FPGA资源至关重要。</p>
+<h2
+id="利用io硬件资源将差分信号转为单端信号">利用IO硬件资源将差分信号转为单端信号</h2>
+<p>在使用Verilog语言描述将差分输入信号转换为单端信号的过程中，可以利用Xilinx
+FPGA中的输入/输出原语（IOBs）。差分信号通常用于提高信号的完整性，减少噪声的影响，而在一些情况下，我们需要将这些差分信号转换为单端信号以便于处理。以下是一个简单的例子，演示如何实现这一转换：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> DiffToSingle <span class="op">(</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">input</span>  <span class="dt">wire</span> diff_p<span class="op">,</span> <span class="co">// 差分信号的正端</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">input</span>  <span class="dt">wire</span> diff_n<span class="op">,</span> <span class="co">// 差分信号的负端</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">output</span> <span class="dt">wire</span> single  <span class="co">// 转换后的单端信号</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">// 利用Xilinx FPGA原语IBUFDS进行差分到单端的转换</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">// IBUFDS是一个差分信号缓冲器，它将差分输入转换为单端输出</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>IBUFDS ibufds_inst <span class="op">(</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    .I<span class="op">(</span>diff_p<span class="op">),</span>    <span class="co">// 差分输入正</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    .IB<span class="op">(</span>diff_n<span class="op">),</span>   <span class="co">// 差分输入负</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    .O<span class="op">(</span>single<span class="op">)</span>     <span class="co">// 单端输出</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
+<p>在这个例子中，<code>IBUFDS</code>是Xilinx
+FPGA提供的一个差分输入缓冲器原语，专门用于将差分信号转换为单端信号。其中，<code>.I</code>和<code>.IB</code>分别接收差分信号的正端和负端，<code>.O</code>则输出转换后的单端信号。</p>
+<p>需要注意的是，实际应用中，差分信号的使用和转换可能会涉及到更多的设计考虑，包括信号的完整性分析、PCB布局以及电气特性的匹配等。此外，具体使用哪种原语以及如何配置，还需要参考Xilinx
+FPGA的特定型号和技术手册。</p>
+<h2 id="使用芯片的硬件时钟资源">使用芯片的硬件时钟资源</h2>
+<p>在FPGA设计中，将信号连接到时钟网络是一种常见的需求，尤其是当该信号用于驱动触发器或参与时序控制时。<code>BUFG</code>是Xilinx
+FPGA中的一种全局缓冲器原语，用于将输入信号广播到全局时钟网络。通过使用<code>BUFG</code>，可以确保时钟信号或需要广泛分布的信号具有较低的偏移和偏斜，从而提高时序性能。</p>
+<p>以下是您提供的例子的详细解释：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>BUFG BUFG_Pulse1in <span class="op">(</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    .O<span class="op">(</span>Pulse1bufg<span class="op">),</span>  <span class="co">// 1-bit output: Clock output.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    .I<span class="op">(</span>Pulse1in<span class="op">)</span>     <span class="co">// 1-bit input: Clock input.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
+<ul>
+<li><p><strong><code>.O(Pulse1bufg)</code></strong>：这是BUFG原语的输出端口，表示处理后的信号输出。在这个例子中，<code>Pulse1bufg</code>将被连接到FPGA的全局时钟网络中，这意味着它可以作为时钟信号驱动触发器或其他时序敏感的逻辑电路。</p></li>
+<li><p><strong><code>.I(Pulse1in)</code></strong>：这是BUFG原语的输入端口，接收待处理的输入信号。在您的场景中，<code>Pulse1in</code>是从差分到单端信号转换模块输出的信号，现在您希望将其连接到FPGA内部的时钟网络，以便可以用作时钟信号。</p></li>
+</ul>
+<p>将信号通过<code>BUFG</code>连接到时钟网络是一种标准做法，特别是当该信号作为全局时钟或需要在FPGA内广泛分布时。这种方式可以确保信号在芯片内的传播延时最小化和同步化，从而优化整个系统的时序性能。</p>
+<p>需要注意的是，不是所有信号都适合通过<code>BUFG</code>接入时钟网络。通常，只有那些作为全局时钟、需要精确时序控制的信号，或者需要在多个时钟域之间提供稳定同步的信号才会这样处理。此外，FPGA中全局缓冲资源有限，设计时应考虑到资源的合理分配和使用。</p>
+<h2 id="全局时钟资源和局部时钟资源">全局时钟资源和局部时钟资源</h2>
+<p>“全局”在FPGA设计语境中，确实指的是在整个芯片中任意资源都可以使用的信号，尤其是指时钟信号。全局时钟网络是专门设计来传输时钟信号，以确保低偏斜和低延迟地在整个芯片中分发时钟。然而，全局时钟资源是有限的，并且使用这些资源会增加功耗，因此在不需要将信号广播到整个芯片的场合，使用全局时钟资源可能不是最优选择。</p>
+<p>如果您希望让一个信号在FPGA内的一个局部区域中作为共有时钟使用，而不是全局使用，确实是可以的。这种情况下，您可以使用局部缓冲器或区域缓冲器（如<code>BUFR</code>或<code>BUFH</code>）而不是全局缓冲器（如<code>BUFG</code>）。这些局部缓冲器允许信号在FPGA的某个局部区域内广泛分布，而不会占用宝贵的全局时钟资源。</p>
+<ul>
+<li><strong>BUFR</strong>：专为分配给特定区域的时钟设计，例如用于驱动一个或多个特定的时钟域内的逻辑。</li>
+<li><strong>BUFH</strong>：可以用于更高层次的局部时钟分配，提供比BUFR更广泛的覆盖范围，但不如BUFG的全芯片覆盖。</li>
+</ul>
+<p>通过使用这些区域性的时钟缓冲器，您可以更精细地控制时钟信号的分布，优化资源使用并减少功耗。这种方式非常适合那些只需要在FPGA内部小范围分布的时钟信号，可以有效地管理时钟资源，同时满足特定逻辑块的时钟需求。</p>
+<p>在设计时，应根据实际需要选择合适的缓冲器类型，考虑时钟信号的覆盖范围、所需的性能和资源利用率等因素，以实现最优的设计方案。</p>
+<h2
+id="设置时钟资源之后综合工具的行为">设置时钟资源之后综合工具的行为</h2>
+<p>在没有明确指定位置约束的情况下，FPGA的综合和布局放置（Place &amp;
+Route）工具确实会自动处理逻辑和时钟网络的分配。这意味着，当您使用局域时钟缓冲器（如BUFR或BUFH）并编写相关逻辑时，综合工具会尝试优化布局，以减少逻辑与时钟资源之间的物理距离，从而减少延迟和功耗，提高时钟信号的稳定性。</p>
+<p>这种自动化的处理包括：</p>
+<ul>
+<li><strong>逻辑布局优化</strong>：工具会根据逻辑之间的连接关系和依赖性，尝试将相互依赖的逻辑块放置在物理位置上相近的地方。这样做可以减少信号传输的路径长度，降低延迟和信号劣化。</li>
+<li><strong>时钟网络分配</strong>：对于局域时钟缓冲器的使用，布局工具会根据时钟域的划分和逻辑需求，选择最适合的局部时钟资源。这个选择基于尽可能优化时钟信号的分布，确保有足够的时钟资源覆盖所需的逻辑区域，同时避免过度占用全局时钟资源。</li>
+</ul>
+<p>然而，虽然综合和布局工具能够自动进行这些优化，但在复杂的设计中，自动布局可能不会总是达到最优。因此，设计者通常会通过手动添加约束来指导布局工具，确保设计满足特定的性能和资源利用要求。这些约束可以包括：</p>
+<ul>
+<li><strong>位置约束</strong>（Placement
+Constraints）：指定特定的逻辑块应该放置在FPGA芯片上的哪个位置。</li>
+<li><strong>时钟域约束</strong>：明确指定时钟域的边界，以及哪些逻辑块应该使用哪个时钟资源。</li>
+</ul>
+<p>通过这些手动约束，可以更细致地控制设计的布局，确保达到预期的性能目标，特别是在设计规模大、性能要求高的情况下。因此，虽然系统可以在没有更多约束的情况下自动进行逻辑布局和时钟分配，但在实践中，为了实现最优设计，通常推荐根据设计的具体需求添加适当的约束。</p>

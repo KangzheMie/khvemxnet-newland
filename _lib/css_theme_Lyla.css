@@ -1,0 +1,29 @@
+:root {
+    --header-h1-color:#FFF;
+    --background-color:#171818;
+    --border-color:#fff;
+    --section-color: #252629;
+    --nav-color: #7be; 
+    --nav-a-color: #7d9192;
+    --nav-text-color:#fff;
+    --h1-color:#9df;
+    --h2-color:#CFE4FD;
+    --p-color:#fff;
+    --footer-color:#666;
+    --footer-text-color:#FFF;
+    --a-color:#aae;
+}
+
+header {
+    background-image: url('../picture/theme_Lyla/Main_Lyla.jpg'); 
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat; 
+}
+
+#blankPage-img{
+    background-image: url('../picture/theme_Lyla/404.png'); 
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat; 
+}

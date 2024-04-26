@@ -77,7 +77,7 @@ def add_script_to_html(directory_path):
             script = f"""
 <script>
   if (window.location.href.indexOf('?page={html_file.stem}') === -1) {{
-    window.location.href = '/subpage/wangkangzhe/index.html?page=./blog/{html_file.stem}.html';
+    window.location.href = '/index.html?page=./blog/{html_file.stem}.html';
   }}
 </script>
 """
@@ -109,12 +109,12 @@ sync_files('./source/blog/picture/blog', './picture/blog')
 # 用于存储分类数据的字典
 categories = defaultdict(list)
 category_titles = {
-    'DmZi': '电子，臣服于我！',
-    'WuLi': '宇宙，星光灿烂！',
-    'SuXt': '数学，学不会滴~',
-    'RrJm': '软件，菜就多练。',
-    'SeHv': '社会，不碰滑梯。',
-    'RvPn': '锐评，大放厥词！'
+    'DmZi': '电子',
+    'WuLi': '物理',
+    'SuXt': '数学',
+    'RrJm': '软件',
+    'LoGi': '逻辑',
+    'SeHv': '社会',
 }
 
 # 遍历目录中的所有文件

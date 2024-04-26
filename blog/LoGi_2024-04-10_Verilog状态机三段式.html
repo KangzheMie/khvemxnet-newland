@@ -1,0 +1,74 @@
+
+<script>
+  if (window.location.href.indexOf('?page=LoGi_2024-04-10_Verilog状态机三段式') === -1) {
+    window.location.href = '/index.html?page=./blog/LoGi_2024-04-10_Verilog状态机三段式.html';
+  }
+</script>
+<h1 id="verilog状态机三段式">Verilog状态机三段式</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode v"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">localparam</span> S1 <span class="op">=</span> <span class="bn">2&#39;b00</span><span class="op">;</span>  <span class="co">//state examples</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">localparam</span> S2 <span class="op">=</span> <span class="bn">2&#39;b01</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">localparam</span> S3 <span class="op">=</span> <span class="bn">2&#39;b11</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">localparam</span> S4 <span class="op">=</span> <span class="bn">2&#39;b10</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">reg</span> <span class="op">[</span><span class="dv">1</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> cstate<span class="op">;</span> <span class="co">//current state from next state in synchronous</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">reg</span> <span class="op">[</span><span class="dv">1</span><span class="op">:</span><span class="dv">0</span><span class="op">]</span> nstate<span class="op">;</span> <span class="co">//next state form Combinational logic</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="dt">reg</span> reg1<span class="op">,</span>reg2<span class="op">,</span>reg3<span class="op">;</span> <span class="co">//register examples</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">//Synchronous state machine</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> clk <span class="dt">or</span> <span class="kw">negedge</span> rst_n<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span><span class="op">(!</span>rst_n<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        cstate <span class="op">&lt;=</span> S1<span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span> <span class="kw">else</span> <span class="kw">begin</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        cstate <span class="op">&lt;=</span> nstate<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">//Asynchronous Combinational logic circuit for states&#39; transforming</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">//Point: in Combinational logic circuit YOU SHOULD USE &quot;=&quot; instead of &quot;&lt;=&quot;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">always</span> <span class="op">@(</span>*<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span><span class="op">(!</span>rst_n<span class="op">)</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        nstate <span class="op">=</span> S1<span class="op">;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="kw">begin</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span><span class="op">(</span>cstate<span class="op">)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="dv">S1:</span> <span class="kw">begin</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                <span class="kw">if</span><span class="op">(</span>condition1<span class="op">)</span> nstate <span class="op">=</span> S2<span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                <span class="kw">else</span> nstate <span class="op">=</span> S1<span class="op">;</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>            <span class="kw">end</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            <span class="dv">S2:</span> <span class="kw">begin</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>                <span class="kw">if</span><span class="op">(</span>condition2<span class="op">)</span> nstate <span class="op">=</span> S3<span class="op">;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                <span class="kw">else</span> <span class="kw">if</span><span class="op">(</span>condition3<span class="op">)</span> nstate <span class="op">=</span> S1<span class="op">;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>                <span class="kw">else</span> nstate <span class="op">=</span> S2<span class="op">;</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>            <span class="kw">end</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="dv">S3:</span> ...</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            <span class="dv">S4:</span> ... </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            <span class="kw">default</span><span class="op">:</span> nstate <span class="op">=</span> S1<span class="op">;</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        <span class="kw">endcase</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">//Synchronuos logic circuit</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co">//Registers behavior and some synchronous outputs registers</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co">//In synchronous circuit you should use &quot;&lt;=&quot; for registers</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">always</span> <span class="op">@(</span><span class="kw">posedge</span> clk <span class="dt">or</span> <span class="kw">negedge</span> rst_n<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span><span class="op">(!</span>rst_n<span class="op">)</span> <span class="kw">begin</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        reg1 <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>        reg2 <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        reg3 <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// you should synchronous reset all registers</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span> <span class="kw">else</span> <span class="kw">begin</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span><span class="op">(</span>nstate<span class="op">)</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>            <span class="dv">S1:</span> <span class="kw">begin</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>                reg1 <span class="op">&lt;=</span> XXX<span class="op">;</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>                <span class="kw">if</span><span class="op">(</span>condition1<span class="op">)</span> reg2 <span class="op">&lt;=</span> XXX<span class="op">;</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>                condition1 <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>            <span class="kw">end</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>            <span class="dv">S2:</span> <span class="kw">begin</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>                reg3 <span class="op">&lt;=</span> XXX<span class="op">;</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>            <span class="kw">end</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>            <span class="dv">S3:</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>            <span class="dv">S4:</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>            <span class="kw">default</span><span class="op">:</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>        <span class="kw">endcase</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>

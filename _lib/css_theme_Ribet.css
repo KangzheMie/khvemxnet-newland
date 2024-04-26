@@ -1,4 +1,5 @@
 :root {
+    --header-h1-color:#FFF;
     --background-color:#171818;
     --border-color:#fff;
     --section-color: #252629;
@@ -14,7 +15,7 @@
 }
 
 header {
-    background-image: url('../picture/theme_Ribet/Main_Ribet.png'); 
+    background-image: url('../picture/theme_Ribet/Main_Ribet.jpg'); 
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat; 

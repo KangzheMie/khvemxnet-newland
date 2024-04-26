@@ -1,35 +1,43 @@
-<p align="center">
-<img src="./picture/NewLand.png" width=400px>
-</p>
-<h2 align="center"> 放在实验室服务器上的小型网页 </h2>
-<br/> 
+
+<h1 align="center"> 新大陆发现部 </h1>
+
 
 ## 介绍
 
-新大陆发现部是利用课题组实验室服务器资源的网页开发练手项目
+「这里是新大陆发现部的档案馆, 用于陈放我们在星海中观察和发掘到的知识. 这些知识作为笔记留存在这里, 是我们继续在宇宙中探索的力量.」
 
-网站的地址为：http://lodetech.ustc.edu.cn/subpage/wangkangzhe/index.html
+url：http://newland.khvemx.work/
 
 ## 用途
 
-* 该工程将作为本人练习使用html+css+js+python的实验性项目
-* 本网页最终将作为个人放置笔记的仓库使用
+* 将作为html+css+js+python的练习项目
+* 将作为个人放置笔记使用
+* 最终实现自动化发布Markdown笔记
+
+## 当前计划
+
+新大陆1.x初步实现了Markdown笔记的本地自动发布，将使用若干版本逐步实现全流程脚本自动化管理，届时发布新大陆2.x。
 
 ## 版本
 
 **2023.11.29**: 
+
 v0.1 第一个稳定运行版本 
 
 **2023.12.06**: 
+
 v0.2 增加了子菜单功能, 让日志可以在子菜单页面上显示 
 
 **2023.12.09**: 
+
 v0.3 新增blog模块。使用[pandoc](https://github.com/jgm/pandoc)转换md文件到html，使用[KaTeX](https://github.com/KaTeX/KaTeX)和[HighLight.js](https://github.com/highlightjs/highlight.js)库对blog文章中的公式和代码渲染。
 
 **2023.12.20**: 
+
 v0.4 新增手机适配；重新排版所有页面；继续开发新的栏目
 
 **2024.02.10**：
+
 v1.0 Happy Loong Year；
 - 架构大更新 将静态网页的各个部分分别使用js脚本动态加载；
 - 新增 「Elysia」主题包；
@@ -39,14 +47,25 @@ v1.0 Happy Loong Year；
 - 修改 首页欢迎界面
 
 **2024.02.12**：
+
 v1.1 
 - 新增 「Ribet」暗黑主题包
 - 新增 不同主题之间的切换脚本，使用localStorage暂存用户偏好
 - 优化 blog/log的存储格式
 
 **2024.02.18**：
+
 v1.2
 - 新增 URL重定向加载，可以通过url访问站内资源
 - 新增 高亮样式，暗色版本
 - 修改 文章样式，调整了公式和表格
 - 修改 主题样式，关联高亮样式，调整头图位置
+- 增加 主题「Lyla」
+- 增加 主题「Noel」
+
+**2024.04.26**：
+
+v1.3
+- 备份
+- 修改 取得独立域名后项目性质发生改变
+- 修改 开发计划

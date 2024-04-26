@@ -1,11 +1,55 @@
 <style>
 header a{
     text-decoration: none;
-    color: #EEE;
+    color: var(--header-h1-color);
 }
 </style>
 
 <header>
     <h1><a href="./module/mainPage.html">新大陸發現部</a></h1>
-    <p><a href="./module/mainPage.html">向着世界旋转的反方向前进!</a></p>
+    <p><a href="./module/mainPage.html">回る世界と逆向きで</a></p>
 </header>
+
+
+
+<style>
+    .alink {
+    text-align: center;
+    }
+</style>
+    
+    <nav>
+        <ul>
+            <li>
+                <a class="alink" href="./module/mainPage.html">Main</a>
+            </li>
+            <li>
+                <a>Theme</a>
+                <ul class="submenu">
+                    <li><a onclick="switchTheme('./_lib/css_theme_Elysia.css'); switchHighlight('./_lib/css_highlight.css')">Elysia</a></li>
+                    <li><a onclick="switchTheme('./_lib/css_theme_Ribet.css'); switchHighlight('./_lib/css_highlight_dark.css')">Ribet</a></li>
+                    <li><a onclick="switchTheme('./_lib/css_theme_Lyla.css'); switchHighlight('./_lib/css_highlight_dark.css')">Lyla</a></li>
+                    <li><a onclick="switchTheme('./_lib/css_theme_Noel.css'); switchHighlight('./_lib/css_highlight.css')">Noel</a></li>
+                </ul>
+            </li>
+            <li>
+                <a>Note</a>
+                <!-- 使用alink类才会被js识别和加载，这样普通的a就不会加载出来奇怪的页面 -->
+                <ul class="submenu">
+                    <li><a class="alink" href="./blog/blog_SuXt.html">数学</a></li>
+                    <li><a class="alink" href="./blog/blog_WuLi.html">物理</a></li>
+                    <li><a class="alink" href="./blog/blog_DmZi.html">电子</a></li>
+                    <li><a class="alink" href="./blog/blog_LoGi.html">逻辑</a></li>
+                    <li><a class="alink" href="./blog/blog_RrJm.html">软件</a></li>
+                    <li><a class="alink" href="./blog/blog_SeHv.html">社会</a></li>
+                </ul>
+            </li>
+            <li>
+                <a>Daily</a>
+                <ul class="submenu">
+                    <li><a class="alink" href="./log/log_RiCh.html">日常</a></li>
+                    <li><a class="alink" href="./log/log_BiJi.html">笔记</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>

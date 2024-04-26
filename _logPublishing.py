@@ -47,7 +47,7 @@ def add_script_to_html_log(directory_path, log_name):
             script = f"""
 <script>
   if (window.location.href.indexOf('?page={html_file.stem}') === -1) {{
-    window.location.href = '/subpage/wangkangzhe/index.html?page=./log/{log_name}/{html_file.stem}.html';
+    window.location.href = '/index.html?page=./log/{log_name}/{html_file.stem}.html';
   }}
 </script>
 """
@@ -71,7 +71,7 @@ def add_script_to_html(directory_path):
             script = f"""
 <script>
   if (window.location.href.indexOf('?page={html_file.stem}') === -1) {{
-    window.location.href = '/subpage/wangkangzhe/index.html?page=./log/{html_file.stem}';
+    window.location.href = '/index.html?page=./log/{html_file.stem}.html';
   }}
 </script>
 """
@@ -95,8 +95,8 @@ os.chdir(script_path)
 
 log_name_list = ['RiCh','BiJi']
 log_titles = {
-    'RiCh': '宇宙随时可以打败我，但不是今天',
-    'BiJi': '赛博笔记，记录随手记录'
+    'RiCh': '发现部的日常',
+    'BiJi': '赛博笔记'
 }
 log_flowers = {
     'RiCh': '🌻',

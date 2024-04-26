@@ -11,17 +11,17 @@ h1 {
 }
 
 h2 {
-    font-size: 22px;
+    font-size: 1.8em;
     color:var(--h2-color);
 }
 
 h3 {
-    font-size: 21px;
+    font-size: 1.3em;
     color: var(--h2-color);
 }
 
 h4 {
-    font-size: 18px;
+    font-size: 1.1em;
     color: var(--h2-color);
 }
 

@@ -6,6 +6,7 @@ section {
     margin: auto;
     background-color: var(--section-color);
     border:1px solid var(--border-color);
+    min-height: 1000px;
 }
 
 section p {
@@ -13,7 +14,11 @@ section p {
 }
 
 section li {
-  font-size: 18px;
+    font-size: 18px;
+}
+
+section li p{
+    text-indent: 0em;
 }
 
 .sourceCode{
@@ -29,6 +34,12 @@ section li {
 .katex-display>.katex {
   overflow-y: hidden;
   overflow-x: auto;
+}
+
+figcaption {
+  text-align: center;
+  font-size: 17px;
+  color: var(--p-color);
 }
 
 @media(max-width: 600px){

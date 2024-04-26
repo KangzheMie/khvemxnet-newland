@@ -1,0 +1,146 @@
+
+<script>
+  if (window.location.href.indexOf('?page=RrJm_2024-04-15_使用Python将txt处理为csv') === -1) {
+    window.location.href = '/index.html?page=./blog/RrJm_2024-04-15_使用Python将txt处理为csv.html';
+  }
+</script>
+<h1 id="使用python将txt处理为csv">使用Python将txt处理为csv</h1>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main(txtfile, csvfile):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> <span class="vs">r&#39;(T2_1:)(-?\d+\.\d+)(T2_2:)(-?\d+\.\d+)&#39;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(csvfile, <span class="st">&#39;w&#39;</span>, newline<span class="op">=</span><span class="st">&#39;&#39;</span>) <span class="im">as</span> csvfile:</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        writer <span class="op">=</span> csv.writer(csvfile)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        writer.writerow([<span class="st">&#39;T2_1&#39;</span>, <span class="st">&#39;T2_2&#39;</span>])  <span class="co"># 写入标题</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(txtfile, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># 逐行读取和处理</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">file</span>:</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                match <span class="op">=</span> re.search(pattern, line.strip()) <span class="co"># 使用strip()去除可能的空白字符</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> match:</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># 如果匹配成功，提取各个组</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                    Temperature_1 <span class="op">=</span> match.group(<span class="dv">2</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                    Temperature_2 <span class="op">=</span> match.group(<span class="dv">4</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                    writer.writerow([Temperature_1, Temperature_2])</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">print</span>(<span class="st">&quot;No match found.&quot;</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">&quot;Extract temperatures from text and write to CSV.&quot;</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">&quot;txtfile&quot;</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">str</span>, <span class="bu">help</span><span class="op">=</span><span class="st">&quot;The path to the text file to process.&quot;</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">&quot;csvfile&quot;</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">str</span>, <span class="bu">help</span><span class="op">=</span><span class="st">&quot;The path to the CSV file to write.&quot;</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    main(args.txtfile, args.csvfile)</span></code></pre></div>
+<h2 id="逐行处理txt">逐行处理txt</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 打开文件</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;example.txt&#39;</span>, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 逐行读取和处理</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">file</span>:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 这里可以添加您需要的处理逻辑</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(line.strip())  <span class="co"># 使用strip()去除可能的空白字符</span></span></code></pre></div>
+<p>使用 <code>with</code> 语句可以确保文件在操作完成后会被正确关闭。</p>
+<h3 id="文件对象作为迭代器">文件对象作为迭代器</h3>
+<p>当打开一个文件时，Python
+创建一个文件对象，这个对象本身就是一个迭代器。迭代器是一种支持迭代（即一次返回一个元素，直到没有更多元素时停止）的对象。在Python中，文件对象的迭代是按行进行的。</p>
+<p><strong>每次迭代返回文件的下一行。</strong></p>
+<p>当在 <code>for</code> 循环中使用文件对象时，Python调用文件对象的
+<code>__next__()</code>
+方法来获取文件中的下一行。如果到达文件末尾，文件对象会自动抛出一个
+<code>StopIteration</code> 异常，这告诉 <code>for</code>
+循环停止迭代。</p>
+<h2 id="正则匹配">正则匹配</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r&#39;(T2_1:)(-?\d+\.\d+)&#39;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;test.txt&#39;</span>, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">file</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(line.strip())  <span class="co"># 打印原始行数据</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        match <span class="op">=</span> re.search(pattern, line.strip())  <span class="co"># 在整行中搜索模式</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;找到匹配:&quot;</span>, match.group(<span class="dv">0</span>))  <span class="co"># 打印匹配的内容</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">&quot;未找到匹配&quot;</span>)</span></code></pre></div>
+<p>使用 <code>re.match()</code>
+函数，该函数只在字符串开始处进行匹配检查。如果在<strong>行的开始处没有</strong>立即找到符合模式的内容，<code>re.match()</code>
+就会返回 <code>None</code>。</p>
+<p><strong>如果目标字符串可能在行内任何位置</strong>，应使用
+<code>re.search()</code> 来代替
+<code>re.match()</code>。<code>re.search()</code>
+会检查整个字符串，并返回第一个符合模式的匹配项。</p>
+<h2 id="提取匹配">提取匹配</h2>
+<p>在Python中使用正则表达式的 <code>match</code> 或 <code>search</code>
+结果时，可以通过 <code>group()</code>
+方法访问各个组。<code>group(0)</code> 返回整个匹配的字符串，而
+<code>group(n)</code> 返回第 <code>n</code> 个括号组的匹配字符串。</p>
+<p>假设有一个正则表达式，其中包含四个组，如下：</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r&#39;(T2_1:)(-?\d+\.\d+)(T2_3:)(-?\d+\.\d+)&#39;</span></span></code></pre></div>
+<p>这里，<code>part1</code> 对应于第一个括号
+<code>(T2_1:)</code>，<code>part2</code> 对应于第二个括号
+<code>(-?\d+\.\d+)</code>，依此类推。</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r&#39;(T2_1:)(-?\d+\.\d+)(T2_3:)(-?\d+\.\d+)&#39;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">&quot;T2_1:28.6558T2_3:-200.0000&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>match <span class="op">=</span> re.search(pattern, text)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> match:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    part2 <span class="op">=</span> match.group(<span class="dv">2</span>)  <span class="co"># 提取第二个组</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    part4 <span class="op">=</span> match.group(<span class="dv">4</span>)  <span class="co"># 提取第四个组</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Part2:&quot;</span>, part2, <span class="st">&quot;Part4:&quot;</span>, part4)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;未找到匹配&quot;</span>)</span></code></pre></div>
+<h2 id="写入csv">写入csv</h2>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 打开CSV文件准备写入</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(csv_file_path, <span class="st">&#39;w&#39;</span>, newline<span class="op">=</span><span class="st">&#39;&#39;</span>) <span class="im">as</span> csvfile:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    writer <span class="op">=</span> csv.writer(csvfile)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    writer.writerow([<span class="st">&#39;Temperature_1&#39;</span>, <span class="st">&#39;Temperature_2&#39;</span>])  <span class="co"># 写入标题</span></span></code></pre></div>
+<ul>
+<li>使用<code>newline=''</code>来防止在写入文件时出现空行。</li>
+<li>确保文件路径和文件名是正确的，并且您的运行环境有权限写入文件。</li>
+</ul>
+<h2 id="使用命令行运行程序">使用命令行运行程序</h2>
+<p>要让脚本接受命令行参数，可以使用 Python 的 <code>argparse</code>
+库来简单地处理命令行输入。</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&#39;__main__&#39;</span>:</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">&quot;Extract temperatures from text and write to CSV.&quot;</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">&quot;txtfile&quot;</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">str</span>, <span class="bu">help</span><span class="op">=</span><span class="st">&quot;The path to the text file to process.&quot;</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">&quot;csvfile&quot;</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">str</span>, <span class="bu">help</span><span class="op">=</span><span class="st">&quot;The path to the CSV file to write.&quot;</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> parser.parse_args()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    main(args.txtfile, args.csvfile)</span></code></pre></div>
+<p>使用方法</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> xxx.py test.txt output.csv</span></code></pre></div>
+<p>使用提示</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">PS</span> D:<span class="dt">\&gt;</span> python TempToCSV.py <span class="at">-h</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">usage:</span> TempToCSV.py <span class="pp">[-</span><span class="ss">h</span><span class="pp">]</span> txtfile csvfile</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Extract</span> temperatures from text and write to CSV.</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">positional</span> arguments:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">txtfile</span>     The path to the text file to process.</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">csvfile</span>     The path to the CSV file to write.</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ex">options:</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-h,</span> <span class="at">--help</span>  show this help message and exit</span></code></pre></div>

@@ -14,12 +14,35 @@ footer {
 
 footer p{
     color: var(--footer-text-color);
-    margin: auto;
+    margin: 0px;
     font-size: 15px;
+}
+
+footer a{
+    color: var(--footer-text-color);
+    text-decoration: none;
 }
 
 @media(max-width: 600px){
     footer {
         width: 100%;
     }
+}
+
+.visitor-wrapper {
+    display: flex; /* 使用flex布局使子元素排列在同一行 */
+    align-items: center; /* 垂直居中对齐子元素 */
+    justify-content: center; /* 水平居中对齐子元素 */
+}
+
+#visitorCount {
+    display: inline; /* 将div设置为行内元素 */
+    font-family: "pixel-cn", sans-serif;
+    font-weight: normal;
+    font-size: 15px;
+    color: var(--p-color);
+}
+
+footer p a{
+    font-size: 15px;
 }

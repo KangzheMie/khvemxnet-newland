@@ -76,7 +76,7 @@ $$
 $$
 \begin{aligned}
 v(x,t) &= |V_0^+|\cos(\omega t - \beta x + \varphi^+)\exp(-ax) \\
-&+|V_0^-|\cos(\omega t + \beta x + \varphi^+)\exp(+ax)
+&+|V_0^-|\cos(\omega t + \beta x + \varphi^-)\exp(+ax)
 \end{aligned}
 $$
 

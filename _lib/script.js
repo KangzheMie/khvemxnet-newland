@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     loadComponent('header', './module/header.html');
-    loadComponent('navbar', './module/navbar.html');
-    loadComponent('footer', './module/footer.html');
 
     // 解析URL参数获取'page'值
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,6 +21,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }else{
         loadContent('./module/mainPage.html'); // 加载默认内容
     }
+
+    // 创建一个新的AJAX请求
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'counter.php'); // 指定请求的类型和URL
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // 请求成功，将返回的文本设置到div中
+            document.getElementById('visitorCount').innerText = xhr.responseText;
+        } else {
+            // 出错时的处理
+            document.getElementById('visitorCount').innerText = "???";
+        }
+    };
+    xhr.send(); // 发送请求
 });
 
 function renderMath() {
@@ -124,3 +136,8 @@ function switchHighlight(themeFileName, save = true) {
         localStorage.setItem('highlight', themeFileName);
     }
 }
+
+// 当文档加载完毕时执行
+document.addEventListener('DOMContentLoaded', function() {
+
+});
