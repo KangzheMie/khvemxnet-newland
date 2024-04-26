@@ -40,7 +40,7 @@ footer a{
     font-family: "pixel-cn", sans-serif;
     font-weight: normal;
     font-size: 15px;
-    color: var(--p-color);
+    color: var(--footer-text-color);;
 }
 
 footer p a{

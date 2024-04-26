@@ -74,3 +74,7 @@ nav li:hover .submenu {
 .submenu a:hover {
     background-color: rgb(87, 156, 166); /* 悬停时的背景颜色，可根据需要调整 */
 }
+
+.alink {
+    text-align: center;
+}

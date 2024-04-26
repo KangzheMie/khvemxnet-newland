@@ -2,3 +2,5 @@ log/*
 !log/.gitkeep
 source/*
 !source/.gitkeep
+package-lock.json
+package.json

@@ -8,8 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         switchHighlight(savedHighlight, false); // 应用保存的主题
     }
 
-    loadComponent('header', './module/header.html');
-
     // 解析URL参数获取'page'值
     const urlParams = new URLSearchParams(window.location.search);
     const page = urlParams.get('page');
@@ -19,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const contentPath = `${page}`; // 构造内容文件的路径
         loadContent(contentPath);
     }else{
-        loadContent('./module/mainPage.html'); // 加载默认内容
+        loadContent('./mainPage.html'); // 加载默认内容
     }
 
     // 创建一个新的AJAX请求
@@ -53,16 +51,6 @@ function renderMath() {
     }
 }
 
-function loadComponent(componentId, componentUrl) {
-    fetch(componentUrl).then(function(response) {
-        return response.text();
-    }).then(function(html) {
-        document.getElementById(componentId).innerHTML = html;
-    }).catch(function(err) {
-        console.warn('Component failed to load', err);
-    });
-}
-
 function loadContent(contentUrl) {
     fetch(contentUrl).then(function(response) {
         return response.text();
@@ -88,7 +76,7 @@ window.addEventListener('popstate', function(event) {
 document.body.addEventListener('click', function(event) {
     if (event.target.matches('nav .alink')) {
         event.preventDefault(); // 阻止链接默认行为
-        const contentUrl = event.target.getAttribute('href') || './module/blank.html';
+        const contentUrl = event.target.getAttribute('href') || './blank.html';
         loadContent(contentUrl);
     }
 });
@@ -97,7 +85,7 @@ document.body.addEventListener('click', function(event) {
 document.body.addEventListener('click', function(event) {
     if (event.target.matches('header a')) {
         event.preventDefault(); // 阻止链接默认行为
-        const contentUrl = event.target.getAttribute('href') || './module/blank.html';
+        const contentUrl = event.target.getAttribute('href') || './blank.html';
         loadContent(contentUrl);
     }
 });
@@ -107,7 +95,7 @@ document.body.addEventListener('click', function(event) {
 document.body.addEventListener('click', function(event) {
     if (event.target.matches('.timeline a')) {
         event.preventDefault(); // 阻止链接默认行为
-        const contentUrl = event.target.getAttribute('href') || './module/blank.html';
+        const contentUrl = event.target.getAttribute('href') || './blank.html';
         loadContent(contentUrl);
     }
 });
@@ -136,8 +124,3 @@ function switchHighlight(themeFileName, save = true) {
         localStorage.setItem('highlight', themeFileName);
     }
 }
-
-// 当文档加载完毕时执行
-document.addEventListener('DOMContentLoaded', function() {
-
-});
