@@ -20,25 +20,24 @@ url：http://newland.khvemx.work/
 
 ## 版本
 
-**2023.11.29**: 
+v0.1 2023-11-29
+- 第一个稳定运行版本 
 
-v0.1 第一个稳定运行版本 
+v0.2 2023-12-06
+- 增加 子菜单功能
+- 让日志可以在子菜单页面上显示 
 
-**2023.12.06**: 
+v0.3 2023-12-09
+- 新增 blog模块
+- 使用[pandoc](https://github.com/jgm/pandoc)转换md文件到html
+- 使用[KaTeX](https://github.com/KaTeX/KaTeX)和[HighLight.js](https://github.com/highlightjs/highlight.js)库对blog文章中的公式和代码渲染。
 
-v0.2 增加了子菜单功能, 让日志可以在子菜单页面上显示 
+v0.4 2023-12-20
+- 新增 手机适配 
+- 重新排版所有页面
+- 继续开发新的栏目
 
-**2023.12.09**: 
-
-v0.3 新增blog模块。使用[pandoc](https://github.com/jgm/pandoc)转换md文件到html，使用[KaTeX](https://github.com/KaTeX/KaTeX)和[HighLight.js](https://github.com/highlightjs/highlight.js)库对blog文章中的公式和代码渲染。
-
-**2023.12.20**: 
-
-v0.4 新增手机适配；重新排版所有页面；继续开发新的栏目
-
-**2024.02.10**：
-
-v1.0 Happy Loong Year；
+v1.0 Happy Loong Year 2024-02-10
 - 架构大更新 将静态网页的各个部分分别使用js脚本动态加载；
 - 新增 「Elysia」主题包；
 - 新增 自动化发布blog/log的python脚本
@@ -46,16 +45,12 @@ v1.0 Happy Loong Year；
 - 优化 超长数学公式在手机上的显示
 - 修改 首页欢迎界面
 
-**2024.02.12**：
-
-v1.1 
+v1.1 2024-02-12
 - 新增 「Ribet」暗黑主题包
 - 新增 不同主题之间的切换脚本，使用localStorage暂存用户偏好
 - 优化 blog/log的存储格式
 
-**2024.02.18**：
-
-v1.2
+v1.2 2024-02-18
 - 新增 URL重定向加载，可以通过url访问站内资源
 - 新增 高亮样式，暗色版本
 - 修改 文章样式，调整了公式和表格
@@ -63,9 +58,7 @@ v1.2
 - 增加 主题「Lyla」
 - 增加 主题「Noel」
 
-**2024.04.26**：
-
-v1.3
+v1.3 2024-04-26
 - 备份
-- 修改 取得独立域名后项目性质发生改变
+- 取得独立域名后项目性质发生改变
 - 修改 开发计划
