@@ -3,8 +3,11 @@
 <head>
     <title>新大陆发现部</title>
     <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="./_lib2/content.css">
+    <link rel="stylesheet" href="./_lib2/HeadNavFoot.css">
+    <link rel="stylesheet" href="./_lib2/mobilePhone.css">
     
     <link rel="stylesheet" href="./node_modules/katex/dist/katex.min.css" />    
 </head>
@@ -13,16 +16,59 @@
 
     <div id="content">
         <div id="header">
-
+            <h1><a href="./mainPage2.html">新大陸發現部</a></h1>
+            <p><a href="./mainPage2.html">回る世界と逆向きで</a></p>
         </div>
         <div id="nav">
-
+            <ul>
+                <li>
+                    <a class="alink" href="./mainPage.html">Main</a>
+                </li>
+                <li>
+                    <a>Theme</a>
+                    <ul class="submenu">
+                        <li><a onclick="switchTheme('./_lib/css_theme_Elysia.css'); switchHighlight('./_lib/css_highlight.css')">Elysia</a></li>
+                        <li><a onclick="switchTheme('./_lib/css_theme_Ribet.css'); switchHighlight('./_lib/css_highlight_dark.css')">Ribet</a></li>
+                        <li><a onclick="switchTheme('./_lib/css_theme_Lyla.css'); switchHighlight('./_lib/css_highlight_dark.css')">Lyla</a></li>
+                        <li><a onclick="switchTheme('./_lib/css_theme_Noel.css'); switchHighlight('./_lib/css_highlight.css')">Noel</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a>Note</a>
+                    <!-- 使用alink类才会被js识别和加载，这样普通的a就不会加载出来奇怪的页面 -->
+                    <ul class="submenu">
+                        <li><a class="alink" href="./blog/blog_SuXt.html">数学</a></li>
+                        <li><a class="alink" href="./blog/blog_WuLi.html">物理</a></li>
+                        <li><a class="alink" href="./blog/blog_DmZi.html">电子</a></li>
+                        <li><a class="alink" href="./blog/blog_LoGi.html">逻辑</a></li>
+                        <li><a class="alink" href="./blog/blog_RrJm.html">软件</a></li>
+                        <li><a class="alink" href="./blog/blog_SeHv.html">社会</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a>Daily</a>
+                    <ul class="submenu">
+                        <li><a class="alink" href="./log/log_RiCh.html">日常</a></li>
+                        <li><a class="alink" href="./log/log_BiJi.html">笔记</a></li>
+                        <li><a class="alink" href="">测试页</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
         <div id="note">
 
         </div>
         <div id="footer">
-
+            <p><a href="https://beian.miit.gov.cn/" rel="external nofollow" target="_blank">皖ICP备2024045783号-1</a></p>
+            <p><a href="http://khvemx.work">星云电波塔</a> 
+                | <a href="https://space.bilibili.com/32385828">bilibili</a> 
+                | <a href="https://bgm.tv/user/kangzhemie">bangumi</a> 
+                | <a href="https://www.zhihu.com/people/khvemx">zhihu</a> 
+                | <a href="https://github.com/KangzheMie">github</a></p>
+            <div class="visitor-wrapper">
+                <p>访问次数：</p><div id="visitorCount">正在加载访客数...</div>
+            </div>
+            <p>&copy; 2023-2024 khvemx All rights reserved</p>
         </div>
     </div>
 
