@@ -1,0 +1,23 @@
+
+<script>
+  if (window.location.href.indexOf('?page=LoGi_2024-03-04_Verilog异或') === -1) {
+    window.location.href = '/index.html?page=./blog/LoGi_2024-03-04_Verilog异或.html';
+  }
+</script>
+<h1 id="verilog异或">Verilog异或</h1>
+<p>在 <strong>Verilog</strong> 中，异或运算使用符号 <code>^</code>
+表示。它是一种基于二进制的位运算，其运算法则是对运算符两侧数的每一个二进制位，<strong>同值取0，异值取1</strong>。简单理解就是<strong>不进位加法</strong>，例如：1
++ 1 = 0，0 + 0 = 0，1 + 0 = 1。</p>
+<p>以下是一个简单的 <strong>Verilog</strong> 代码示例，用于实现一个
+<strong>2 输入异或门</strong>：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode verilog"><code class="sourceCode verilog"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> xor_gate <span class="op">(</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">input</span> a<span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">input</span> b<span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">output</span> y</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">assign</span> y <span class="op">=</span> a <span class="op">^</span> b<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">endmodule</span></span></code></pre></div>
+<p>在上面的代码中，<code>a</code> 和 <code>b</code>
+是两个输入信号，<code>y</code>
+是异或门的输出信号。异或门的结果是当两个操作数的值不同时为1，否则为0。</p>

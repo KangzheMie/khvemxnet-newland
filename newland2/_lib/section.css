@@ -1,0 +1,82 @@
+:root {
+    --color-section-h1: #FFF;
+    --color-section-h2: #FFF;
+    --color-section-h3: #FFF;
+    --color-section-h4: #FFF;
+    --color-section-p: #FFF;
+    --color-section-a: #FFF;
+}
+
+
+#section h1 {
+    margin: 0px;
+    padding: 1.5em 0em 0.5em;
+
+    font-family: var(--font-family);
+    font-size: 2em;
+
+    color: var(--color-section-h1);
+}
+
+#section h2 {
+    margin: 0px;
+    padding: 0.2em 0em 0.2em;
+
+    font-family: var(--font-family);
+    font-size: 1.8em;
+
+    color: var(--color-section-h2);
+}
+
+#section h3 {
+    margin: 0px;
+    padding: 0.1em 0em 0.1em;
+
+    font-family: var(--font-family);
+    font-size: 1.3em;
+
+    color: var(--color-section-h3);
+}
+
+#section h4 {
+    margin: 0px;
+    padding: 0.1em 0em 0.1em;
+
+    font-family: var(--font-family);
+    font-size: 1.2em;
+
+    color: var(--color-section-h4);
+}
+
+#section p{
+    margin: 0px;
+    padding: 0.3em 0em;
+
+    font-family: var(--font-family);
+    font-size: 1.1em;
+
+    color: var(--color-section-p);
+    text-indent: 2em;
+}
+
+#section a{
+    font-family: var(--font-family);
+
+    color: var(--color-section-a);
+}
+
+#section img{
+    margin: auto;
+    padding: 0px;
+
+    max-width: 100%;
+    display: block;
+}
+
+#section #mainPage-img{
+    margin: auto;
+    padding: 0px;
+
+    width: 60%;
+    display: block;
+}

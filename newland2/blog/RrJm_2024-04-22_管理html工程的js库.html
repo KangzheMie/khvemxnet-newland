@@ -1,0 +1,35 @@
+
+<script>
+  if (window.location.href.indexOf('?page=RrJm_2024-04-22_管理html工程的js库') === -1) {
+    window.location.href = '/index.html?page=./blog/RrJm_2024-04-22_管理html工程的js库.html';
+  }
+</script>
+<h1 id="管理html工程的js库">管理html工程的js库</h1>
+<p>Node.js 通过 npm（Node Package Manager）允许在任意的 HTML
+项目路径下规范地引入和管理来自网络的 JavaScript
+库。这种方式提供了几个关键优势：</p>
+<h3 id="便捷的库管理">1. <strong>便捷的库管理</strong></h3>
+<p>通过 npm，可以轻松地添加、更新、删除或管理依赖项。npm
+会处理所有的依赖关系和版本控制，确保项目中使用的库是最新且兼容的。</p>
+<h3 id="自动化的依赖解析">2. <strong>自动化的依赖解析</strong></h3>
+<p>当安装一个 JavaScript 库时，npm
+自动下载该库及其所有依赖的其他库，这些都会被放置在
+<code>node_modules</code>
+目录中。这简化了依赖管理，无需手动下载和链接库文件。</p>
+<h3 id="项目内的局部安装">3. <strong>项目内的局部安装</strong></h3>
+<p>npm 默认在当前项目的 <code>node_modules</code>
+目录下局部安装库，这意味着可以在不同的项目中使用不同版本的同一库，各个项目之间的依赖不会互相干扰。</p>
+<h3 id="支持全局安装">4. <strong>支持全局安装</strong></h3>
+<p>对于一些工具和库，如果频繁地在多个项目中使用它们，也可以选择全局安装。全局安装的库不会在每个项目的
+<code>node_modules</code>
+中重复存储，而是存放在一个统一的位置，所有项目都可以访问这些库。</p>
+<h3 id="脚本和工具的使用">5. <strong>脚本和工具的使用</strong></h3>
+<p>除了管理库之外，npm
+还支持运行自定义脚本和任务，这可以帮助自动化项目的构建、测试和部署过程。</p>
+<h3 id="如何引用-node_modules-中的库">如何引用 node_modules 中的库</h3>
+<p>在 HTML 文件中，可以通过相对路径直接引用 <code>node_modules</code>
+中的 JavaScript 或 CSS 文件。例如，使用 <code>&lt;script&gt;</code> 或
+<code>&lt;link&gt;</code> 标签指向对应的库文件：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;./node_modules/some-library/dist/some-library.css&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;./node_modules/some-library/dist/some-library.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>

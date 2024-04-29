@@ -1,0 +1,444 @@
+
+<script>
+  if (window.location.href.indexOf('?page=WuLi_2024-02-16_精确对角化') === -1) {
+    window.location.href = '/index.html?page=./blog/WuLi_2024-02-16_精确对角化.html';
+  }
+</script>
+<h1 id="精确对角化">精确对角化</h1>
+<p>精确对角化实际上<code>就是把哈密顿量写成矩阵</code>表示，然后再求这个矩阵的最小本征值和本征矢，也就是基态和基态能量。</p>
+<p>说人话就是每一个工科生都会的矩阵力学求解本征值和本征向量的过程。</p>
+<p>而本文的所有内容都在探究，如何构造矩阵。</p>
+<p>构造矩阵无非两种方法 1.
+通过算符在某表象下的矩阵形式和直积直接构造矩阵 2.
+通过在某表象下的波矢于算符的定义计算<span class="math inline">\langle
+m|H|n \rangle</span></p>
+<h2
+id="自旋模型的哈密顿算符精确对角化">自旋模型的哈密顿算符精确对角化</h2>
+<h3 id="自旋算符简介">自旋算符简介</h3>
+<p>在量子力学中，自旋算符 <span class="math inline">S^x</span>, <span
+class="math inline">S^y</span>, 和 <span class="math inline">S^z</span>
+分别对应自旋沿x, y, z轴的分量。对于一个自旋1/2粒子，自旋升降算符 <span
+class="math inline">S^+</span> 和 <span class="math inline">S^-</span>
+可以用来提升或降低自旋的z分量。这些算符之间的关系如下：</p>
+<ul>
+<li><span class="math inline">S^+ = S^x + iS^y</span></li>
+<li><span class="math inline">S^- = S^x - iS^y</span></li>
+</ul>
+<p>这里的 <span class="math inline">S^+</span> 和 <span
+class="math inline">S^-</span> 是升降算符，它们可以将自旋态 <span
+class="math inline">\lvert \downarrow \rangle</span> 和 <span
+class="math inline">\lvert \uparrow \rangle</span> 转换为：</p>
+<ul>
+<li><span class="math inline">S^+ \lvert \downarrow \rangle = \hbar
+\lvert \uparrow \rangle</span></li>
+<li><span class="math inline">S^- \lvert \uparrow \rangle = \hbar \lvert
+\downarrow \rangle</span></li>
+</ul>
+<p>而 <span class="math inline">S^x</span>, <span
+class="math inline">S^y</span>, <span class="math inline">S^z</span>
+与基态 <span class="math inline">\lvert \uparrow \rangle</span> 和 <span
+class="math inline">\lvert \downarrow \rangle</span> 的作用如下：</p>
+<ul>
+<li><span class="math inline">S^z \lvert \uparrow \rangle = \hbar/2
+\lvert \uparrow \rangle</span></li>
+<li><span class="math inline">S^z \lvert \downarrow \rangle = -\hbar/2
+\lvert \downarrow \rangle</span></li>
+<li><span class="math inline">S^x</span> 和 <span
+class="math inline">S^y</span> 将会在基态之间产生叠加。</li>
+</ul>
+<p>在自旋表象下，算符的矩阵形式如下：</p>
+<ul>
+<li><span class="math inline">S^z</span> 算符的矩阵表示为： <span
+class="math display">
+S^z = \frac{\hbar}{2} \begin{pmatrix}
+1 &amp; 0 \\
+0 &amp; -1
+\end{pmatrix}
+</span></li>
+<li><span class="math inline">S^+</span> 算符的矩阵表示为： <span
+class="math display">
+S^+ = \hbar \begin{pmatrix}
+0 &amp; 1 \\
+0 &amp; 0
+\end{pmatrix}
+</span></li>
+<li><span class="math inline">S^-</span> 算符的矩阵表示为： <span
+class="math display">
+S^- = \hbar \begin{pmatrix}
+0 &amp; 0 \\
+1 &amp; 0
+\end{pmatrix}
+</span></li>
+</ul>
+<p>对于 <span class="math inline">S^x</span> 和 <span
+class="math inline">S^y</span> 算符，可以通过 <span
+class="math inline">S^+</span> 和 <span class="math inline">S^-</span>
+表达为：</p>
+<ul>
+<li><span class="math inline">S^x = \frac{1}{2}(S^+ + S^-)</span>
+算符的矩阵表示为： <span class="math display">
+S^x = \frac{\hbar}{2} \begin{pmatrix}
+0 &amp; 1 \\
+1 &amp; 0
+\end{pmatrix}
+</span></li>
+<li><span class="math inline">S^y = \frac{1}{2i}(S^+ - S^-)</span>
+算符的矩阵表示为： <span class="math display">
+S^y = \frac{\hbar}{2i} \begin{pmatrix}
+0 &amp; -i \\
+i &amp; 0
+\end{pmatrix}
+</span></li>
+</ul>
+<h3 id="需要对角化的费米子哈密顿算符">需要对角化的费米子哈密顿算符</h3>
+<p><span class="math display"> H = -J \sum_{i=1}^{N} \vec{S}_i \cdot
+\vec{S}_{i+1} = -J \sum_{i=1}^{N} \left( S_i^x S_{i+1}^x + S_i^y
+S_{i+1}^y + S_i^z S_{i+1}^z \right) </span></p>
+<p>可以重新表达为：</p>
+<p><span class="math display"> H = -J \sum_i \left[ \frac{1}{2}(S^+_i
+S^-_{i+1} + S^-_i S^+_{i+1}) + \frac{1}{2i}(S^+_i S^-_{i+1} - S^-_i
+S^+_{i+1}) + \Delta S_{zi} S_{z(i+1)} \right] </span></p>
+<p><span class="math display"> H = -J \sum_{i=1}^{N} \left[ \frac{1}{2}
+\left( S_i^+ S_{i+1}^- + S_i^- S_{i+1}^+ \right) + S_i^z S_{i+1}^z
+\right] </span></p>
+<h3 id="通过张量积构造矩阵">通过张量积构造矩阵</h3>
+<p>例程</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="va">H</span> <span class="op">=</span> <span class="va">tensor_product</span>(<span class="va">varargin</span>)   <span class="co">% varargin 接收变长参数</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">length</span>(<span class="va">varargin</span>) <span class="op">&lt;</span> <span class="fl">2</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">H</span> <span class="op">=</span> <span class="va">varargin</span>{<span class="fl">1</span>}<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">return</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">H</span> <span class="op">=</span> <span class="va">varargin</span>{<span class="fl">1</span>}<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="va">i</span> <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="va">length</span>(<span class="va">varargin</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">H</span> <span class="op">=</span> <span class="va">kron</span>(<span class="va">H</span><span class="op">,</span> <span class="va">varargin</span>{<span class="va">i</span>})<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="va">Sz</span> <span class="op">=</span> [<span class="fl">1</span><span class="op">,</span> <span class="fl">0</span><span class="op">;</span> <span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">1</span>] <span class="op">./</span> <span class="fl">2</span><span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="va">Sp</span> <span class="op">=</span> [<span class="fl">0</span><span class="op">,</span> <span class="fl">1</span><span class="op">;</span> <span class="fl">0</span><span class="op">,</span>  <span class="fl">0</span>]<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="va">Sm</span> <span class="op">=</span> [<span class="fl">0</span><span class="op">,</span> <span class="fl">0</span><span class="op">;</span> <span class="fl">1</span><span class="op">,</span>  <span class="fl">0</span>]<span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="va">II</span> <span class="op">=</span> <span class="va">eye</span>(<span class="fl">2</span>)<span class="op">;</span></span></code></pre></div>
+<p>有了上边的直积工具以及矩阵，就可以构造哈密顿矩阵了</p>
+<p><span class="math display"> \frac{1}{2} \sum_{i} \left( S_i^+
+S_{i+1}^- + S_i^- S_{i+1}^+ \right)
++ \sum_{i} S_i^z S_{i+1}^z
+</span></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="va">H</span> <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span> <span class="op">*</span> ( <span class="op">...</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="va">tensor_product</span>(<span class="va">Sp</span><span class="op">,</span> <span class="va">Sm</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">II</span>) <span class="op">...</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">II</span><span class="op">,</span> <span class="va">Sp</span><span class="op">,</span> <span class="va">Sm</span><span class="op">,</span> <span class="va">II</span>) <span class="op">...</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">II</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">Sp</span><span class="op">,</span> <span class="va">Sm</span>) <span class="op">...</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">Sm</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">Sp</span>) <span class="op">...</span>    <span class="co">% 这里是周期，边界开放将这个删除</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="op">...</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">Sm</span><span class="op">,</span> <span class="va">Sp</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">II</span>) <span class="op">...</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">II</span><span class="op">,</span> <span class="va">Sm</span><span class="op">,</span> <span class="va">Sp</span><span class="op">,</span> <span class="va">II</span>) <span class="op">...</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">II</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">Sm</span><span class="op">,</span> <span class="va">Sp</span>) <span class="op">...</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">Sp</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">Sm</span>) <span class="op">...</span>    <span class="co">% 这里是周期，边界开放将这个删除</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span> (                            <span class="op">...</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="va">tensor_product</span>(<span class="va">Sz</span><span class="op">,</span> <span class="va">Sz</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">II</span>) <span class="op">...</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">II</span><span class="op">,</span> <span class="va">Sz</span><span class="op">,</span> <span class="va">Sz</span><span class="op">,</span> <span class="va">II</span>) <span class="op">...</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">II</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">Sz</span><span class="op">,</span> <span class="va">Sz</span>) <span class="op">...</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="va">tensor_product</span>(<span class="va">Sz</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">II</span><span class="op">,</span> <span class="va">Sz</span>) <span class="op">...</span>    <span class="co">% 这里是周期，边界开放将这个删除</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span></code></pre></div>
+<p><strong>注意！！！！</strong></p>
+<p>本处将所有的<span class="math inline">\hbar =
+1</span>，忽略所有的<span class="math inline">\Delta</span>和<span
+class="math inline">J</span>。</p>
+<h3 id="通过基矢和算符计算构造矩阵">通过基矢和算符计算构造矩阵</h3>
+<p>比如考虑有4个自旋的系统，他的所有基矢表示为： <span
+class="math display"> \lvert 0 \rangle = \lvert \uparrow \uparrow
+\uparrow \uparrow \rangle = (0000) </span> <span class="math display">
+\lvert 1 \rangle = \lvert \uparrow \uparrow \uparrow \downarrow \rangle
+= (0001) </span> <span class="math display"> \lvert 2 \rangle = \lvert
+\uparrow \uparrow \downarrow \uparrow \rangle = (0010) </span> <span
+class="math display"> \lvert 3 \rangle = \lvert \uparrow \uparrow
+\downarrow \downarrow \rangle = (0011) </span> <span
+class="math display"> \cdots </span></p>
+<p>然后根据哈密顿算符的定义计算哈密顿量的矩阵元 <span
+class="math display"> H_{mn} = \langle m \lvert H \lvert n \rangle
+</span></p>
+<p>计算例子： <span class="math display">
+\begin{aligned}
+H \lvert \uparrow \uparrow \downarrow \downarrow \downarrow \rangle
+&amp;= -J \sum_i \left[ \frac{1}{2} \left( S_i^+ S_{i+1}^- + S_i^-
+S_{i+1}^+ \right) + \Delta S_i^z S_{i+1}^z \right] \lvert \uparrow
+\uparrow \downarrow \downarrow \downarrow \rangle \\
+&amp;= -\frac{J}{2} \left( S_1^+ S_2^- + S_2^+ S_3^- + S_3^+ S_4^- +
+S_4^+ S_5^-\right) \lvert \uparrow \uparrow \downarrow \downarrow
+\downarrow \rangle \\
+&amp;\ \ \ \  -\frac{J}{2} \left( S_1^- S_2^+ + S_2^- S_3^+ + S_3^-
+S_4^+ + S_4^- S_5^+\right) \lvert \uparrow \uparrow \downarrow
+\downarrow \downarrow \rangle \\
+&amp;\ \ \ \  -J \Delta \left( S_1^z S_2^z + S_2^z S_3^z + S_3^z S_4^z +
+S_4^z S_5^z \right) \lvert \uparrow \uparrow \downarrow \downarrow
+\downarrow \rangle \\
+&amp;= -\frac{J}{2} \lvert \uparrow \downarrow \uparrow \downarrow
+\downarrow \rangle
+- J \Delta \left( \frac{1}{4} - \frac{1}{4} - \frac{1}{4} + \frac{1}{4}
+\right) \lvert \uparrow \uparrow \downarrow \downarrow \downarrow
+\rangle \\
+&amp;= -\frac{J}{2} \lvert \uparrow \downarrow \uparrow \downarrow
+\downarrow \rangle  - \frac{J \Delta}{2} \lvert \uparrow \uparrow
+\downarrow \downarrow \downarrow \rangle
+\end{aligned}
+</span></p>
+<p><strong>注意！！！！</strong> 本处将所有的<span
+class="math inline">\hbar = 1</span></p>
+<p>从上边的例子可以看出，H的求和符号代表的是哈密顿算符本身的构造。所以基矢需要和所有构造的内容都进行一遍相互作用。最明显的就是</p>
+<p><span class="math display">
+-J \sum_i \Delta S_i^z S_{i+1}^z \lvert \uparrow \uparrow \downarrow
+\downarrow \downarrow \rangle
+= - J \Delta \left( \frac{1}{4} - \frac{1}{4} - \frac{1}{4} +
+\frac{1}{4} \right) \lvert \uparrow \uparrow \downarrow \downarrow
+\downarrow \rangle
+</span></p>
+<h3 id="例程">例程：</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">N</span> <span class="op">=</span> <span class="fl">4</span><span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">% 初始化哈密顿矩阵</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">H</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="fl">2</span><span class="op">^</span><span class="va">N</span><span class="op">,</span> <span class="fl">2</span><span class="op">^</span><span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">% 遍历所有基矢</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">%{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    对于这个系统来说，所有的状态都可以用二进制完全表示</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    如从<span class="fl">0000</span> <span class="op">~</span> <span class="fl">1111</span>表示<span class="va">N</span> <span class="op">=</span> <span class="fl">4</span>时的所有基矢的状态</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    生成哈密顿量矩阵的步骤就是根据这些基矢和哈密顿算符的定义</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    写出所有矩阵元上的元素</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    遍历基矢<span class="op">|</span><span class="va">a</span><span class="op">&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    例如从<span class="op">|</span><span class="fl">0000</span><span class="op">&gt;</span> <span class="op">~</span> <span class="op">|</span><span class="fl">1111</span><span class="op">&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">%}</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="va">a</span> <span class="op">=</span> <span class="fl">0</span><span class="op">:</span>(<span class="fl">2</span><span class="op">^</span><span class="va">N</span> <span class="op">-</span> <span class="fl">1</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 对每个基矢 |a&gt; 根据上边的计算例子，计算他对于哈密顿矩阵的贡献</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">%{</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        基矢本身由<span class="va">N个元素组成</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="op">|</span><span class="va">XOXX</span><span class="op">&gt;</span> <span class="op">|</span><span class="va">XXOX</span><span class="op">&gt;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>          <span class="op">^</span>       <span class="op">^</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>          <span class="va">i</span>       <span class="va">j</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        然后再检查基矢的组成是否可以满足算符的条件</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        根据基矢的组成可以求得对于各个矩阵元的贡献</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">%}</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="va">i</span> <span class="op">=</span> <span class="fl">0</span><span class="op">:</span>(<span class="va">N</span> <span class="op">-</span> <span class="fl">1</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 只考虑i的下一个邻位</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        <span class="va">j</span> <span class="op">=</span> <span class="va">mod</span>(<span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 获取|a&gt;态的第i位的值</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">ai</span> <span class="op">=</span> <span class="va">get_state_index</span>(<span class="va">a</span><span class="op">,</span> <span class="va">i</span>)<span class="op">;</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 获取|a&gt;态的第j位的值</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        <span class="va">aj</span> <span class="op">=</span> <span class="va">get_state_index</span>(<span class="va">a</span><span class="op">,</span> <span class="va">j</span>)<span class="op">;</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        <span class="co">% Sz项</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        <span class="co">%{</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>            <span class="va">S</span><span class="op">^</span><span class="va">z_i</span> <span class="va">S</span><span class="op">^</span><span class="va">z_i</span><span class="op">+</span><span class="fl">1</span> 算符不改变状态，但是会产生系数<span class="fl">1</span><span class="op">/</span><span class="fl">2</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            <span class="va">S</span><span class="op">^</span><span class="va">z</span> <span class="op">|</span><span class="fl">1</span><span class="op">&gt;</span> <span class="op">=</span>  <span class="fl">1</span><span class="op">/</span><span class="fl">2</span> <span class="op">|</span><span class="fl">1</span><span class="op">&gt;</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>            <span class="va">S</span><span class="op">^</span><span class="va">z</span> <span class="op">|</span><span class="fl">0</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span> <span class="op">|</span><span class="fl">1</span><span class="op">&gt;</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>            由于算符不改变状态，所以在计算<span class="op">&lt;</span><span class="va">m</span><span class="op">|</span><span class="va">H</span><span class="op">|</span><span class="va">n</span><span class="op">&gt;</span>时只有对角元<span class="op">&lt;</span><span class="va">n</span><span class="op">|</span><span class="va">n</span><span class="op">&gt;</span>有效</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="co">%}</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="va">ai</span> <span class="op">==</span> <span class="va">aj</span>                             </span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>            <span class="co">% 当ij同向，±1/2 * ±1/2 = 1/4</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>            <span class="co">% 注意！！！！ 这里具体+什么，需要根据H的具体构造</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            <span class="va">H</span>(<span class="va">a</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">a</span><span class="op">+</span><span class="fl">1</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">a</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">a</span><span class="op">+</span><span class="fl">1</span>) <span class="op">+</span> <span class="fl">0.25</span><span class="op">;</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            <span class="co">% 否则当ij反向时，-1/4</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>            <span class="co">% 注意！！！！ 这里具体+什么，需要根据H的具体构造</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            <span class="va">H</span>(<span class="va">a</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">a</span><span class="op">+</span><span class="fl">1</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">a</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">a</span><span class="op">+</span><span class="fl">1</span>) <span class="op">-</span> <span class="fl">0.25</span><span class="op">;</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="co">% SxSx + SySy项</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        <span class="co">%{</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>            <span class="va">S</span><span class="op">^</span><span class="va">p_i</span> <span class="va">S</span><span class="op">^</span><span class="va">n_i</span><span class="op">+</span><span class="fl">1</span> 算符会改变状态<span class="op">|</span><span class="va">a</span><span class="op">&gt;</span>到<span class="op">|</span><span class="va">b</span><span class="op">&gt;</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>            <span class="va">S</span><span class="op">^</span><span class="va">p_i</span> <span class="va">S</span><span class="op">^</span><span class="va">n_i</span><span class="op">+</span><span class="fl">1</span> <span class="op">|</span><span class="fl">01</span><span class="op">&gt;</span> <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span> <span class="op">|</span><span class="fl">10</span><span class="op">&gt;</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>            <span class="op">&lt;</span><span class="va">b</span><span class="op">|</span><span class="va">S</span><span class="op">^</span><span class="va">p_i</span> <span class="va">S</span><span class="op">^</span><span class="va">n_i</span><span class="op">+</span><span class="fl">1</span><span class="op">|</span><span class="va">a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span> <span class="op">&lt;</span><span class="va">b</span><span class="op">|</span><span class="va">a</span><span class="op">&gt;</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>            当<span class="va">a</span> <span class="op">=</span> <span class="op">|</span><span class="fl">10</span><span class="op">&gt;</span> <span class="va">S</span><span class="op">^</span><span class="va">p_i</span> <span class="va">S</span><span class="op">^</span><span class="va">n_i</span><span class="op">+</span><span class="fl">1</span>无效 <span class="va">S</span><span class="op">^</span><span class="va">n_i</span> <span class="va">S</span><span class="op">^</span><span class="va">p_i</span><span class="op">+</span><span class="fl">1</span>有效</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>            当<span class="va">a</span> <span class="op">=</span> <span class="op">|</span><span class="fl">01</span><span class="op">&gt;</span> <span class="va">S</span><span class="op">^</span><span class="va">p_i</span> <span class="va">S</span><span class="op">^</span><span class="va">n_i</span><span class="op">+</span><span class="fl">1</span>有效 <span class="va">S</span><span class="op">^</span><span class="va">n_i</span> <span class="va">S</span><span class="op">^</span><span class="va">p_i</span><span class="op">+</span><span class="fl">1</span>无效</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        <span class="co">%}</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="va">ai</span> <span class="op">~=</span> <span class="va">aj</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>            <span class="co">% a = |10&gt; -&gt; b = |01&gt;</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>            <span class="co">% a = |01&gt; -&gt; b = |10&gt;</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>            <span class="va">b</span> <span class="op">=</span> <span class="va">flip_state</span>(<span class="va">a</span><span class="op">,</span> <span class="va">i</span>)<span class="op">;</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>            <span class="va">b</span> <span class="op">=</span> <span class="va">flip_state</span>(<span class="va">b</span><span class="op">,</span> <span class="va">j</span>)<span class="op">;</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>            <span class="co">%{ </span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>                最终无论是<span class="va">S</span><span class="op">^</span><span class="va">p_i</span> <span class="va">S</span><span class="op">^</span><span class="va">n_i</span><span class="op">+</span><span class="fl">1</span>有效还是<span class="va">S</span><span class="op">^</span><span class="va">n_i</span> <span class="va">S</span><span class="op">^</span><span class="va">p_i</span><span class="op">+</span><span class="fl">1</span>有效</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>                最终<span class="op">&lt;</span><span class="va">b</span><span class="op">|</span><span class="va">H</span><span class="op">|</span><span class="va">a</span><span class="op">&gt;</span>的矩阵元还是<span class="fl">1</span><span class="op">/</span><span class="fl">2</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>            <span class="co">%}</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>            <span class="co">% 注意！！！！ 这里具体+什么，需要根据H的具体构造</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>            <span class="va">H</span>(<span class="va">a</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">b</span><span class="op">+</span><span class="fl">1</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">a</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">b</span><span class="op">+</span><span class="fl">1</span>) <span class="op">+</span> <span class="fl">0.5</span><span class="op">;</span> </span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="va">index</span> <span class="op">=</span> <span class="va">get_state_index</span>(<span class="va">state</span><span class="op">,</span> <span class="va">position</span>)</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 获取state在指定position的二进制值</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>    <span class="va">mask</span> <span class="op">=</span> <span class="va">bitshift</span>(<span class="fl">1</span><span class="op">,</span> <span class="va">position</span>)<span class="op">;</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    <span class="va">index</span> <span class="op">=</span> <span class="va">bitand</span>(<span class="va">state</span><span class="op">,</span> <span class="va">mask</span>)<span class="op">;</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>    <span class="va">index</span> <span class="op">=</span> <span class="va">bitshift</span>(<span class="va">index</span><span class="op">,</span> <span class="op">-</span><span class="va">position</span>)<span class="op">;</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="va">new_state</span> <span class="op">=</span> <span class="va">flip_state</span>(<span class="va">state</span><span class="op">,</span> <span class="va">position</span>)</span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 翻转state在指定position的二进制值</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="va">mask</span> <span class="op">=</span> <span class="va">bitshift</span>(<span class="fl">1</span><span class="op">,</span> <span class="va">position</span>)<span class="op">;</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="va">new_state</span> <span class="op">=</span> <span class="va">bitxor</span>(<span class="va">state</span><span class="op">,</span> <span class="va">mask</span>)<span class="op">;</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<p>如果不考虑周期边界，那么在邻位j处增加一个判断。</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="va">i</span> <span class="op">=</span> <span class="fl">0</span><span class="op">:</span>(<span class="va">N</span> <span class="op">-</span> <span class="fl">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 只考虑i的下一个邻位</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">j</span> <span class="op">=</span> <span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">j</span> <span class="op">==</span> <span class="va">N</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">break</span><span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 宇宙星光灿烂</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<h2 id="截断法">截断法</h2>
+<p>粒子的希尔伯特空间是<span
+class="math inline">2^N</span>，精确对角化在多个粒子的时候有巨大的限制。</p>
+<p>考虑限制粒子数量为少量的几个，这样可以得到靠近基态的一些能量分布。这是因为认为多数的粒子占据态对于基态能量的贡献不大。</p>
+<p>因为是认为截断精度，所以称之为截断法，产生的误差是截断误差。</p>
+<h3 id="例程-1">例程：</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">% 参数设置</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">L</span> <span class="op">=</span> <span class="fl">5</span><span class="op">;</span>  <span class="co">% 链的长度</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="va">N</span> <span class="op">=</span> <span class="fl">2</span><span class="op">;</span>  <span class="co">% 处于激发态的粒子数</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="va">J</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span>  <span class="co">% 相互作用强度</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="va">Delta</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span>  <span class="co">% 自旋相互作用参数</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">% 生成所有可能的状态</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">% 这里有从1:L中选N的所有组合，作为激发粒子的坐标</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="va">states</span> <span class="op">=</span> <span class="va">nchoosek</span>(<span class="fl">1</span><span class="op">:</span><span class="va">L</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">% 初始化哈密顿矩阵</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="va">num_states</span> <span class="op">=</span> <span class="va">size</span>(<span class="va">states</span><span class="op">,</span> <span class="fl">1</span>)<span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="va">H</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="va">num_states</span><span class="op">,</span> <span class="va">num_states</span>)<span class="op">;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">% 填充哈密顿矩阵</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="va">i</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">num_states</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 根据激发粒子的坐标，生成类似[0 1 1 0 0]的态 计为|i&gt;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">current_state</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="fl">1</span><span class="op">,</span> <span class="va">L</span>)<span class="op">;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="va">current_state</span>(<span class="va">states</span>(<span class="va">i</span><span class="op">,</span> <span class="op">:</span>)) <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 根据激发粒子的坐标，生成类似[0 1 0 1 0]的态 计为|j&gt;</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="va">j</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">num_states</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">next_state</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="fl">1</span><span class="op">,</span> <span class="va">L</span>)<span class="op">;</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">next_state</span>(<span class="va">states</span>(<span class="va">j</span><span class="op">,</span> <span class="op">:</span>)) <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 根据之前的|i&gt;!=|j&gt; 以及要求的H，写出矩阵元&lt;i|H|j&gt;</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 检查 S+ S- 和 S- S+ 项</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 根据|i&gt;|j&gt;态中的每一项进行判断</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="kw">for</span> <span class="va">k</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>(<span class="va">L</span><span class="op">-</span><span class="fl">1</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            <span class="co">% 如果发现两个态之间满足跃迁关系 |01&gt; or |10&gt;</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>            <span class="kw">if</span> <span class="va">current_state</span>(<span class="va">k</span>) <span class="op">~=</span> <span class="va">current_state</span>(<span class="va">k</span><span class="op">+</span><span class="fl">1</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                <span class="co">% 那么将current_state跃迁到态temp_state</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                <span class="va">temp_state</span> <span class="op">=</span> <span class="va">current_state</span><span class="op">;</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                <span class="va">temp_state</span>([<span class="va">k</span><span class="op">,</span> <span class="va">k</span><span class="op">+</span><span class="fl">1</span>]) <span class="op">=</span> <span class="va">temp_state</span>([<span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">k</span>])<span class="op">;</span> <span class="co">% 交换相邻自旋</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                <span class="co">%如果跃迁后的temp_state与|j&gt;相同</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                <span class="kw">if</span> <span class="va">all</span>(<span class="va">next_state</span> <span class="op">==</span> <span class="va">temp_state</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>                    <span class="va">H</span>(<span class="va">i</span><span class="op">,</span> <span class="va">j</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">i</span><span class="op">,</span> <span class="va">j</span>) <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">J</span><span class="op">;</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>                <span class="kw">end</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>            <span class="kw">end</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 根据之前的|i&gt; 以及要求的H，写出矩阵元&lt;i|H|i&gt;</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 计算对角线上的 S_z S_z 项</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="va">k</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>(<span class="va">L</span><span class="op">-</span><span class="fl">1</span>)</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>        <span class="va">H</span>(<span class="va">i</span><span class="op">,</span> <span class="va">i</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">i</span><span class="op">,</span> <span class="va">i</span>) <span class="op">-</span> <span class="va">Delta</span> <span class="op">*</span> (<span class="fl">2</span><span class="op">*</span><span class="va">current_state</span>(<span class="va">k</span>)<span class="op">-</span><span class="fl">1</span>) <span class="op">*</span> (<span class="fl">2</span><span class="op">*</span><span class="va">current_state</span>(<span class="va">k</span><span class="op">+</span><span class="fl">1</span>)<span class="op">-</span><span class="fl">1</span>) <span class="op">/</span> <span class="fl">4</span><span class="op">;</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="co">% 显示哈密顿矩阵</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="va">heatmap</span>(<span class="va">H</span>)<span class="op">;</span></span></code></pre></div>
+<h3 id="截断法求解费米子体系">截断法求解费米子体系</h3>
+<p><span class="math display">
+H = -J\sum_i (c_i^\dagger c_{i+1} + h.c.) + Un_in_{i+1} - \mu n_i
+</span></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">% 参数设置</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="va">L</span> <span class="op">=</span> <span class="fl">5</span><span class="op">;</span>  <span class="co">% 链的长度</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="va">N</span> <span class="op">=</span> <span class="fl">2</span><span class="op">;</span>  <span class="co">% 处于激发态的粒子数</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="va">J</span> <span class="op">=</span> <span class="fl">0</span><span class="op">;</span>  <span class="co">% 相互作用强度</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="va">U</span> <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="va">mu</span> <span class="op">=</span> <span class="fl">0</span><span class="op">;</span>  <span class="co">% 自旋相互作用参数</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">% 生成所有可能的状态</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">% 这里有从1:L中选N的所有组合，作为激发粒子的坐标</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="va">states</span> <span class="op">=</span> <span class="va">nchoosek</span>(<span class="fl">1</span><span class="op">:</span><span class="va">L</span><span class="op">,</span> <span class="va">N</span>)<span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">% 初始化哈密顿矩阵</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="va">num_states</span> <span class="op">=</span> <span class="va">size</span>(<span class="va">states</span><span class="op">,</span> <span class="fl">1</span>)<span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="va">H</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="va">num_states</span><span class="op">,</span> <span class="va">num_states</span>)<span class="op">;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">% 填充哈密顿矩阵</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="va">i</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">num_states</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 根据激发粒子的坐标，生成类似[0 1 1 0 0]的态 计为|i&gt;</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="va">current_state</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="fl">1</span><span class="op">,</span> <span class="va">L</span>)<span class="op">;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="va">current_state</span>(<span class="va">states</span>(<span class="va">i</span><span class="op">,</span> <span class="op">:</span>)) <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 根据激发粒子的坐标，生成类似[0 1 0 1 0]的态 计为|j&gt;</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="va">j</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">num_states</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">next_state</span> <span class="op">=</span> <span class="va">zeros</span>(<span class="fl">1</span><span class="op">,</span> <span class="va">L</span>)<span class="op">;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">next_state</span>(<span class="va">states</span>(<span class="va">j</span><span class="op">,</span> <span class="op">:</span>)) <span class="op">=</span> <span class="fl">1</span><span class="op">;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 根据之前的|i&gt;!=|j&gt; 以及要求的H，写出矩阵元&lt;i|H|j&gt;</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 根据|i&gt;|j&gt;态中的每一项进行判断</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        <span class="kw">for</span> <span class="va">k</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>(<span class="va">L</span><span class="op">-</span><span class="fl">1</span>)  <span class="co">% 这个k的遍历范围非常重要！！！</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>            <span class="co">% 如果发现两个谐振子之间满足可跃迁关系 |01&gt; or |10&gt;</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>            <span class="kw">if</span> <span class="va">current_state</span>(<span class="va">k</span>) <span class="op">~=</span> <span class="va">current_state</span>(<span class="va">k</span><span class="op">+</span><span class="fl">1</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>                <span class="co">% 那么将current_state跃迁到态temp_state</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>                <span class="va">temp_state</span> <span class="op">=</span> <span class="va">current_state</span><span class="op">;</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                <span class="va">temp_state</span>([<span class="va">k</span><span class="op">,</span> <span class="va">k</span><span class="op">+</span><span class="fl">1</span>]) <span class="op">=</span> <span class="va">temp_state</span>([<span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">k</span>])<span class="op">;</span> <span class="co">% 交换相邻自旋</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>                <span class="co">%如果跃迁后的temp_state与|j&gt;相同</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                <span class="kw">if</span> <span class="va">all</span>(<span class="va">next_state</span> <span class="op">==</span> <span class="va">temp_state</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                    <span class="va">H</span>(<span class="va">i</span><span class="op">,</span> <span class="va">j</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">i</span><span class="op">,</span> <span class="va">j</span>) <span class="op">-</span> <span class="va">J</span><span class="op">;</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                <span class="kw">end</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>            <span class="kw">end</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="va">k</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>(<span class="va">L</span><span class="op">-</span><span class="fl">1</span>)     <span class="co">% 这个k的遍历范围非常重要！！！</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 如果发现两个谐振子满足相邻关系</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="va">current_state</span>(<span class="va">k</span>) <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;&amp;</span> <span class="va">current_state</span>(<span class="va">k</span><span class="op">+</span><span class="fl">1</span>) <span class="op">==</span> <span class="fl">1</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>            <span class="va">H</span>(<span class="va">i</span><span class="op">,</span><span class="va">i</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">i</span><span class="op">,</span><span class="va">i</span>) <span class="op">+</span> <span class="va">U</span><span class="op">;</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">for</span> <span class="va">k</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">L</span>         <span class="co">% 这个k的遍历范围非常重要！！！</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 如果发现有谐振子的存在</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="va">current_state</span>(<span class="va">k</span>) <span class="op">==</span> <span class="fl">1</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>            <span class="va">H</span>(<span class="va">i</span><span class="op">,</span><span class="va">i</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">i</span><span class="op">,</span><span class="va">i</span>) <span class="op">-</span> <span class="va">mu</span><span class="op">;</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co">% 显示哈密顿矩阵</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="va">heatmap</span>(<span class="va">H</span>)<span class="op">;</span></span></code></pre></div>
+<p>当考虑周期边界条件时：</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">% 根据|i&gt;|j&gt;态中的每一项进行判断</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="va">k</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">L</span>     <span class="co">% 这个k的遍历范围非常重要！！！</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">% 如果发现两个谐振子之间满足可跃迁关系 |01&gt; or |10&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> <span class="va">current_state</span>(<span class="va">k</span>) <span class="op">~=</span> <span class="va">current_state</span>(<span class="va">mod</span>(<span class="va">k</span><span class="op">-</span><span class="fl">2</span><span class="op">,</span><span class="va">L</span>)<span class="op">+</span><span class="fl">1</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">% 那么将current_state跃迁到态temp_state</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">temp_state</span> <span class="op">=</span> <span class="va">current_state</span><span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">temp_state</span>([<span class="va">k</span><span class="op">,</span> <span class="va">mod</span>(<span class="va">k</span><span class="op">-</span><span class="fl">2</span><span class="op">,</span><span class="va">L</span>)<span class="op">+</span><span class="fl">1</span>]) <span class="op">=</span> <span class="va">temp_state</span>([<span class="va">mod</span>(<span class="va">k</span><span class="op">-</span><span class="fl">2</span><span class="op">,</span><span class="va">L</span>)<span class="op">+</span><span class="fl">1</span><span class="op">,</span> <span class="va">k</span>])<span class="op">;</span> <span class="co">% 交换相邻自旋</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">%如果跃迁后的temp_state与|j&gt;相同</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="va">all</span>(<span class="va">next_state</span> <span class="op">==</span> <span class="va">temp_state</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>            <span class="va">H</span>(<span class="va">i</span><span class="op">,</span> <span class="va">j</span>) <span class="op">=</span> <span class="va">H</span>(<span class="va">i</span><span class="op">,</span> <span class="va">j</span>) <span class="op">-</span> <span class="va">J</span><span class="op">;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>

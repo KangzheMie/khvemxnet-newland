@@ -1,0 +1,35 @@
+
+<script>
+  if (window.location.href.indexOf('?page=RrJm_2024-02-18_MATLAB使用例子：多项式拟合') === -1) {
+    window.location.href = '/index.html?page=./blog/RrJm_2024-02-18_MATLAB使用例子：多项式拟合.html';
+  }
+</script>
+<h1 id="matlab使用例子多项式拟合">MATLAB使用例子：多项式拟合</h1>
+<h2 id="例子">例子</h2>
+<h3 id="定义待拟合的函数">定义待拟合的函数</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">% 定义函数 gamma 和 ceff</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">gamma</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">lambda</span>) <span class="op">-</span>(<span class="fl">1</span> <span class="op">+</span> <span class="va">lambda</span>)<span class="op">/</span><span class="fl">2</span> <span class="op">.*</span> <span class="va">log</span>((<span class="fl">1</span> <span class="op">+</span> <span class="va">lambda</span>)<span class="op">/</span><span class="fl">2</span>) <span class="op">-</span> (<span class="fl">1</span> <span class="op">-</span> <span class="va">lambda</span>)<span class="op">/</span><span class="fl">2</span> <span class="op">.*</span> <span class="va">log</span>((<span class="fl">1</span> <span class="op">-</span> <span class="va">lambda</span>)<span class="op">/</span><span class="fl">2</span>)<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">ceff</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">beta</span>) <span class="va">integral</span>(<span class="op">@</span>(<span class="va">lambda</span>) <span class="va">gamma</span>(<span class="va">lambda</span>) <span class="op">.*</span> (<span class="va">lambda</span><span class="op">./</span>(<span class="fl">1</span> <span class="op">-</span> <span class="va">lambda</span><span class="op">.^</span><span class="fl">2</span>)) <span class="op">.*</span> (<span class="va">sqrt</span>(<span class="fl">1</span> <span class="op">-</span> <span class="va">beta</span><span class="op">.^</span><span class="fl">2</span>)<span class="op">./</span><span class="va">sqrt</span>(<span class="va">lambda</span><span class="op">.^</span><span class="fl">2</span> <span class="op">-</span> <span class="va">beta</span><span class="op">.^</span><span class="fl">2</span>))<span class="op">,</span> <span class="va">beta</span><span class="op">,</span> <span class="fl">1</span>)<span class="op">;</span></span></code></pre></div>
+<p>这是一个看起来行为复杂的函数<span
+class="math inline">c_{eff}(\beta)</span>，不管形式如何，写出来能求出来数值就可以。</p>
+<h3 id="生成待拟合的数据集">生成待拟合的数据集</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">% 数据生成用于拟合</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">beta_values</span> <span class="op">=</span> <span class="va">linspace</span>(<span class="fl">0.1</span><span class="op">,</span> <span class="fl">0.9</span><span class="op">,</span> <span class="fl">10</span>)<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">ceff_values</span> <span class="op">=</span> <span class="va">arrayfun</span>(<span class="va">ceff</span><span class="op">,</span> <span class="va">beta_values</span>)<span class="op">;</span></span></code></pre></div>
+<p>待拟合的数据集由自变量<span
+class="math inline">\beta</span>的值和因变量<span
+class="math inline">c_{eff}</span>的值组成。</p>
+<h3 id="函数拟合">函数拟合</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode matlab"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">% 函数近似</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">% 这里以二次多项式为例</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">p</span> <span class="op">=</span> <span class="va">polyfit</span>(<span class="va">beta_values</span><span class="op">,</span> <span class="va">ceff_values</span><span class="op">,</span> <span class="fl">2</span>)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">% 拟合后的函数</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">f</span> <span class="op">=</span> <span class="op">@</span>(<span class="va">beta</span>) <span class="va">p</span>(<span class="fl">1</span>)<span class="op">*</span><span class="va">beta</span><span class="op">.^</span><span class="fl">2</span> <span class="op">+</span> <span class="va">p</span>(<span class="fl">2</span>)<span class="op">*</span><span class="va">beta</span> <span class="op">+</span> <span class="va">p</span>(<span class="fl">3</span>)<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="va">ezplot</span>(<span class="va">ceff</span><span class="op">,</span>[<span class="fl">0</span><span class="op">,</span><span class="fl">1</span>])<span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="va">hold</span> <span class="va">on</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="va">ezplot</span>(<span class="va">f</span><span class="op">,</span>[<span class="fl">0</span><span class="op">,</span><span class="fl">1</span>])<span class="op">;</span></span></code></pre></div>

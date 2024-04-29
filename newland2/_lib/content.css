@@ -3,7 +3,7 @@
     --background-color-content: #333;
     --background-color-header: #555;
     --background-color-nav: #777;
-    --background-color-note: #888;
+    --background-color-seciotn: #222;
     --background-color-footer: #333;   
 
     --border-color-content: #FFF;
@@ -52,9 +52,11 @@ body {
     border-bottom: 1px solid var(--border-color-nav);
 }
 
-#note{
+#section{
+    padding: 0px 100px 60px;
+
     min-height: 1000px;
-    background-color: var(--background-color-note);
+    background-color: var(--background-color-seciotn);
 }
 
 #footer{

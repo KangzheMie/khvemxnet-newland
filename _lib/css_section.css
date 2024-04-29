@@ -1,4 +1,10 @@
 /* ----------------------------------内容区域------------------------------------ */
+@font-face {
+  font-family: "pixel-cn";
+  src: url(./TTF/ark-pixel-12px-proportional-zh_cn.woff2) format(woff2);
+}
+
+
 section {
     flex: 1;
     padding: 2px 100px;
@@ -11,18 +17,22 @@ section {
 
 section p {
     text-indent: 2em;
+    font-family: "pixel-cn"
 }
 
 section li {
     font-size: 18px;
+    font-family: "pixel-cn"
 }
 
 section li p{
     text-indent: 0em;
+    font-family: "pixel-cn"
 }
 
 .sourceCode{
   font-size: 17px;
+  font-family: "pixel-cn"
 }
 
 .math{
