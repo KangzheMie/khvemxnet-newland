@@ -29,7 +29,7 @@ footer a{
     }
 }
 
-.visitor-wrapper {
+.flex-center {
     display: flex; /* 使用flex布局使子元素排列在同一行 */
     align-items: center; /* 垂直居中对齐子元素 */
     justify-content: center; /* 水平居中对齐子元素 */

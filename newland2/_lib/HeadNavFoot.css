@@ -53,9 +53,15 @@
     border-right: 1px solid var(--border-color-nav);
 }
 
+#nav .rightli{
+    float: right;
+    border-right: 0px;
+    border-left: 1px solid var(--border-color-nav);
+}
+
 #nav a{
-    margin: 5px 13px;
-    padding: 0px;
+    margin: 1px;
+    padding: 5px 13px;
 
     font-family: var(--font-family), sans-serif;
     font-size: 1em;
@@ -126,7 +132,7 @@
     text-decoration: none;
 }
 
-.visitor-wrapper {
+.flex-center {
     display: flex; /* 使用flex布局使子元素排列在同一行 */
     align-items: center; /* 垂直居中对齐子元素 */
     justify-content: center; /* 水平居中对齐子元素 */
