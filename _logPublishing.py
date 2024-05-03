@@ -70,9 +70,7 @@ def add_script_to_html(directory_path):
             content = file.read()
             script = f"""
 <script>
-  if (window.location.href.indexOf('?page={html_file.stem}') === -1) {{
-    window.location.href = '/index.html?page=./log/{html_file.stem}.html';
-  }}
+window.location.href = '/index.html?page=./log/{html_file.stem}.html';
 </script>
 """
             # 检查文件是否已包含该脚本

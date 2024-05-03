@@ -1,0 +1,223 @@
+:root {
+    --color-section-h1: #FFF;
+    --color-section-h2: #FFF;
+    --color-section-h3: #FFF;
+    --color-section-h4: #FFF;
+    --color-section-p: #FFF;
+    --color-section-a: #FFF;
+
+    --color-section-border-h1: #FF0;
+    --color-section-border-timeline-outer: #F00;
+    --color-section-border-timeline-inner: #0F0;
+    --color-section-border-timeline-date: #00F;
+
+    --font-size-section-p: 18px;
+}
+
+/* ========== 普通 ========== */
+
+#section h1 {
+    margin: .5em 0em;
+    padding: 0em 0em 0em 1em;
+
+    font-family: var(--font-family);
+    font-size: 2em;
+
+    color: var(--color-section-h1);
+
+    border-left: 5px solid var(--color-section-border-h1) ;
+}
+
+#section h2 {
+    margin: 0px;
+    padding: 0.2em 0em 0.2em;
+
+    font-family: var(--font-family);
+    font-size: 1.8em;
+
+    color: var(--color-section-h2);
+}
+
+#section h3 {
+    margin: 0px;
+    padding: 0.1em 0em 0.1em;
+
+    font-family: var(--font-family);
+    font-size: 1.3em;
+
+    color: var(--color-section-h3);
+}
+
+#section h4 {
+    margin: 0px;
+    padding: 0.1em 0em 0.1em;
+
+    font-family: var(--font-family);
+    font-size: 1.2em;
+
+    color: var(--color-section-h4);
+}
+
+#section p{
+    margin: 0px;
+    padding: 0.3em 0em;
+
+    font-family: var(--font-family);
+    font-size: var(--font-size-section-p);
+
+    color: var(--color-section-p);
+    text-indent: 2em;
+}
+
+#section a{
+    font-family: var(--font-family);
+
+    color: var(--color-section-a);
+
+    text-decoration: none;
+}
+
+#section figure{
+    margin: 0;
+}
+
+#section figcaption {
+    text-align: center;
+    font-size: var(--font-size-section-p);
+    font-family: var(--font-family);
+    color: var(--color-section-p);
+}
+
+#section img{
+    margin: auto;
+    padding: 0px;
+
+    max-width: 100%;
+    display: block;
+}
+
+#section #mainPage-img{
+    margin: auto;
+    padding: 0px;
+
+    width: 60%;
+    display: block;
+}
+
+#section li {
+    font-size: var(--font-size-section-p);
+    font-family: var(--font-family);
+
+    color: var(--color-section-p);
+}
+
+#section li p{
+    text-indent: 0em;
+}
+
+/* ========== 时间线 ========== */
+#section .timeline{
+    margin: 0px 0px 10px 0px;
+    padding: 0px;
+
+    width: auto;
+    border: 1px solid var(--color-section-border-timeline-outer);
+    border-radius: 3px;
+}
+
+#section .timeline h2{
+    margin: 0px;
+    padding: 0px;
+
+    text-align: center;
+    color: var(--color-section-h2);
+}
+
+#section .timeline ul{
+    margin: auto;
+    padding: 0px;
+
+    width: 95%;
+    list-style: none;
+}
+
+#section .timeline li{
+    line-height: 2em;
+    border-bottom: 1px dashed var(--color-section-border-timeline-inner);
+}
+
+#section .timeline li:last-child{
+    border: none;
+}
+
+#section .timeline .date{
+    margin: 0px;
+    padding: 0px 2px 0px 0px;
+
+    font-family: var(--font-family);
+
+    color: var(--color-section-p);
+    border-right: 2px solid var(--color-section-border-timeline-date);
+}
+
+#section .timeline .event{
+    margin: 0px;
+    padding: 0px;
+}
+
+/* ========= Markdown ========= */
+/* 数学 */
+.math{
+    color: var(--color-section-p);
+    font-size: var(--font-size-section-p);
+    max-width: 100%;
+}
+
+.katex-display>.katex {
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+/* markdown的块状样式 */
+blockquote {
+    margin: 1em 0 1em 1.7em;
+    padding-left: 1em;
+    border-left: 2px solid #e6e6e6;
+    color: #606060;
+}
+
+/* 文章markdown列表 */
+table {
+    padding: 2em;
+    border-collapse: collapse;
+    width: auto;
+    overflow-x: auto;
+    display: block;
+    font-family: var(--font-family);
+}
+table caption {
+    margin-bottom: 0.75em;
+}
+tbody {
+    margin-top: 0.5em;
+    border-top: 1px solid var(--color-section-p);
+    border-bottom: 1px solid var(--color-section-p);
+}
+th {
+    border-top: 1px solid var(--color-section-p);
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    color: var(--color-section-p);
+    font-size: var(--font-size-section-p);
+}
+td {
+    padding: 0.125em 0.5em 0.25em 0.5em;
+    color: var(--color-section-p);
+    font-size: var(--font-size-section-p);
+}
+
+/* 强调 */
+strong{
+    font-size: var(--font-size-section-p);
+}
+
+
