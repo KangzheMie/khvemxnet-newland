@@ -1,23 +1,3 @@
-:root {
-    --background-color-body: #000;
-    --background-color-content: #333;
-    --background-color-header: #555;
-    --background-color-nav: #777;
-    --background-color-seciotn: #222;
-    --background-color-footer: #333;   
-
-    --border-color-content: #FFF;
-    --border-color-nav: #FFF;
-    --border-color-footer: #FFF;
-
-    --background-image-header: url('./theme/theme_Lyla/Main_Lyla.jpg');
-}
-
-@font-face {
-    font-family: "pixel-cn";
-    src: url(./TTF/ark-pixel-12px-proportional-zh_cn.woff2) format(woff2);
-}
-
 body {
     background-color: var(--background-color-body);
     margin: 0px;

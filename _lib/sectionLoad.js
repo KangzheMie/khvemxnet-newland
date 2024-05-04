@@ -55,21 +55,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 点击事件 阻止页面重新加载 仅加载html文本到<div id="section">中
 document.body.addEventListener('click', function(event) {
-    if (event.target.matches('#nav .alink')) {
-        // 阻止链接默认行为
-        // 链接默认跳转到指定链接并重新加载页面
-        event.preventDefault();
-        // 阻止并根据#nav .alink中的href参数确定需要加载内容的对象
-        const contentUrl = event.target.getAttribute('href') || './blank.html';
-        // 调用loadSection直接加载href指定内容中的html文本，而不需要重新加载整个网页
-        loadSection(contentUrl);
-    }
-
-    // if (event.target.matches('#section .timeline a')) {
-    //     // event.preventDefault(); //我宣布！本网站依靠此bug顺利运行，不要去掉这个注释
+    // if (event.target.matches('#nav .alink')) {
+    //     // 阻止链接默认行为
+    //     // 链接默认跳转到指定链接并重新加载页面
+    //     // event.preventDefault();
+    //     // 阻止并根据#nav .alink中的href参数确定需要加载内容的对象
     //     const contentUrl = event.target.getAttribute('href') || './blank.html';
+    //     // 调用loadSection直接加载href指定内容中的html文本，而不需要重新加载整个网页
     //     loadSection(contentUrl);
     // }
+
+    if (event.target.matches('#section .timeline a')) {
+        event.preventDefault();
+        const contentUrl = event.target.getAttribute('href') || './blank.html';
+        loadSection(contentUrl);
+    }
 
     if (event.target.matches('#header a')) {
         event.preventDefault();

@@ -1,13 +1,3 @@
-/* =========================全局变量========================= */
-:root {
-    --text-color-nav: #FFF;
-    --text-color-footer: #FFF;
-
-    --background-color-nav-li-hover: #AAA;
-
-    --font-family: "pixel-cn";
-}
-
 /* =========================头图部分========================= */
 
 #header h1{
