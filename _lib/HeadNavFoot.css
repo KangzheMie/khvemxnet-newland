@@ -109,7 +109,7 @@
     padding: 0px;
 
     font-family: var(--font-family);
-    font-size: 15px;
+    font-size: var(--font-size-section-p);
 
     color: var(--text-color-footer);
 
@@ -133,7 +133,7 @@
 
     font-family: "pixel-cn", sans-serif;
     font-weight: normal;
-    font-size: 15px;
+    font-size: var(--font-size-section-p);
     
     color: var(--text-color-footer);;
 }

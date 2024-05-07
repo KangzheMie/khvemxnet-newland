@@ -14,4 +14,15 @@
     #section{
         padding: 7%;
     }
+    :root {
+        --font-size-section-p: 17px;
+    }
+    #footer p, #visitorCount{
+        font-size: 15px;
+    }
+    #content{
+        border-left : none;
+        border-right : none;
+        border-bottom: none;
+    }
 }

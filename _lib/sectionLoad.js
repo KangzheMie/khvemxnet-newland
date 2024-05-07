@@ -24,13 +24,7 @@ function loadSection(contentUrl) {
         document.getElementById('section').innerHTML = htmltext;
         renderMath();
         // 使用HTML5 History API的 pushState 方法更新浏览器的地址栏，同时不重新加载页面。
-        if(contentUrl == './ciallo.html'){
-            // ciallo页面是index的默认内容
-            history.pushState({ path: contentUrl }, '', 'index.html');
-        }
-        else {
-            history.pushState({ path: contentUrl }, '', contentUrl);
-        }
+        // history.pushState({ path: contentUrl }, '', contentUrl);
     }).catch(function(err) {
         console.warn('Component failed to load', err);
     }); 
@@ -54,36 +48,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // 点击事件 阻止页面重新加载 仅加载html文本到<div id="section">中
-document.body.addEventListener('click', function(event) {
-    // if (event.target.matches('#nav .alink')) {
-    //     // 阻止链接默认行为
-    //     // 链接默认跳转到指定链接并重新加载页面
-    //     // event.preventDefault();
-    //     // 阻止并根据#nav .alink中的href参数确定需要加载内容的对象
-    //     const contentUrl = event.target.getAttribute('href') || './blank.html';
-    //     // 调用loadSection直接加载href指定内容中的html文本，而不需要重新加载整个网页
-    //     loadSection(contentUrl);
-    // }
+// document.body.addEventListener('click', function(event) {
+//     // if (event.target.matches('#nav .alink')) {
+//     //     // 阻止链接默认行为
+//     //     // 链接默认跳转到指定链接并重新加载页面
+//     //     // event.preventDefault();
+//     //     // 阻止并根据#nav .alink中的href参数确定需要加载内容的对象
+//     //     const contentUrl = event.target.getAttribute('href') || './blank.html';
+//     //     // 调用loadSection直接加载href指定内容中的html文本，而不需要重新加载整个网页
+//     //     loadSection(contentUrl);
+//     // }
+//     // 通过测试发现，如果阻止跳转，浏览器的后退只会记录一次的历史记录，无法回退两次
 
-    if (event.target.matches('#section .timeline a')) {
-        event.preventDefault();
-        const contentUrl = event.target.getAttribute('href') || './blank.html';
-        loadSection(contentUrl);
-    }
+//     if (event.target.matches('#section .timeline a')) {
+//         event.preventDefault();
+//         const contentUrl = event.target.getAttribute('href') || './blank.html';
+//         loadSection(contentUrl);
+//     }
 
-    if (event.target.matches('#header a')) {
-        event.preventDefault();
-        const contentUrl = event.target.getAttribute('href') || './blank.html';
-        loadSection(contentUrl);
-    }
-});
-
-// 当用户前进或者后退操作时，检测url并重新加载网页
-window.addEventListener('popstate', function(event) {
-    var newUrl = location.href;
-    if(newUrl.includes("index"))
-        loadSection('./ciallo.html');
-    else
-        loadSection(newUrl);
-});
-
+//     if (event.target.matches('#header a')) {
+//         event.preventDefault();
+//         const contentUrl = event.target.getAttribute('href') || './blank.html';
+//         loadSection(contentUrl);
+//     }
+// });

@@ -1,0 +1,11 @@
+
+Xlinx FPGA的供电结构, ['AI', '电路基础知识']
+放大器的压摆率和带宽, ['AI', '电路基础知识']
+Verilog case语句, ['AI', '电路基础知识']
+Verilog SDC约束文件的写法, ['AI', 'Verilog']
+Verilog中可调参数的写法, ['AI', 'Verilog']
+Verilog原语, ['AI', 'Verilog']
+Verilog异或, ['AI', 'Verilog']
+Vivado中MMCM和PLL的区别, ['AI', 'Verilog']
+Windows的快捷方式与链接, ['AI', '文件管理']
+使用Python处理PDF文件, ['AI', '文件管理']

@@ -18,8 +18,8 @@
     /* 内容部分 */
     --color-section-h1: #9df;
     --color-section-h2: #CFE4FD;
-    --color-section-h3: #FFF;
-    --color-section-h4: #FFF;
+    --color-section-h3: #CFE4FD;
+    --color-section-h4: #CFE4FD;
     --color-section-p: #FFF;
     --color-section-a: #aae;
 
@@ -29,7 +29,7 @@
     --color-section-border-timeline-date: #AAF;
 
     --font-family: "pixel-cn";
-    --font-size-section-p: 18px;
+    --font-size-section-p: 20px;
 
     /* 头图 */
     --background-image-header: url('./theme/theme_Lyla/Main_Lyla.jpg');

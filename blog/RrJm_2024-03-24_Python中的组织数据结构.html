@@ -11,7 +11,9 @@
 <li><p><strong>特性</strong>：不可变（immutable），意味着一旦创建，其内容不能被改变。</p></li>
 <li><p><strong>使用例子</strong>：</p>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_tuple <span class="op">=</span> (<span class="dv">1</span>, <span class="st">&quot;apple&quot;</span>, [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span></code></pre></div></li>
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_tuple <span class="op">=</span> (<span class="st">&#39;apple&#39;</span>, <span class="st">&#39;banana&#39;</span>, <span class="st">&#39;cherry&#39;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_tuple[<span class="dv">0</span>])  <span class="co"># 输出 &#39;apple&#39;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_tuple[<span class="dv">1</span>])  <span class="co"># 输出 &#39;banana&#39;</span></span></code></pre></div></li>
 </ul>
 <h3 id="列表list">列表（List）</h3>
 <ul>
@@ -20,8 +22,10 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <li><p><strong>特性</strong>：可变（mutable），列表的元素可以被修改、添加或删除。</p></li>
 <li><p><strong>使用例子</strong>：</p>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="op">=</span> [<span class="dv">1</span>, <span class="st">&quot;banana&quot;</span>, [<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>my_list.append(<span class="st">&quot;grape&quot;</span>)  <span class="co"># 添加元素</span></span></code></pre></div></li>
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="op">=</span> [<span class="st">&#39;apple&#39;</span>, <span class="st">&#39;banana&#39;</span>, <span class="st">&#39;cherry&#39;</span>, [<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>]]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_list[<span class="dv">0</span>])  <span class="co"># 输出 &#39;apple&#39;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_list[<span class="dv">1</span>])  <span class="co"># 输出 &#39;banana&#39;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>my_list.append(<span class="st">&quot;grape&quot;</span>)  <span class="co"># 添加元素</span></span></code></pre></div></li>
 </ul>
 <h3 id="字典dictionary">字典（Dictionary）</h3>
 <ul>
@@ -31,17 +35,20 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 <li><p><strong>使用例子</strong>：</p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_dict <span class="op">=</span> {<span class="st">&quot;name&quot;</span>: <span class="st">&quot;John&quot;</span>, <span class="st">&quot;age&quot;</span>: <span class="dv">30</span>, <span class="st">&quot;fruits&quot;</span>: [<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>]}</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>my_dict[<span class="st">&quot;age&quot;</span>] <span class="op">=</span> <span class="dv">31</span>  <span class="co"># 修改键值</span></span></code></pre></div></li>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>my_dict[<span class="st">&quot;age&quot;</span>] <span class="op">=</span> <span class="dv">31</span>  <span class="co"># 修改键值</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_dict[<span class="st">&#39;name&#39;</span>])  <span class="co"># 输出 &#39;John&#39;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(my_dict[<span class="st">&#39;age&#39;</span>])  <span class="co"># 输出 30</span></span></code></pre></div></li>
 </ul>
 <h3 id="集合set">集合（Set）</h3>
 <ul>
 <li><p><strong>符号</strong>：<code>{}</code>（创建非空集合时使用；空集合需用<code>set()</code>创建）</p></li>
 <li><p><strong>成员</strong>：唯一的对象，自动去重，可以是任何不可变类型。</p></li>
-<li><p><strong>特性</strong>：可变，可以添加或删除元素，但集合中的元素必须是唯一的。</p></li>
+<li><p><strong>特性</strong>：可变，可以添加或删除元素，但集合中的元素必须是唯一的。集合不支持通过索引来访问元素，因为集合是无序的，并且每个元素都是唯一的。</p></li>
 <li><p><strong>使用例子</strong>：</p>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_set <span class="op">=</span> {<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&quot;apple&quot;</span>}</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>my_set.add(<span class="st">&quot;banana&quot;</span>)  <span class="co"># 添加元素</span></span></code></pre></div></li>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>my_set.add(<span class="st">&quot;banana&quot;</span>)  <span class="co"># 添加元素</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;banana&#39;</span> <span class="kw">in</span> my_set)  <span class="co"># 输出 True</span></span></code></pre></div></li>
 </ul>
 <h3 id="总结">总结</h3>
 <ul>
