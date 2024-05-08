@@ -3,7 +3,7 @@ title: "使用Python处理PDF文件"
 date: "2024-03-10" # 格式为 YYYY-MM-DD
 categories: RrJm
 tags:
-  - AI
+  - Python
   - 文件管理
 summary: "使用脚本实现PDF文件的分割、合并以及转为图像"
 author: "ChatGPT"

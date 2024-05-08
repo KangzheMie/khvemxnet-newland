@@ -3,7 +3,7 @@ title: "Windows的快捷方式与链接"
 date: "2024-03-13" # 格式为 YYYY-MM-DD
 categories: RrJm
 tags:
-  - AI
+  - Windows
   - 文件管理
 summary: "快捷方式是Windows操作系统的特性，它并不是一种可以通用的属性。而链接提供了一个更加底层的文件系统的访问手段。"
 author: "ChatGPT"

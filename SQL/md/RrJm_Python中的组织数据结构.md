@@ -18,7 +18,9 @@ author: "ChatGPT"
 - **特性**：不可变（immutable），意味着一旦创建，其内容不能被改变。
 - **使用例子**：
   ```python
-  my_tuple = (1, "apple", [2, 3, 4])
+  my_tuple = ('apple', 'banana', 'cherry')
+  print(my_tuple[0])  # 输出 'apple'
+  print(my_tuple[1])  # 输出 'banana'
   ```
 
 ### 列表（List）
@@ -27,7 +29,9 @@ author: "ChatGPT"
 - **特性**：可变（mutable），列表的元素可以被修改、添加或删除。
 - **使用例子**：
   ```python
-  my_list = [1, "banana", [5, 6, 7]]
+  my_list = ['apple', 'banana', 'cherry', [5, 6, 7]]
+  print(my_list[0])  # 输出 'apple'
+  print(my_list[1])  # 输出 'banana'
   my_list.append("grape")  # 添加元素
   ```
 
@@ -39,16 +43,19 @@ author: "ChatGPT"
   ```python
   my_dict = {"name": "John", "age": 30, "fruits": ["apple", "banana"]}
   my_dict["age"] = 31  # 修改键值
+  print(my_dict['name'])  # 输出 'John'
+  print(my_dict['age'])  # 输出 30
   ```
 
 ### 集合（Set）
 - **符号**：`{}`（创建非空集合时使用；空集合需用`set()`创建）
 - **成员**：唯一的对象，自动去重，可以是任何不可变类型。
-- **特性**：可变，可以添加或删除元素，但集合中的元素必须是唯一的。
+- **特性**：可变，可以添加或删除元素，但集合中的元素必须是唯一的。集合不支持通过索引来访问元素，因为集合是无序的，并且每个元素都是唯一的。
 - **使用例子**：
   ```python
   my_set = {1, 2, 3, "apple"}
   my_set.add("banana")  # 添加元素
+  print('banana' in my_set)  # 输出 True
   ```
 
 ### 总结

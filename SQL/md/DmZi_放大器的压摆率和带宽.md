@@ -3,8 +3,8 @@ title: "放大器的压摆率和带宽"
 date: "2024-03-04" # 格式为 YYYY-MM-DD
 categories: DmZi
 tags:
-  - AI
-  - 电路基础知识
+  - 放大器
+  - 电路
 summary: "放大器的压摆率和带宽是描述不同模型的不同指标，并没有必然的关系"
 author: "ChatGPT"
 ---

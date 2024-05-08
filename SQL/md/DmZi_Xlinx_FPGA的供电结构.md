@@ -3,8 +3,8 @@ title: "Xlinx FPGA的供电结构"
 date: "2024-03-12" # 格式为 YYYY-MM-DD
 categories: DmZi
 tags:
-  - AI
-  - 电路基础知识
+  - FPGA
+  - 电路
 summary: "Xlinx FPGA的供电结构"
 author: "ChatGPT"
 ---

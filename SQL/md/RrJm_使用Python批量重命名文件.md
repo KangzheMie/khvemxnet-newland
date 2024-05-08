@@ -6,7 +6,7 @@ tags:
   - Python
   - 文件管理
 summary: "使用脚本实现一个文件夹下文件名的重命名"
-author: "ChatGPT and KhVeMx"
+author: "KhVeMx"
 ---
 
 # 使用Python批量重命名文件

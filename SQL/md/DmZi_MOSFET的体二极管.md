@@ -6,7 +6,7 @@ tags:
   - 电子学
   - 集成电路
 summary: "MOSFET的体二极管来自于衬底与源极相连"
-author: "KhVeMx & ChatGPT"
+author: "KhVeMx"
 ---
 
 # MOSFET的体二极管

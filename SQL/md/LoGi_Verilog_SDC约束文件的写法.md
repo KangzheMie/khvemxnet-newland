@@ -3,7 +3,6 @@ title: "Verilog SDC约束文件的写法"
 date: "2024-03-04" # 格式为 YYYY-MM-DD
 categories: LoGi
 tags:
-  - AI
   - Verilog
 summary: "SDC约束文件的写法"
 author: "ChatGPT"

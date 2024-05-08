@@ -3,8 +3,8 @@ title: "Verilog case语句"
 date: "2024-03-04" # 格式为 YYYY-MM-DD
 categories: LoGi
 tags:
-  - AI
-  - 电路基础知识
+  - Verilog
+  - 电路
 summary: "case语句有不同的变种，应对高阻与不定值"
 author: "ChatGPT"
 ---

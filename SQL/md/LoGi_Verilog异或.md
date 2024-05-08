@@ -3,7 +3,6 @@ title: "Verilog异或"
 date: "2024-03-04" # 格式为 YYYY-MM-DD
 categories: LoGi
 tags:
-  - AI
   - Verilog
 summary: "Verilog异或例子"
 author: "ChatGPT"

@@ -3,7 +3,6 @@ title: "Verilog中可调参数的写法"
 date: "2024-03-04" # 格式为 YYYY-MM-DD
 categories: LoGi
 tags:
-  - AI
   - Verilog
 summary: "在调用模块时应该如何设置模块内部的parameter"
 author: "ChatGPT"
