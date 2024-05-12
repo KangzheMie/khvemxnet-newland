@@ -1,0 +1,138 @@
+body {
+    background-color: var(--background-color-body);
+    background-image: var(--background-image-body);
+
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    margin: 0px;
+
+    display: flex;
+}
+
+/* =============== 菜单部分 =================*/
+
+#menu{
+    width: 250px;
+    min-width: 250px;
+    background-color: var(--background-color-menu);
+
+    margin: 0px 0px 0px auto;
+    word-wrap: break-word;
+
+    color: #fff;
+
+    flex-direction: column;
+
+    border-left : 3px solid var(--border-color-menu);
+    border-right : 3px solid var(--border-color-menu);
+
+    font-family: "pixel-cn";
+
+}
+
+#avatar-container{
+    width: 100%;
+    max-height: 250px;
+    min-height: 250px;
+
+    display: flex;
+    flex-direction: column;
+
+    border-bottom : 3px solid var(--border-color-menu);
+}
+
+#menu-nav{
+    margin: 0px 0px 20px;
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--background-color-menu-nav);
+
+    position: sticky;
+    top: 0; /* 到达顶部后停止 */
+
+}
+
+#menu-footer{
+    min-height: 32px;
+
+    margin: 40px 0px 0px;
+    padding: 5px;
+
+    background-color: var(--background-color-menu-footer);
+
+    border-top: 1px solid var(--border-color-footer);
+}
+
+/* =============== 内容展示部分 =================*/
+
+#content{
+    width: 1000px;
+    min-width: 1000px;
+    min-height: 100vh;
+    background-color: var(--background-color-content);
+
+    display: flex;
+    flex-direction: column;
+
+    margin: 0px auto 0px 10px;
+
+    border-left : 3px solid var(--border-color-content);
+    border-right : 3px solid var(--border-color-content);
+
+}
+
+#header{
+    height: 250px;
+
+    flex: 0 0 auto;
+
+    background-color: var(--background-color-header);
+    background-image: var(--background-image-header);
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat; 
+
+    border-bottom: 3px solid var(--border-color-nav);
+}
+
+#nav{
+    display: none;
+
+    min-height: 32px;
+
+    flex: 0 0 auto;
+
+    background-color: var(--background-color-nav);
+
+    border-bottom: 3px solid var(--border-color-nav);
+}
+
+#section{
+    padding-top: 50px;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 50px;
+
+    flex: 1 1 auto;
+
+    background-color: var(--background-color-seciotn);
+}
+
+#footer{
+    display: none;
+
+    min-height: 32px;
+
+    margin: 0px;
+    padding: 5px;
+
+    flex: 0 0 auto;
+
+    background-color: var(--background-color-footer);
+
+    border-top: 1px solid var(--border-color-footer);
+}

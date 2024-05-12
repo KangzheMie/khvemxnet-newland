@@ -1,0 +1,73 @@
+
+<script>
+    window.location.href = '/index.html?page=./blog/RrJm_2024-05-10_Nginx服务器ssl证书配置.html';
+</script>
+<h1 id="nginx服务器ssl证书配置">Nginx服务器ssl证书配置</h1>
+<h2 id="获取ssl证书">获取ssl证书</h2>
+<p>本网站使用阿里云提供服务。</p>
+<p>在阿里的控制台搜索ssl证书界面，即可每年领取20个证书的份额，每个证书现在有效期是3个月。</p>
+<p>填写申请域名材料即可申报一个证书。得到证书之后按照指示下载<code>.key</code>公钥文件和<code>.pem</code>私钥文件。</p>
+<h2 id="配置ssl证书">配置ssl证书</h2>
+<h3 id="第一步-放置证书">第一步 放置证书</h3>
+<p>首先在一个权限安全的地方存放好密钥文件，位置随意。</p>
+<h3 id="第二步-更改nginx的配置文件">第二步 更改nginx的配置文件</h3>
+<p>找到配置文件</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /etc/nginx/sites-available/default</span></code></pre></div>
+<p>写入</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>server {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#HTTPS的默认访问端口443。</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#如果未在此处配置HTTPS的默认访问端口，可能会造成Nginx无法启动。</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    listen <span class="dv">443</span> ssl<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#填写证书绑定的域名</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    server_name newland.khvemx.work<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#填写证书文件绝对路径</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    ssl_certificate path<span class="op">/</span>khvemx.work.pem<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#填写证书私钥文件绝对路径</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ssl_certificate_key path<span class="op">/</span>khvemx.work.key<span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    ssl_session_cache shared:SSL:<span class="dv">1</span><span class="er">m</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    ssl_session_timeout <span class="dv">5</span><span class="er">m</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#自定义设置使用的TLS协议的类型以及加密套件（以下为配置示例，请您自行评估是否需要配置）</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#TLS协议版本越高，HTTPS通信的安全性越高，但是相较于低版本TLS协议，高版本TLS协议对浏览器的兼容性较差。</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    ssl_ciphers ECDHE<span class="op">-</span>RSA<span class="op">-</span>AES128<span class="op">-</span>GCM<span class="op">-</span>SHA256:ECDHE:ECDH:AES:HIGH:<span class="op">!</span>NULL:<span class="op">!</span>aNULL:<span class="op">!</span>MD5:<span class="op">!</span>ADH:<span class="op">!</span>RC4<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    ssl_protocols TLSv1<span class="fl">.1</span> TLSv1<span class="fl">.2</span> TLSv1<span class="fl">.3</span><span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#表示优先使用服务端加密套件。默认开启</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    ssl_prefer_server_ciphers on<span class="op">;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    location <span class="op">/</span> {</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        root path<span class="op">/</span>html<span class="op">;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        index index.html<span class="op">;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        try_files $uri $uri<span class="op">/</span> <span class="op">=</span><span class="dv">404</span><span class="op">;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    location <span class="op">~</span> \.php$ {</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        include snippets<span class="op">/</span>fastcgi<span class="op">-</span>php.conf<span class="op">;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        fastcgi_pass unix:<span class="op">/</span>run<span class="op">/</span>php<span class="op">/</span>php8<span class="fl">.1</span><span class="op">-</span>fpm.sock<span class="op">;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="第三步-重定位http服务">第三步 重定位HTTP服务</h3>
+<p>如果想让来自80端口的http请求重定位到https上，写入</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>server {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    listen <span class="dv">80</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    server_name newland.khvemx.work<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    rewrite <span class="op">^</span>(.<span class="op">*</span>)$ https:<span class="op">//</span>newland.khvemx.work<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    location <span class="op">/</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        index index.html index.htm<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="第四步-检查和重启">第四步 检查和重启</h3>
+<p>然后回到bash中检查一下有无错误</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nginx</span> <span class="at">-t</span></span></code></pre></div>
+<p>如果没有错误就重启nginx服务，此时ssl就成功部署到nginx上了</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> restart nginx</span></code></pre></div>

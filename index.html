@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="./_lib/theme/theme_Lyla.css">
     <link rel="stylesheet" href="./_lib/theme/highlight_dark.css">
 
-    <link rel="stylesheet" href="./_lib/content.css">
+    <link rel="stylesheet" href="./_lib/body.css">
+    <link rel="stylesheet" href="./_lib/menu.css">
     <link rel="stylesheet" href="./_lib/HeadNavFoot.css">
     <link rel="stylesheet" href="./_lib/section.css">
     <link rel="stylesheet" href="./_lib/mobilePhone.css">
@@ -18,6 +19,49 @@
 <body>
     <base href="./index.html">
 
+    <div id="menu">
+        <div id="avatar-container">
+            <div id="avatar-img"></div>
+            <div id="avatar-name">KhVeMx</div>
+            <div id="avatar-email">khvemx@foxmail.com</div>
+        </div>
+        
+        <div id="menu-nav">
+            <div id="menu-nav-header"><a>档 案</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./blog/blog_DmZi.html">电子</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./blog/blog_LoGi.html">逻辑</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./blog/blog_RrJm.html">软件</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./blog/blog_WuLi.html">物理</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./blog/blog_SuXt.html">数学</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./blog/blog_SeHv.html">社会</a></div>
+
+            <div id="menu-nav-header"><a>日 常</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./log/log_RiCh.html">日寄</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./log/log_BiJi.html">笔记</a></div>
+
+            <div id="menu-nav-header"><a>页 面</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./ciallo.html">主页</a></div>
+            <div id="menu-nav-li"><a class="alink" href="./about.html">关于</a></div>
+            <div id="menu-nav-li"><a>主题选择</a></div>
+
+            <div id="menu-footer">
+                <p><a href="http://khvemx.work"><img src="https://khvemx.work//favicon.ico"></a> 
+                    | <a href="https://space.bilibili.com/32385828"><img src="https://www.bilibili.com/favicon.ico"></a> 
+                    | <a href="https://bgm.tv/user/kangzhemie"><img src="https://bgm.tv/img/favicon.ico"></a> 
+                    | <a href="https://www.zhihu.com/people/khvemx"><img src="https://static.zhihu.com/heifetz/favicon.ico"></a> 
+                    | <a href="https://github.com/KangzheMie"><img src="https://github.com/favicon.ico"></a>
+                </p>
+                <p><a href="https://beian.miit.gov.cn/" rel="external nofollow" target="_blank">皖ICP备2024045783号-1</a></p>
+                <div class="flex-center">
+                    <img style="height: 1em; width: 1em; padding: 0px 8px 0px 0px;" src="./_lib/mainPagePic/备案图标.png" alt="备案图标">
+                    <p><a href="https://beian.mps.gov.cn/#/query/webSearch?code=34040002000422" target="_blank">皖公网安备34040002000422</a></p>
+                </div>
+                <p>Email: khvemx@foxmail.com</p>
+                <p>&copy; 2023-2024 khvemx All rights reserved</p>
+            </div>
+        </div>
+    </div>
+        
     <div id="content">
         <div id="header">
             <h1><a href="./ciallo.html">新大陸發現部</a></h1>
@@ -26,36 +70,38 @@
         <div id="nav">
             <ul>
                 <li>
-                    <a>Note</a>
+                    <a>档案</a>
                     <!-- 使用alink类才会被js识别和加载，这样普通的a就不会加载出来奇怪的页面 -->
                     <ul class="submenu">
-                        <li><a class="alink" href="./blog/blog_SuXt.html">数学</a></li>
-                        <li><a class="alink" href="./blog/blog_WuLi.html">物理</a></li>
                         <li><a class="alink" href="./blog/blog_DmZi.html">电子</a></li>
                         <li><a class="alink" href="./blog/blog_LoGi.html">逻辑</a></li>
                         <li><a class="alink" href="./blog/blog_RrJm.html">软件</a></li>
+                        <li><a class="alink" href="./blog/blog_WuLi.html">物理</a></li>
+                        <li><a class="alink" href="./blog/blog_SuXt.html">数学</a></li>
                         <li><a class="alink" href="./blog/blog_SeHv.html">社会</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a>Daily</a>
+                    <a>日常</a>
                     <ul class="submenu">
-                        <li><a class="alink" href="./log/log_RiCh.html">日常</a></li>
+                        <li><a class="alink" href="./log/log_RiCh.html">日寄</a></li>
                         <li><a class="alink" href="./log/log_BiJi.html">笔记</a></li>
                     </ul>
                 </li>
-
-                <li class="rightli">
-                    <a>Theme</a>
-                </li>
-                <li class="rightli">
-                    <a class="alink" href="./">Main</a>
+                <li>
+                    <a>页面</a>
+                    <ul class="submenu">
+                        <li><a class="alink" href="./ciallo.html">首页</a></li>
+                        <li><a class="alink" href="./about.html">关于</a></li>
+                        <li><a>主题</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
         <div id="section">
             <!-- 使用脚本加载内容 -->
         </div>
+
         <div id="footer">
             <p><a href="http://khvemx.work">星云电波塔</a> 
                 | <a href="https://space.bilibili.com/32385828">bilibili</a> 

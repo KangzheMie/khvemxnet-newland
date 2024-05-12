@@ -1,4 +1,14 @@
 @media (max-width: 600px) {
+    :root {
+        --font-size-section-p: 17px;
+    }
+    #content{
+        border-left : none;
+        border-right : none;
+        border-bottom: none;
+        min-width: 0px;
+    }
+
     #header{
         height: 120px;
         width: auto;
@@ -11,18 +21,26 @@
         padding: 0px 0px 0px 10px;
         font-size: 14px;
     }
+
     #section{
         padding: 7%;
     }
-    :root {
-        --font-size-section-p: 17px;
+    #section #mainPage-img{
+        width: 80%;
     }
-    #footer p, #visitorCount{
-        font-size: 15px;
+}
+
+@media (max-width: 1250px) {
+    #menu{
+        display: none;
+    }
+    #nav{
+        display: block;
+    }
+    #footer{
+        display: block;
     }
     #content{
-        border-left : none;
-        border-right : none;
-        border-bottom: none;
+        margin: auto;
     }
 }

@@ -43,14 +43,8 @@
     border-right: 1px solid var(--border-color-nav);
 }
 
-#nav .rightli{
-    float: right;
-    border-right: 0px;
-    border-left: 1px solid var(--border-color-nav);
-}
-
 #nav a{
-    margin: 1px;
+    margin: 0px;
     padding: 5px 13px;
 
     font-family: var(--font-family), sans-serif;
@@ -77,6 +71,7 @@
 /* =========================导航栏子菜单========================= */
 
 #nav .submenu {
+    margin: 1px 0px 0px;
     display: none;
     position: absolute;
     background-color: var(--nav-color); 
@@ -109,7 +104,7 @@
     padding: 0px;
 
     font-family: var(--font-family);
-    font-size: var(--font-size-section-p);
+    font-size: var(--font-size-footer);
 
     color: var(--text-color-footer);
 
@@ -128,12 +123,7 @@
     justify-content: center; /* 水平居中对齐子元素 */
 }
 
-#visitorCount {
-    display: inline; /* 将div设置为行内元素 */
-
-    font-family: "pixel-cn", sans-serif;
-    font-weight: normal;
-    font-size: var(--font-size-section-p);
-    
-    color: var(--text-color-footer);;
+#footer img{
+    width: 1.2em;
+    height: 1.2em;
 }

@@ -1,6 +1,15 @@
 :root {
+    /* 菜单部分 */
+    --background-color-menu: #252629;
+    --border-color-menu: #fff;
+    --border-color-menu-nav: #FFF;
+    --background-color-menu-nav:#333;
+    --background-color-menu-footer:#252629;
+
+    --color-menu-nav-a: #9df;
+
     /* 框架部分 */
-    --background-color-body: #171818;
+    --background-color-body: #111;
     --background-color-content: #171818;
     --background-color-header: #171818;
     --background-color-nav: #7be;
@@ -13,7 +22,7 @@
     --border-color-footer: #FFF;
 
     --text-color-nav: #FFF;
-    --text-color-footer: #FFF;
+    --text-color-footer: #DDD;
 
     /* 内容部分 */
     --color-section-h1: #9df;
@@ -28,10 +37,14 @@
     --color-section-border-timeline-inner: #AFA;
     --color-section-border-timeline-date: #AAF;
 
-    --font-family: "pixel-cn";
+    --font-family: "Microsoft Yahei","Helvetica Neue", Helvetica, Arial,"Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
     --font-size-section-p: 20px;
+    --font-size-menu-footer: 14px;
+    --font-size-footer: 17px;
 
     /* 头图 */
+    --background-image-body: url('./mainPagePic/少终星空.jpg');
+    --background-image-avatar: url('./mainPagePic/绪山真寻.png');
     --background-image-header: url('./theme/theme_Lyla/Main_Lyla.jpg');
 }
 
