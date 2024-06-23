@@ -1,6 +1,4 @@
-log/*
-!log/.gitkeep
-source/*
-!source/.gitkeep
+blogs/*
+!blogs/.gitkeep
 package-lock.json
 package.json

@@ -154,12 +154,28 @@
 .math{
     color: var(--color-section-p);
     font-size: var(--font-size-section-p);
-    max-width: 100%;
 }
 
-.katex-display>.katex {
-    overflow-y: hidden;
+.katex-display{
     overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* 代码 */
+
+code {
+    font-family: var(--font-family), Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+    font-size: var(--font-size-section-p);
+    margin: 0;
+    hyphens: manual;
+}
+pre {
+    margin: 1em 0;
+    overflow: auto;
+}
+pre code {
+    overflow: visible;
+    overflow-wrap: normal;
 }
 
 /* markdown的块状样式 */
