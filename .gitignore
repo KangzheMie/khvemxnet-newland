@@ -1,4 +1,6 @@
 blogs/*
 !blogs/.gitkeep
+picture/*
+!picture/.gitkeep
 package-lock.json
 package.json
