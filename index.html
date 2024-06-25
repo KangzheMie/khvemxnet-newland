@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <title>新大陆发现部</title>
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- 主题 -->
-    <link rel="stylesheet" href="/_lib/theme_Lyla.css">
+    <link rel="stylesheet" href="./_lib/theme_Lyla.css">
 <!-- 框架与文本 -->
-    <link rel="stylesheet" href="/_lib/body.css">
-    <link rel="stylesheet" href="/_lib/menu.css">
-    <link rel="stylesheet" href="/_lib/HeadNavFoot.css">
-    <link rel="stylesheet" href="/_lib/section.css">
-    <link rel="stylesheet" href="/_lib/mobilePhone.css">
+    <link rel="stylesheet" href="./_lib/body.css">
+    <link rel="stylesheet" href="./_lib/menu.css">
+    <link rel="stylesheet" href="./_lib/HeadNavFoot.css">
+    <link rel="stylesheet" href="./_lib/section.css">
+    <link rel="stylesheet" href="./_lib/mobilePhone.css">
 
 <!-- markdown -->
-    <script src="/node_modules/marked/marked.min.js"></script>
+    <script src="./node_modules/marked/marked.min.js"></script>
 <!-- 数学公式渲染 -->
-    <link rel="stylesheet" href="/node_modules/katex/dist/katex.min.css" /> 
-    <script src="/node_modules/katex/dist/katex.min.js"></script>
-    <script src="/node_modules/katex/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/katex/dist/katex.min.css" /> 
+    <script src="./node_modules/katex/dist/katex.min.js"></script>
+    <script src="./node_modules/katex/dist/contrib/auto-render.min.js"></script>
 <!-- 代码块渲染 -->
-    <link rel="stylesheet" href="/_lib/highlight/ir-black.min.css">
-    <script src="/_lib/highlight/highlight.min.js"></script>
+    <link rel="stylesheet" href="./_lib/highlight/ir-black.min.css">
+    <script src="./_lib/highlight/highlight.min.js"></script>
     <!-- 如果缺少语言就从highlight官网下载 -->
-    <script src="/_lib/highlight/matlab.min.js"></script>
-    <script src="/_lib/highlight/verilog.min.js"></script>
+    <script src="./_lib/highlight/matlab.min.js"></script>
+    <script src="./_lib/highlight/verilog.min.js"></script>
+    <script src="./_lib/highlight/bash.min.js"></script>
+    <script src="./_lib/highlight/latex.min.js"></script>
 </head>
 <body>
-    <base href="/index.html">
+    <base href="./index.html">
 
     <div id="menu">
         <div id="avatar-container">
@@ -39,30 +41,30 @@
         
         <div id="menu-nav">
             <div id="menu-nav-header"><a>档 案</a></div>
-            <div id="menu-nav-li"><a href="/index.html?page=DmZi">电子</a></div>
-            <div id="menu-nav-li"><a href="/index.html?page=LoGi">逻辑</a></div>
-            <div id="menu-nav-li"><a href="/index.html?page=RrJm">软件</a></div>
-            <div id="menu-nav-li"><a href="/index.html?page=WuLi">物理</a></div>
-            <div id="menu-nav-li"><a href="/index.html?page=SuXt">数学</a></div>
-            <div id="menu-nav-li"><a href="/index.html?page=SeHv">社会</a></div>
+            <div id="menu-nav-li"><a href="./index.html?page=DmZi">电子</a></div>
+            <div id="menu-nav-li"><a href="./index.html?page=LoGi">逻辑</a></div>
+            <div id="menu-nav-li"><a href="./index.html?page=RrJm">软件</a></div>
+            <div id="menu-nav-li"><a href="./index.html?page=WuLi">物理</a></div>
+            <div id="menu-nav-li"><a href="./index.html?page=SuXt">数学</a></div>
+            <div id="menu-nav-li"><a href="./index.html?page=SeHv">社会</a></div>
 
             <div id="menu-nav-header"><a>页 面</a></div>
-            <div id="menu-nav-li"><a href="/">主页</a></div>
-            <div id="menu-nav-li"><a href="/index.html?page=about">关于</a></div>
+            <div id="menu-nav-li"><a href="./">主页</a></div>
+            <div id="menu-nav-li"><a href="./index.html?page=about">关于</a></div>
             <div id="menu-nav-li"><a>主题</a></div>
 
             <div id="menu-footer">
-                <p><a href="http://khvemx.work"><img src="https://khvemx.work//favicon.ico"></a> 
-                    | <a href="https://space.bilibili.com/32385828"><img src="https://www.bilibili.com/favicon.ico"></a> 
-                    | <a href="https://bgm.tv/user/kangzhemie"><img src="https://bgm.tv/img/favicon.ico"></a> 
-                    | <a href="https://www.zhihu.com/people/khvemx"><img src="https://static.zhihu.com/heifetz/favicon.ico"></a> 
-                    | <a href="https://github.com/KangzheMie"><img src="https://github.com/favicon.ico"></a>
+                <p><a href="http://khvemx.work"><img src="https://khvemx.work//favicon.ico" alt="星云电波塔ico"></a> 
+                    | <a href="https://space.bilibili.com/32385828"><img src="https://www.bilibili.com/favicon.ico" alt="bilibiliico"></a> 
+                    | <a href="https://bgm.tv/user/kangzhemie"><img src="https://bgm.tv/img/favicon.ico" alt="bgmico"></a> 
+                    | <a href="https://www.zhihu.com/people/khvemx"><img src="https://static.zhihu.com/heifetz/favicon.ico" alt="知乎ico"></a> 
+                    | <a href="https://github.com/KangzheMie"><img src="https://github.com/favicon.ico" alt="githubico"></a>
                 </p>
 
                 <p><a href="https://beian.miit.gov.cn/" rel="external nofollow" target="_blank">皖ICP备2024045783号-1</a></p>
 
                 <div class="flex-center">
-                    <img style="height: 1em; width: 1em; padding: 0px 8px 0px 0px;" src="/_lib/mainPagePic/备案图标.png" alt="备案图标">
+                    <img style="height: 1em; width: 1em; padding: 0px 8px 0px 0px;" src="./_lib/mainPagePic/备案图标.png" alt="备案图标">
                     <p><a href="https://beian.mps.gov.cn/#/query/webSearch?code=34040002000422" target="_blank">皖公网安备34040002000422</a></p>
                 </div>
 
@@ -83,19 +85,19 @@
                 <li>
                 <a>档案</a>
                  <ul class="submenu">
-                        <li><a href="/index.html?page=DmZi">电子</a></li>
-                        <li><a href="/index.html?page=LoGi">逻辑</a></li>
-                        <li><a href="/index.html?page=RrJm">软件</a></li>
-                        <li><a href="/index.html?page=WuLi">物理</a></li>
-                        <li><a href="/index.html?page=SuXt">数学</a></li>
-                        <li><a href="/index.html?page=SeHv">社会</a></li>
+                        <li><a href="./index.html?page=DmZi">电子</a></li>
+                        <li><a href="./index.html?page=LoGi">逻辑</a></li>
+                        <li><a href="./index.html?page=RrJm">软件</a></li>
+                        <li><a href="./index.html?page=WuLi">物理</a></li>
+                        <li><a href="./index.html?page=SuXt">数学</a></li>
+                        <li><a href="./index.html?page=SeHv">社会</a></li>
                     </ul>
                 </li>
                 <li>
                     <a>页面</a>
                     <ul class="submenu">
-                        <li><a href="/index.html?page=ciallo">首页</a></li>
-                        <li><a href="/index.html?page=about">关于</a></li>
+                        <li><a href="./index.html?page=ciallo">首页</a></li>
+                        <li><a href="./index.html?page=about">关于</a></li>
                         <li><a>主题</a></li>
                     </ul>
                 </li>
@@ -114,7 +116,7 @@
             </p>
             <p><a href="https://beian.miit.gov.cn/" rel="external nofollow" target="_blank">皖ICP备2024045783号-1</a></p>
             <div class="flex-center">
-                <img style="height: 1em; width: 1em; padding: 0px 8px 0px 0px;" src="/_lib/mainPagePic/备案图标.png" alt="备案图标">
+                <img style="height: 1em; width: 1em; padding: 0px 8px 0px 0px;" src="./_lib/mainPagePic/备案图标.png" alt="备案图标">
                 <p><a href="https://beian.mps.gov.cn/#/query/webSearch?code=34040002000422" target="_blank">皖公网安备34040002000422</a></p>
             </div>
             <p>Email: khvemx@foxmail.com</p>
@@ -122,6 +124,6 @@
         </div>
     </div>
 
-    <script src="/_lib/sectionLoad.js"></script>
+    <script src="./_lib/sectionLoad.js"></script>
 </body>
 </html>

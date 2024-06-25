@@ -2,6 +2,18 @@
     <h2>软件</h2>
     <ul>
         <li>
+            <span class="date">2024-06-25</span>
+            <span class="event"><a href="/index.html?blog=RrJm_samba服务的应用：局域网硬盘">samba服务的应用：局域网硬盘</a></span>
+        </li>
+        <li>
+            <span class="date">2024-06-25</span>
+            <span class="event"><a href="/index.html?blog=RrJm_Word中将有序列表链接到标题上的方法">Word中将有序列表链接到标题上的方法</a></span>
+        </li>
+        <li>
+            <span class="date">2024-06-25</span>
+            <span class="event"><a href="/index.html?blog=RrJm_浏览器加载资源">浏览器加载资源</a></span>
+        </li>
+        <li>
             <span class="date">2024-06-22</span>
             <span class="event"><a href="/index.html?blog=RrJm_php的使用">php的使用</a></span>
         </li>

@@ -2,6 +2,10 @@
     <h2>数学</h2>
     <ul>
         <li>
+            <span class="date">2024-06-19</span>
+            <span class="event"><a href="/index.html?blog=SuXt_概率生成函数与母函数方法">概率生成函数与母函数方法</a></span>
+        </li>
+        <li>
             <span class="date">2024-03-13</span>
             <span class="event"><a href="/index.html?blog=SuXt_用均匀分布生成任意分布">矩阵范数强调的方面</a></span>
         </li>
