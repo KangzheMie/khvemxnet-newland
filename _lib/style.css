@@ -1,0 +1,549 @@
+:root {
+    /* 文字设定 */
+    --font-family: "Microsoft Yahei","Helvetica Neue", Helvetica, Arial,"Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
+    --font-size-p : 20px;
+    --font-size-h1: 2em;
+    --font-size-h2: 1.8em;
+    --font-size-h3: 1.4em;
+    --font-size-h4: 1.2em;
+    --font-size-code : 18px;
+}
+@font-face {
+    font-family: "pixel-cn";
+    src: url(./TTF/ark-pixel-12px-proportional-zh_cn.woff2) format(woff2);
+}
+
+/* 网页背景设置 */
+    body {
+        /* 大小 */
+
+        /* 边距 */
+        margin: 0px;
+        /* 排版 */
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+        /* 背景 */
+        background-image: var(--background-image-header);
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        /* 边框 */
+
+        /* 文字 */
+    }
+
+    body::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Opera */
+    }
+
+
+/* 头部区域 */
+    #header{
+        /* 大小 */
+        width: 100%;
+        height: 35vh;
+    }
+
+    #header h1{
+
+        /* 边距 */
+        margin: 20vh 0vh 0vh 30vh;
+
+        /* 文字 */
+        color: #FFF;
+        font-family: var(--font-family), sans-serif;
+        font-size: 5vh;
+        text-shadow: 2px 2px 1px rgba(0, 0, 0, 1);
+    }
+
+    #header p{
+
+        /* 边距 */
+        margin: 0px 0px 0px 32vh;
+
+        /* 文字 */
+        font-family: var(--font-family), sans-serif;
+        font-size: 3vh;
+        text-shadow: 2px 2px 1px rgba(0, 0, 0, 1);
+    }
+
+    #header a{
+        /* 文字 */
+        text-decoration: none;
+        color: #FFF;
+    }
+
+
+/* 内容区域 */
+    #content{
+        /* 边距 */
+        margin: 0px auto 0px auto;
+        /* 排版 */
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        align-items: stretch;
+
+    }
+
+    /* ------------------------------------------- 侧边栏 ------------------------------------------ */
+
+    /* 内容区域：侧边栏 */
+        #menu-left{
+            /* 大小 */
+            width: 180px;
+            min-width: 180px;
+            /* 边距 */
+            margin: 15px;
+            /* 排版 */
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: normal;
+            justify-content: flex-start;
+            align-items: stretch;
+
+            /* 文字 */
+            color: var(--text-color-p);
+            font-family: "pixel-cn";
+
+            position: sticky;
+            top: 0; /* 到达顶部后停止 */
+        }
+
+        /* 内容区域：侧边栏：导航栏 */
+            #menu-nav{
+                /* 大小 */
+                width: 100%;
+                /* 边距 */
+                padding: 10px 0px 20px 0px;
+                margin: 0px;
+                /* 排版 */
+                display: flex;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                align-content: normal;
+                justify-content: normal;
+                align-items: center;
+                /* 背景 */
+                background-color: var(--background-color-menu);
+                /* 边框 */
+                border : 3px solid var(--color-border);
+                border-radius: 10px;
+            }
+
+            #menu-nav-header{
+                width: 60%;
+
+                margin: 0px;
+                padding: 0px;
+
+                text-align: center;
+                font-size: 24px;
+
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            #menu-nav-li{
+                margin: 0px;
+                padding: 3px;
+
+                font-size: var(--font-size-h4);
+            }
+
+            #menu-nav-li a{
+                text-decoration: none;
+                display: block;
+
+                color: var(--text-color-a);
+            }
+
+        /* 内容区域：侧边栏：头像栏 */
+            #avatar{
+                /* 大小 */
+                width: 100%;
+                min-height: 300px;
+                /* 边距 */
+                margin-bottom: 10px;
+                /* 排版 */
+                display: flex;
+                flex-direction: column;
+                /* 背景 */
+                background-color: var(--background-color-menu);
+                /* 边框 */
+                border : 3px solid var(--color-border);
+                border-radius: 10px;
+            }
+
+            #avatar-img{
+                width: 100px;
+                height: 100px;
+
+                margin: 30px auto 0px;
+
+                border: 2px solid var(--color-border);
+                border-radius: 50px;
+
+                background-image: var(--background-image-avatar);
+                background-position: top;
+                background-size: cover;
+                background-repeat: no-repeat; 
+            }
+
+            #avatar-name{
+                text-align: center;
+                font-size: 25px;
+            }
+            #avatar-email{
+                margin-bottom: 10px;
+
+                text-align: center;
+                font-size: 16px;
+            }
+
+            #avatar-container p{
+                margin: 0;
+                padding: 0px;
+
+                color: var(--text-color-p);
+
+                text-align: center;
+                font-size: 16px;
+                
+            }
+
+            #avatar-container a{
+                color: var(--text-color-p);
+                text-decoration: none;
+            }
+
+            #avatar-container img{
+                width: 1.2em;
+                height: 1.2em;
+            }
+
+
+    /* ------------------------------------------- 文章 ------------------------------------------ */
+    /* 内容区域：文本显示 */
+    #section-text{
+        /* 大小 */
+        width: 1000px;
+        max-width: 1000px;
+
+        /* 边距 */
+        margin: 15px;
+        padding-top: 30px;
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-bottom: 20px;
+        /* 排版 */
+
+        /* 背景 */
+        background-color: var(--background-color-seciotn);
+        /* 边框 */
+        border : 3px solid var(--color-border);
+        border-radius: 10px;
+        /* 文字 */
+    }
+
+        #section-text h1 {
+            margin: 0px;
+            padding: .5em 0em 0em .5em;
+
+            font-family: var(--font-family);
+            font-size: var(--font-size-h1);
+
+            color: var(--text-color-h1);
+
+            border-left: 8px solid var(--color-section-border-h1) ;
+        }
+
+        #section-text h2 {
+            margin: 0px;
+            padding: 0.2em 0em 0.2em;
+
+            font-family: var(--font-family);
+            font-size: var(--font-size-h2);
+
+            color: var(--text-color-h2);
+        }
+
+        #section-text h3 {
+            margin: 0px;
+            padding: 0.1em 0em 0.1em;
+
+            font-family: var(--font-family);
+            font-size: var(--font-size-h3);
+
+            color: var(--text-color-h3);
+        }
+
+        #section-text h4 {
+            margin: 0px;
+            padding: 0.1em 0em 0.1em;
+
+            font-family: var(--font-family);
+            font-size: var(--text-color-h4);
+
+            color: var(--text-color-h4);
+        }
+
+        #section-text p{
+            margin: 0px;
+            padding: 0.3em 0em;
+
+            font-family: var(--font-family);
+            font-size: var(--font-size-p);
+
+            color: var(--text-color-p);
+            text-indent: 2em;
+        }
+
+        #section-text a{
+            font-family: var(--font-family);
+
+            color: var(--text-color-a);
+
+            text-decoration: none;
+        }
+
+        #section-text figure{
+            margin: 0;
+        }
+
+        #section-text figcaption {
+            text-align: center;
+            font-size: var(--font-size-p);
+            font-family: var(--font-family);
+            color: var(--text-color-p);
+        }
+
+        #section-text img{
+            margin: auto;
+            padding: 0px;
+
+            max-width: 100%;
+            display: block;
+        }
+
+        #section-text #mainPage-img{
+            margin: auto;
+            padding: 0px;
+
+            width: 60%;
+            display: block;
+        }
+
+        #section-text li {
+            font-size: var(--font-size-p);
+            font-family: var(--font-family);
+
+            color: var(--text-color-p);
+        }
+
+        #section-text li p{
+            text-indent: 0em;
+        }
+
+        /* ========== 时间线 ========== */
+        #section-text .timeline{
+            margin: 0px 0px 10px 0px;
+            padding: 0px;
+
+            width: auto;
+            border: 1px solid var(--color-section-border-timeline-outer);
+            border-radius: 3px;
+        }
+
+        #section-text .timeline h2{
+            margin: 0px;
+            padding: 0px;
+
+            text-align: center;
+            color: var(--text-color-h2);
+        }
+
+        #section-text .timeline ul{
+            margin: auto;
+            padding: 0px;
+
+            width: 95%;
+            list-style: none;
+        }
+
+        #section-text .timeline li{
+            line-height: 2em;
+            border-bottom: 1px dashed var(--color-section-border-timeline-inner);
+        }
+
+        #section-text .timeline li:last-child{
+            border: none;
+        }
+
+        #section-text .timeline .date{
+            margin: 0px;
+            padding: 0px 2px 0px 0px;
+
+            font-family: var(--font-family);
+
+            color: var(--text-color-p);
+            border-right: 2px solid var(--color-section-border-timeline-date);
+        }
+
+        #section-text .timeline .event{
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /* ========= Markdown ========= */
+        /* 数学 */
+        .math{
+            color: var(--text-color-p);
+            font-size: var(--font-size-p);
+        }
+
+        .katex-display{
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        /* 代码 */
+
+        code {
+            font-family: Consolas, monospace;
+            font-size: var(--font-size-code);
+            margin: 0;
+            hyphens: manual;
+        }
+        pre {
+            margin: 1em 0;
+            overflow: auto;
+        }
+        pre code {
+            overflow: visible;
+            overflow-wrap: normal;
+        }
+
+        /* markdown的块状样式 */
+        blockquote {
+            margin: 1em 0 1em 1.7em;
+            padding-left: 1em;
+            border-left: 2px solid var(--color-border);
+            color: #606060;
+        }
+
+        /* 文章markdown列表 */
+        table {
+            padding: 2em;
+            border-collapse: collapse;
+            width: auto;
+            overflow-x: auto;
+            display: block;
+            font-family: var(--font-family);
+        }
+        table caption {
+            margin-bottom: 0.75em;
+        }
+        tbody {
+            margin-top: 0.5em;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+        th {
+            border-top: 1px solid var(--color-border);
+            padding: 0.25em 0.5em 0.25em 0.5em;
+            color: var(--text-color-h2);
+            font-size: var(--font-size-p);
+        }
+        td {
+            padding: 0.125em 0.5em 0.25em 0.5em;
+            color: var(--text-color-p);
+            font-size: var(--font-size-p);
+        }
+
+        /* 强调 */
+        strong{
+            font-size: var(--font-size-p);
+        }
+
+        /* ======= 友链 ====== */
+        /* 待开发 */
+
+    /* ------------------------------------------- 手机适配 ------------------------------------------ */
+
+/* 手机设置 */
+    @media (max-width: 1200px) {
+        #header{
+            height: 20vh;
+        }
+
+        #header h1{
+            margin: 20px 0 0 10%;
+            font-size: 30px;
+        }
+        #header p{
+            margin: 0 0 0 10%;
+            font-size: 20px;
+        }
+
+        #avatar{
+            display: none;
+        }
+
+        #content{
+            width: 95%;
+            margin: 0px;
+            padding: 0px;
+            flex-direction: column;
+        }
+
+        #menu-left{
+            width: auto;
+            margin: 5px;
+            display: flex;
+        }
+
+        #menu-nav{
+            /* 大小 */
+            width: auto;
+            /* 边距 */
+            padding: 0 10px 0 0;
+            /* 排版 */
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+
+        #menu-nav-header{
+            display: none;
+        }
+
+        #section-text{
+            width: auto;
+            margin: 5px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        #header{
+            height: 15vh;
+        }
+        #content{
+            width: 100%;
+        }
+        #menu-left{
+            margin: 0px;
+        }
+        #section-text{
+            margin: 0px;
+            padding: 20px;
+        }
+    }

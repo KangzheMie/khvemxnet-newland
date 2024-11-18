@@ -47,7 +47,7 @@ function loadMarkdownFile(MarkdownFileName){
 
         // 在页面上显示渲染后的HTML
         const markedHtml = marked.parse(text);
-        const section = document.getElementById('section');
+        const section = document.getElementById('section-text');
         section.innerHTML = markedHtml;
 
         // 所有对于文本部分的渲染都给爷放到这里 //

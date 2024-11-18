@@ -1,0 +1,25 @@
+:root {
+    /* 色块与边缘颜色 */
+    --background-color-seciotn: #1E1E17F6;
+    --background-color-menu: var(--background-color-seciotn);
+
+    /* 描边颜色 */
+    --color-border: #fff;
+    --color-section-border-h1: #DDD;
+    --color-section-border-timeline-outer: #FDD;
+    --color-section-border-timeline-inner: #DFD;
+    --color-section-border-timeline-date : #DDF;
+
+    /* 文字颜色 */
+    --text-color-h1: #8Cf;
+    --text-color-h2: #9DF;
+    --text-color-h3: #AEF;
+    --text-color-h4: #BFF;
+    --text-color-p : #FFF;
+    --text-color-a : #9DF;
+
+    /* 头图 */
+    --background-image-avatar: url('./mainPagePic/绪山真寻.png');
+    --background-image-header: url('./themePic/theme_Witch/Akko.png');
+}
+

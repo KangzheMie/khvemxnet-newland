@@ -1,37 +1,37 @@
 :root {
     /* 菜单部分 */
-    --background-color-menu: #252629;
-    --border-color-menu: #fff;
-    --border-color-menu-nav: #FFF;
-    --background-color-menu-nav:#333;
-    --background-color-menu-footer:#252629;
+    --background-color-menu: #BBB;
+    --border-color-menu: #A7A157;
+    --border-color-menu-nav: #A7A157;
+    --background-color-menu-nav:#EEE;
+    --background-color-menu-footer:#BBB;
 
-    --color-menu-nav-a: #9df;
-    --text-color-menu: #fff;
+    --color-menu-nav-a: #40AD82;
+    --text-color-menu: #111;
 
     /* 框架部分 */
     --background-color-body: #111;
     --background-color-content: #171818;
     --background-color-header: #171818;
-    --background-color-nav: #7be;
+    --background-color-nav: #FEE11B;
     --background-color-nav-li-hover: #7d9192;
-    --background-color-seciotn: #252629;
-    --background-color-footer: #666;   
+    --background-color-seciotn: #F4FFF8;
+    --background-color-footer: #BBB;   
 
-    --border-color-content: #FFF;
-    --border-color-nav: #FFF;
-    --border-color-footer: #FFF;
+    --border-color-content: #A7A157;
+    --border-color-nav: #A7A157;
+    --border-color-footer: #A7A157;
 
-    --text-color-nav: #FFF;
-    --text-color-footer: #DDD;
+    --text-color-nav: #111;
+    --text-color-footer: #FFF;
 
     /* 内容部分 */
-    --color-section-h1: #9df;
-    --color-section-h2: #CFE4FD;
-    --color-section-h3: #CFE4FD;
-    --color-section-h4: #CFE4FD;
-    --color-section-p: #FFF;
-    --color-section-a: #aae;
+    --color-section-h1: #3D3B20;
+    --color-section-h2: #6A6637;
+    --color-section-h3: #6A6637;
+    --color-section-h4: #6A6637;
+    --color-section-p: #073233;
+    --color-section-a: #40AD82;
 
     --color-section-border-h1: #AAA;
     --color-section-border-timeline-outer: #FFA;
@@ -45,12 +45,13 @@
     --font-size-footer: 17px;
 
     /* 头图 */
-    --background-image-body: url('./mainPagePic/少终星空.jpg');
+    --background-image-body: url('./mainPagePic/向日葵.png');
     --background-image-avatar: url('./mainPagePic/绪山真寻.png');
-    --background-image-header: url('./themePic/theme_Lyla/Main_Lyla.jpg');
+    --background-image-header: url('./themePic/theme_Noel/Main_Noel.jpg');
 }
 
 @font-face {
     font-family: "pixel-cn";
     src: url(./TTF/ark-pixel-12px-proportional-zh_cn.woff2) format(woff2);
 }
+
