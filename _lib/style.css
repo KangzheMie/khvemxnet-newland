@@ -37,11 +37,11 @@
         /* 文字 */
     }
 
-    body::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, and Opera */
-    }
-
-
+    /* 取消滚动条 */
+    /* body::-webkit-scrollbar { */
+        /* display: none; Chrome, Safari, and Opera */
+    /* }  */
+   
 /* 头部区域 */
     #header{
         /* 大小 */
@@ -208,7 +208,7 @@
                 font-size: 16px;
             }
 
-            #avatar-container p{
+            #avatar p{
                 margin: 0;
                 padding: 0px;
 
@@ -219,12 +219,12 @@
                 
             }
 
-            #avatar-container a{
+            #avatar a{
                 color: var(--text-color-p);
                 text-decoration: none;
             }
 
-            #avatar-container img{
+            #avatar img{
                 width: 1.2em;
                 height: 1.2em;
             }
@@ -234,14 +234,14 @@
     /* 内容区域：文本显示 */
     #section-text{
         /* 大小 */
-        width: 1000px;
-        max-width: 1000px;
+        width: 800px;
+        max-width: 800px;
 
         /* 边距 */
         margin: 15px;
-        padding-top: 30px;
-        padding-left: 10%;
-        padding-right: 10%;
+        padding-top: 40px;
+        padding-left: 80px;
+        padding-right: 80px;
         padding-bottom: 20px;
         /* 排版 */
 
@@ -479,7 +479,7 @@
     /* ------------------------------------------- 手机适配 ------------------------------------------ */
 
 /* 手机设置 */
-    @media (max-width: 1200px) {
+    @media (max-width: 1000px) {
         #header{
             height: 20vh;
         }
@@ -528,7 +528,10 @@
 
         #section-text{
             width: auto;
+            max-width: none;
             margin: 5px;
+            padding-left: 5%;
+            padding-right: 5%;
         }
     }
 

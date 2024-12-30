@@ -46,6 +46,18 @@ function loadMarkdownFile(MarkdownFileName){
         }
 
         // 在页面上显示渲染后的HTML
+        // 重载所有的<em> 输出为 _ ，因为在渲染数学公式的时候，傻逼 marked 无法处理很多的下标符号。
+        // 例如 {A}_1 B_{i+1} 输出为{A}<em>1 B</em>{i+1}
+        // 重载 em 渲染器解决问题
+        const renderer = {
+            em({ tokens }) {
+                const text = this.parser.parseInline(tokens);
+                return `_${text}_`;
+            }
+        };
+        
+        marked.use({renderer});
+
         const markedHtml = marked.parse(text);
         const section = document.getElementById('section-text');
         section.innerHTML = markedHtml;
@@ -56,7 +68,7 @@ function loadMarkdownFile(MarkdownFileName){
             renderMathInElement(section, {
                 delimiters: [
                     {left: "$$", right: "$$", display: true},  // 用于显示模式的数学公式
-                    {left: "$", right: "$", display: false}   // 用于行内模式的数学公式
+                    {left: "$", right: "$"  , display: false}, // 用于行内模式的数学公式
                 ]
             });
 

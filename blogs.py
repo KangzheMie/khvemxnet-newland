@@ -187,9 +187,10 @@ for fileName in file_list:
         title       = data[1]
         date        = data[2]
         category    = data[3]
+        author      = data[5]
         url         = f"/index.html?blog={os.path.splitext(fileName)[0]}"
 
-        categories[category].append((date, title, url))
+        categories[category].append((date, title, url, author))
     else:
         print(f"{fileName} 不符合条件")
         
@@ -204,10 +205,15 @@ for category, events in categories.items():
         f.write(f'    <h2>{category_titles.get(category, "通用标题")}</h2>\n')
         f.write('    <ul>\n')
 
-        for date, title, url in sorted(events, key=lambda x: x[0], reverse=True):  # 按日期倒序排序
+        for date, title, url, author in sorted(events, key=lambda x: x[0], reverse=True):  # 按日期倒序排序
             f.write(f'        <li>\n')
             f.write(f'            <span class="date">{date}</span>\n')
-            f.write(f'            <span class="event"><a href="{url}">{title}</a></span>\n')
+            if author == 'KhVeMx':
+                f.write(f'            <span class="event"><a href="{url}">🟢[档案]{title}</a></span>\n')
+            elif author == 'ChatGPT':
+                f.write(f'            <span class="event"><a href="{url}">🔴[AI]{title}</a></span>\n')
+            else:
+                f.write(f'            <span class="event"><a href="{url}">🟡[引用]{title}</a></span>\n')
             f.write('        </li>\n')
 
         f.write('    </ul>\n')

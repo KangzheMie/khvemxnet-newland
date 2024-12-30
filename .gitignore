@@ -4,3 +4,7 @@ picture/*
 !picture/.gitkeep
 package-lock.json
 package.json
+blogsSource/*
+.rsync
+blogapp.js
+blogs.db
