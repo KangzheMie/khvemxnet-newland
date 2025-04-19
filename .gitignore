@@ -1,10 +1,17 @@
+# pesonal-blog
 blogs/*
 !blogs/.gitkeep
 picture/*
 !picture/.gitkeep
-package-lock.json
-package.json
 blogsSource/*
-.rsync
-blogapp.js
+
+# Dependencies
+node_modules/
+
+# Generated files (if applicable)
 blogs.db
+project_structure.txt
+
+# OS generated files
+.DS_Store
+Thumbs.db
