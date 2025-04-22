@@ -2,6 +2,18 @@
     <h2>软件</h2>
     <ul>
         <li>
+            <span class="date">2025-03-12</span>
+            <span class="event"><a href="/index.html?blog=RrJm_Linux和Windows定时运行脚本">🔴[AI]Linux和Windows定时运行脚本</a></span>
+        </li>
+        <li>
+            <span class="date">2025-03-12</span>
+            <span class="event"><a href="/index.html?blog=RrJm_MATLAB关闭警告">🔴[AI]MATLAB关闭警告</a></span>
+        </li>
+        <li>
+            <span class="date">2025-01-01</span>
+            <span class="event"><a href="/index.html?blog=RrJm_python的文件调用">🔴[AI]python的文件调用</a></span>
+        </li>
+        <li>
             <span class="date">2024-12-28</span>
             <span class="event"><a href="/index.html?blog=RrJm_Python中map函数的懒加载">🔴[AI]Python中map函数的懒加载</a></span>
         </li>
@@ -55,23 +67,11 @@
         </li>
         <li>
             <span class="date">2024-11-26</span>
-            <span class="event"><a href="/index.html?blog=RrJm_Ubuntu启用root用户">🔴[AI]Ubuntu启用root用户</a></span>
-        </li>
-        <li>
-            <span class="date">2024-11-26</span>
             <span class="event"><a href="/index.html?blog=RrJm_ubuntu安装appimage和deb应用">🔴[AI]ubuntu安装appimage和deb应用</a></span>
-        </li>
-        <li>
-            <span class="date">2024-11-25</span>
-            <span class="event"><a href="/index.html?blog=RrJm_qBittorrent转移种子数据">🔴[AI]qBittorrent转移种子数据</a></span>
         </li>
         <li>
             <span class="date">2024-07-27</span>
             <span class="event"><a href="/index.html?blog=RrJm_MATLAB运算优先级">🟢[档案]MATLAB运算优先级</a></span>
-        </li>
-        <li>
-            <span class="date">2024-07-26</span>
-            <span class="event"><a href="/index.html?blog=RrJm_Python链式调用">🔴[AI]Python链式调用</a></span>
         </li>
         <li>
             <span class="date">2024-06-25</span>
@@ -150,20 +150,12 @@
             <span class="event"><a href="/index.html?blog=RrJm_bat文件与cmd编码">🔴[AI]bat文件与cmd编码</a></span>
         </li>
         <li>
-            <span class="date">2024-03-24</span>
-            <span class="event"><a href="/index.html?blog=RrJm_Python中的字符串前缀">🔴[AI]Python中的字符串前缀</a></span>
-        </li>
-        <li>
             <span class="date">2024-03-19</span>
             <span class="event"><a href="/index.html?blog=RrJm_嵌入式句柄">🔴[AI]嵌入式句柄</a></span>
         </li>
         <li>
             <span class="date">2024-03-19</span>
             <span class="event"><a href="/index.html?blog=RrJm_异步操作与回调函数">🔴[AI]异步操作与回调函数</a></span>
-        </li>
-        <li>
-            <span class="date">2024-03-13</span>
-            <span class="event"><a href="/index.html?blog=RrJm_Windows的快捷方式与链接">🔴[AI]Windows的快捷方式与链接</a></span>
         </li>
     </ul>
 </div>

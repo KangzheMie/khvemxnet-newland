@@ -2,6 +2,34 @@
     <h2>逻辑</h2>
     <ul>
         <li>
+            <span class="date">2025-03-13</span>
+            <span class="event"><a href="/index.html?blog=LoGi_Verilog锁存器的产生和处理">🔴[AI]Verilog锁存器的产生和处理</a></span>
+        </li>
+        <li>
+            <span class="date">2025-03-13</span>
+            <span class="event"><a href="/index.html?blog=LoGi_Vivado常见警告与快速检索">🔴[AI]Vivado常见警告与快速检索</a></span>
+        </li>
+        <li>
+            <span class="date">2025-03-12</span>
+            <span class="event"><a href="/index.html?blog=LoGi_Vivado_IP核自带的约束文件">🔴[AI]Vivado IP核自带的约束文件</a></span>
+        </li>
+        <li>
+            <span class="date">2025-03-12</span>
+            <span class="event"><a href="/index.html?blog=LoGi_Vivado_SelectIO组的作用">🔴[AI]Vivado SelectIO组的作用</a></span>
+        </li>
+        <li>
+            <span class="date">2025-03-12</span>
+            <span class="event"><a href="/index.html?blog=LoGi_Vivado_中使用tcl脚本">🔴[AI]Vivado中使用tcl脚本</a></span>
+        </li>
+        <li>
+            <span class="date">2025-03-12</span>
+            <span class="event"><a href="/index.html?blog=LoGi_Vivado_中查询原语的使用位置">🔴[AI]Vivado中查询原语的使用位置</a></span>
+        </li>
+        <li>
+            <span class="date">2025-03-12</span>
+            <span class="event"><a href="/index.html?blog=LoGi_Vivado_查询原语使用和数量">🔴[AI]Vivado查询原语使用和数量</a></span>
+        </li>
+        <li>
             <span class="date">2024-07-18</span>
             <span class="event"><a href="/index.html?blog=LoGi_IP核的全局模式和OOC模式">🟢[档案]IP核的全局模式和OOC模式</a></span>
         </li>
@@ -15,7 +43,7 @@
         </li>
         <li>
             <span class="date">2024-07-08</span>
-            <span class="event"><a href="/index.html?blog=LoGi_脉冲信号跨时钟域方案">🟡[引用]信号跨时钟域方案</a></span>
+            <span class="event"><a href="/index.html?blog=LoGi_脉冲信号跨时钟域方案">🔴[AI]信号跨时钟域方案</a></span>
         </li>
         <li>
             <span class="date">2024-07-08</span>

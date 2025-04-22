@@ -210,7 +210,7 @@ for category, events in categories.items():
             f.write(f'            <span class="date">{date}</span>\n')
             if author == 'KhVeMx':
                 f.write(f'            <span class="event"><a href="{url}">🟢[档案]{title}</a></span>\n')
-            elif author == 'ChatGPT':
+            elif author == 'ChatGPT' or 'Claude':
                 f.write(f'            <span class="event"><a href="{url}">🔴[AI]{title}</a></span>\n')
             else:
                 f.write(f'            <span class="event"><a href="{url}">🟡[引用]{title}</a></span>\n')
