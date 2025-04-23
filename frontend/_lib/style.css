@@ -476,6 +476,47 @@
         /* ======= 友链 ====== */
         /* 待开发 */
 
+        /* ======= 文章列表 ======= */
+        #section-text .article-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        #section-text .article-list li {
+            padding: 15px;
+            margin: 0;
+            border-bottom: 1px dashed var(--color-border); /* Thin dashed line for notebook effect */
+            transition: background-color 0.2s;
+        }
+
+        #section-text .article-list li:last-child {
+            border-bottom: none; /* Remove border from last item */
+        }
+
+        #section-text .article-list li a {
+            color: var(--text-color-a);
+            text-decoration: none;
+            font-size: var(--font-size-p);
+            display: block;
+        }
+
+        #section-text .article-list li:hover {
+            background-color: var(--color-section-border-h1);
+        }
+
+        #section-text .error {
+            color: #ff0000;
+            text-align: center;
+            font-size: var(--font-size-p);
+        }
+
+        #section-text .loading {
+            color: #666;
+            text-align: center;
+            font-size: var(--font-size-p);
+        }
+
     /* ------------------------------------------- 手机适配 ------------------------------------------ */
 
 /* 手机设置 */
