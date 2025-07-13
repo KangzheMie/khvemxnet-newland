@@ -1,0 +1,51 @@
+/* ======= 文章列表 - 时间线风格 ======= */
+#section-text .article-list {
+    margin: 0px 0px 10px 0px;
+    padding: 0px;
+    width: auto;
+    border: 1px solid var(--content-border-timeline-outer);
+    border-radius: 3px;
+    list-style: none;
+}
+
+#section-text .article-list li {
+    margin: auto;
+    padding: 0px;
+    width: 95%;
+    line-height: 2em;
+    border-bottom: 1px dashed var(--content-border-timeline-inner);
+    transition: background-color 0.2s;
+}
+
+#section-text .article-list li:last-child {
+    border: none;
+}
+
+#section-text .article-list li a {
+    color: var(--content-text-link);
+    text-decoration: none;
+    font-size: var(--content-font-size-paragraph);
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+
+#section-text .article-list .article-date {
+    margin: 0px;
+    padding: 0px 8px 0px 0px;
+    font-family: var(--global-font-primary);
+    color: var(--content-text-paragraph);
+    border-right: 2px solid var(--content-border-timeline-date);
+    min-width: 80px;
+    flex-shrink: 0;
+}
+
+#section-text .article-list .article-title {
+    margin: 0px;
+    padding: 0px 0px 0px 8px;
+    flex: 1;
+}
+
+#section-text .article-list li:hover {
+    background-color: #444;
+}

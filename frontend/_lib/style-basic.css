@@ -1,0 +1,126 @@
+:root {
+    /* ========================================== 全局主体变量 ========================================== */
+    
+    /* 🎨 主体-字体族 */
+    --global-font-primary: "Microsoft Yahei","Helvetica Neue", Helvetica, Arial,"Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
+    --global-font-pixel: "pixel-cn";
+    
+    /* 📏 主体-字体大小 */
+    --global-font-size-base: 20px;
+    --global-font-size-h1: 2em;
+    --global-font-size-h2: 1.8em;
+    --global-font-size-h3: 1.4em;
+    --global-font-size-h4: 1.2em;
+    --global-font-size-code: 18px;
+    --global-font-size-header-title: 5vh;
+    --global-font-size-header-subtitle: 3vh;
+    
+    /* 🎨 主体-背景图片 */
+    --global-bg-header: url('./themePic/冰川融水.jpg');
+    --global-bg-avatar: url('./mainPagePic/绪山真寻.png');
+    
+    /* 🎨 主体-基础颜色 */
+    --global-color-white: #FFF;
+    --global-color-black: #000;
+    --global-color-error: #ff0000;
+    --global-color-loading: #666;
+    
+    /* 🎨 主体-边框颜色 */
+    --global-border-primary: #fff;
+    --global-border-radius: 10px;
+    --global-border-width: 3px;
+    
+    /* 📐 主体-布局尺寸 */
+    --global-header-height: 35vh;
+    --global-header-margin-top: 20vh;
+    --global-header-margin-left: 30vh;
+    --global-content-margin: 15px;
+    
+    /* 🎭 主体-阴影效果 */
+    --global-text-shadow: 2px 2px 1px rgba(0, 0, 0, 1);
+}
+@font-face {
+    font-family: "pixel-cn";
+    src: url(./TTF/ark-pixel-12px-proportional-zh_cn.woff2) format(woff2);
+}
+
+/* 网页背景设置 */
+    body {
+        /* 大小 */
+
+        /* 边距 */
+        margin: 0px;
+        /* 排版 */
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+        /* 背景 */
+        background-image: var(--global-bg-header);
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        /* 边框 */
+
+        /* 文字 */
+    }
+
+    /* 取消滚动条 */
+    /* body::-webkit-scrollbar { */
+        /* display: none; Chrome, Safari, and Opera */
+    /* }  */
+   
+/* 头部区域 */
+    #header{
+        /* 大小 */
+        width: 100%;
+        height: var(--global-header-height);
+    }
+
+    #header h1{
+
+        /* 边距 */
+        margin: var(--global-header-margin-top) 0vh 0vh var(--global-header-margin-left);
+
+        /* 文字 */
+        color: var(--global-color-white);
+        font-family: var(--global-font-primary), sans-serif;
+        font-size: var(--global-font-size-header-title);
+        text-shadow: var(--global-text-shadow);
+    }
+
+    #header p{
+
+        /* 边距 */
+        margin: 0px 0px 0px 32vh;
+
+        /* 文字 */
+        font-family: var(--global-font-primary), sans-serif;
+        font-size: var(--global-font-size-header-subtitle);
+        text-shadow: var(--global-text-shadow);
+    }
+
+    #header a{
+        /* 文字 */
+        text-decoration: none;
+        color: var(--global-color-white);
+    }
+
+
+/* 内容区域 */
+    #content{
+        /* 边距 */
+        margin: 0px auto 0px auto;
+        /* 排版 */
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: center;
+        align-items: stretch;
+
+    }
+

@@ -1,0 +1,63 @@
+/* 内容区域：侧边栏：头像栏 */
+#avatar{
+    /* 大小 */
+    width: 100%;
+    min-height: var(--sidebar-avatar-min-height);
+    /* 边距 */
+    margin-bottom: var(--sidebar-avatar-margin-bottom);
+    /* 排版 */
+    display: flex;
+    flex-direction: column;
+    /* 背景 */
+    background-color: var(--sidebar-bg-primary);
+    /* 边框 */
+    border: var(--sidebar-border-width) solid var(--sidebar-border-color);
+    border-radius: var(--sidebar-border-radius);
+}
+
+#avatar-img{
+    width: var(--sidebar-avatar-size);
+    height: var(--sidebar-avatar-size);
+
+    margin: var(--sidebar-avatar-margin-top) auto 0px;
+
+    border: var(--sidebar-avatar-border-width) solid var(--sidebar-border-color);
+    border-radius: var(--sidebar-avatar-border-radius);
+
+    background-image: var(--global-bg-avatar);
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat; 
+}
+
+#avatar-name{
+    text-align: center;
+    font-size: var(--sidebar-font-size-name);
+}
+#avatar-email{
+    margin-bottom: var(--sidebar-avatar-margin-bottom);
+
+    text-align: center;
+    font-size: var(--sidebar-font-size-email);
+}
+
+#avatar p{
+    margin: 0;
+    padding: 0px;
+
+    color: var(--sidebar-text-primary);
+
+    text-align: center;
+    font-size: var(--sidebar-font-size-email);
+    
+}
+
+#avatar a{
+    color: var(--sidebar-text-primary);
+    text-decoration: none;
+}
+
+#avatar img{
+    width: var(--sidebar-icon-size);
+    height: var(--sidebar-icon-size);
+}

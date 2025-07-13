@@ -1,0 +1,69 @@
+/* ========= Markdown ========= */
+/* 数学 */
+.math{
+    color: var(--content-text-paragraph);
+    font-size: var(--content-font-size-paragraph);
+}
+
+.katex-display{
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* 代码 */
+code {
+    font-family: Consolas, monospace;
+    font-size: var(--content-font-size-code);
+    margin: 0;
+    hyphens: manual;
+}
+pre {
+    margin: 1em 0;
+    overflow: auto;
+}
+pre code {
+    overflow: visible;
+    overflow-wrap: normal;
+}
+
+/* 文章markdown列表 */
+table {
+    padding: 2em;
+    border-collapse: collapse;
+    width: auto;
+    overflow-x: auto;
+    display: block;
+    font-family: var(--global-font-primary);
+}
+table caption {
+    margin-bottom: 0.75em;
+}
+tbody {
+    margin-top: 0.5em;
+    border-top: 1px solid var(--content-border-primary);
+    border-bottom: 1px solid var(--content-border-primary);
+}
+th {
+    border-top: 1px solid var(--content-border-primary);
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    color: var(--content-text-h2);
+    font-size: var(--content-font-size-paragraph);
+}
+td {
+    padding: 0.125em 0.5em 0.25em 0.5em;
+    color: var(--content-text-paragraph);
+    font-size: var(--content-font-size-paragraph);
+}
+
+/* 强调 */
+strong{
+    font-size: var(--content-font-size-paragraph);
+}
+
+/* markdown的块状样式 */
+blockquote {
+    margin: 1em 0 1em 1.7em;
+    padding-left: 1em;
+    border-left: 2px solid var(--content-border-primary);
+    color: #606060;
+}

@@ -1,0 +1,98 @@
+:root {
+    /* ========================================== 响应式设计变量 ========================================== */
+    
+    /* 📱 移动端断点 */
+    --mobile-breakpoint-large: 1000px;
+    --mobile-breakpoint-small: 600px;
+    
+    /* 📱 移动端-头部尺寸 */
+    --mobile-header-height-large: 20vh;
+    --mobile-header-height-small: 15vh;
+    --mobile-header-title-size: 30px;
+    --mobile-header-subtitle-size: 20px;
+    --mobile-header-margin: 10%;
+    
+    /* 📱 移动端-内容区域 */
+    --mobile-content-width-large: 95%;
+    --mobile-content-width-small: 100%;
+    --mobile-section-margin: 5px;
+    --mobile-section-padding: 5%;
+    --mobile-section-padding-small: 20px;
+    
+    /* 📱 移动端-侧边栏 */
+    --mobile-sidebar-margin: 5px;
+    --mobile-nav-padding: 0 10px 0 0;
+}
+
+/* 手机设置 */
+    @media (max-width: 1000px) {
+        #header{
+            height: var(--mobile-header-height-large);
+        }
+
+        #header h1{
+            margin: 20px 0 0 var(--mobile-header-margin);
+            font-size: var(--mobile-header-title-size);
+        }
+        #header p{
+            margin: 0 0 0 var(--mobile-header-margin);
+            font-size: var(--mobile-header-subtitle-size);
+        }
+
+        #avatar{
+            display: none;
+        }
+
+        #content{
+            width: var(--mobile-content-width-large);
+            margin: 0px;
+            padding: 0px;
+            flex-direction: column;
+        }
+
+        #menu-left{
+            width: auto;
+            margin: var(--mobile-sidebar-margin);
+            display: flex;
+        }
+
+        #menu-nav{
+            /* 大小 */
+            width: auto;
+            /* 边距 */
+            padding: var(--mobile-nav-padding);
+            /* 排版 */
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+
+        .menu-nav-header{
+            display: none;
+        }
+
+        #section-text{
+            width: auto;
+            max-width: none;
+            margin: var(--mobile-section-margin);
+            padding-left: var(--mobile-section-padding);
+            padding-right: var(--mobile-section-padding);
+        }
+    }
+
+    @media (max-width: 600px) {
+        #header{
+            height: var(--mobile-header-height-small);
+        }
+        #content{
+            width: var(--mobile-content-width-small);
+        }
+        #menu-left{
+            margin: 0px;
+        }
+        #section-text{
+            margin: 0px;
+            padding: var(--mobile-section-padding-small);
+        }
+    }

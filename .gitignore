@@ -1,3 +1,7 @@
+# 用户文件夹
+test/
+backup/
+
 # 操作系统生成的文件
 .DS_Store
 Thumbs.db
@@ -32,17 +36,95 @@ yarn-error.log*
 # 环境变量文件 (通常包含敏感信息)
 .env
 .env.*
+.env.docker
 # 保留 .env.example 文件，作为配置示例
 !.env.example
+
+# 🚨 敏感数据和数据库文件
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+database.json
+
+# 📁 应用数据目录 (博客内容和上传文件)
+backend/public/uploads/
+backend/uploads/
+frontend/uploads/
+public/uploads/
+content/
+articles/
+media/
+
+# 💾 备份文件和数据
+*.backup
+*.dump
+*.tar.gz
+*.zip
+
+# 🐳 Docker 相关
+docker-compose.override.yml
+docker-compose.local.yml
+docker-compose.production.yml
+.docker/
+docker-data/
+postgres-data/
+redis-data/
+
+# 🔧 Strapi 特定文件
+.strapi-updater.json
+.strapi/
+backend/build/
+backend/.tmp/
+backend/data.db
+
+# 📝 扩展日志文件
+runtime.log
+error.log
+access.log
+
+# 🔐 安全和密钥文件
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+*.gpg
+*.asc
+
+# 🎯 缓存和临时文件
+.cache/
+cache/
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# 📊 性能分析和监控
+*.cpuprofile
+*.heapprofile
+*.heapsnapshot
+metrics/
+monitoring/
+
+# 🚀 部署相关
+deploy-*.log
+deployment/
+server-config/
+nginx-local.conf
 
 # 自动生成的文件
 project_structure.txt
 
-# 备份目录 (如果不需要版本控制)
-backup/
-
-# 临时文件
-*.tmp
-
 # 测试覆盖率报告
 coverage/
+.nyc_output/
+test-results/
+junit.xml

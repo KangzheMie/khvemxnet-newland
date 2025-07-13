@@ -1,0 +1,46 @@
+/* 内容区域：侧边栏：导航栏 */
+#menu-nav{
+    /* 大小 */
+    width: 100%;
+    /* 边距 */
+    padding: var(--sidebar-nav-padding);
+    margin: 0px;
+    /* 排版 */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: normal;
+    justify-content: normal;
+    align-items: center;
+    /* 背景 */
+    background-color: var(--sidebar-bg-primary);
+    /* 边框 */
+    border: var(--sidebar-border-width) solid var(--sidebar-border-color);
+    border-radius: var(--sidebar-border-radius);
+}
+
+.menu-nav-header{
+    width: var(--sidebar-nav-header-width);
+
+    margin: 0px;
+    padding: 0px;
+
+    text-align: center;
+    font-size: var(--sidebar-font-size-nav-header);
+
+    border-bottom: 1px solid var(--sidebar-border-color);
+}
+
+.menu-nav-li{
+    margin: 0px;
+    padding: var(--sidebar-nav-item-padding);
+
+    font-size: var(--sidebar-font-size-nav-item);
+}
+
+.menu-nav-li a{
+    text-decoration: none;
+    display: block;
+
+    color: var(--sidebar-text-link);
+}
