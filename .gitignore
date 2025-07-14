@@ -1,5 +1,4 @@
 # 用户文件夹
-test/
 backup/
 
 # 操作系统生成的文件
@@ -116,9 +115,9 @@ monitoring/
 
 # 🚀 部署相关
 deploy-*.log
-deployment/
 server-config/
 nginx-local.conf
+# deployment/ - 现在需要跟踪部署脚本
 
 # 自动生成的文件
 project_structure.txt

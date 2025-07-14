@@ -1,0 +1,22 @@
+# Nginx Dockerfile for NewLand2 Frontend
+FROM nginx:alpine
+
+# 复制自定义nginx配置
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# 复制前端文件
+COPY frontend/ /usr/share/nginx/html/frontend/
+COPY index.html /usr/share/nginx/html/
+COPY favicon.ico /usr/share/nginx/html/
+
+# 创建SSL证书目录
+RUN mkdir -p /etc/nginx/ssl
+
+# 设置正确的权限
+RUN chmod -R 755 /usr/share/nginx/html
+
+# 暴露端口
+EXPOSE 80 443
+
+# 启动nginx
+CMD ["nginx", "-g", "daemon off;"]
