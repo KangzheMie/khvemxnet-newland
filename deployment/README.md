@@ -1,6 +1,6 @@
-# 🐳 NewLand2 Docker 部署指南
+# 🐳 NewLand Docker 部署指南
 
-本目录包含了 NewLand2 项目的模块化 Docker 部署脚本，支持分步骤执行和一键部署。
+本目录包含了 NewLand 项目的模块化 Docker 部署脚本，支持分步骤执行和一键部署。
 
 ## 📁 文件结构
 
@@ -151,7 +151,7 @@ chmod +x *.sh
 4. **数据库连接失败**
    - 检查PostgreSQL容器是否正常启动
    - 验证数据库环境变量配置
-   - 查看数据库日志：`docker logs newland2-postgres`
+   - 查看数据库日志：`docker logs newland-postgres`
 
 5. **路径问题**
    - 确保在 `deployment/` 目录下运行脚本
@@ -200,8 +200,8 @@ JWT_SECRET=...          # JWT密钥
 DOMAIN=localhost        # 访问域名
 
 # 数据库配置
-DATABASE_NAME=newland2_db
-DATABASE_USERNAME=newland2_user
+DATABASE_NAME=newland_db
+DATABASE_USERNAME=newland_user
 
 # 环境配置
 NODE_ENV=production
@@ -210,29 +210,64 @@ TZ=Asia/Shanghai
 
 ## 🔒 安全注意事项
 
-1. **保护 `.env` 文件**: 包含敏感信息，不要提交到版本控制
-2. **更改默认密码**: 生产环境中应使用强密码
-3. **配置HTTPS**: 生产环境建议配置SSL证书
-4. **定期备份**: 备份数据库和上传文件
+1. **生产环境部署**
+   - 修改默认密码
+   - 配置HTTPS证书
+   - 限制数据库访问权限
+   - 定期备份数据
 
-## 🌍 生产环境部署
+2. **防火墙配置**
+   ```bash
+   # 仅开放必要端口
+   ufw allow 80/tcp
+   ufw allow 443/tcp
+   ```
 
-在生产环境部署时，请注意：
+3. **数据备份**
+   ```bash
+   # 备份数据库
+   docker exec newland-postgres pg_dump -U newland_user newland_db > backup.sql
+   ```
 
-1. **域名配置**: 修改 `.env` 中的 `DOMAIN` 为实际域名
-2. **SSL证书**: 配置 HTTPS
-3. **防火墙**: 确保必要端口开放
-4. **监控**: 设置服务监控和日志收集
-5. **备份策略**: 建立定期备份机制
+## 🐧 Linux服务器部署
 
-## 📞 支持
+在Linux服务器上部署时的额外注意事项：
 
-如果遇到问题，请：
+1. **系统要求**
+   - Ubuntu 20.04+ / CentOS 8+ / Debian 11+
+   - Docker 20.10+
+   - Docker Compose 2.0+
+   - 至少 2GB RAM
+   - 至少 10GB 可用磁盘空间
 
-1. 查看服务日志: `./manage-services.sh logs`
-2. 检查服务状态: `./manage-services.sh status`
-3. 参考故障排除部分
-4. 提交 Issue 到项目仓库
+2. **安装Docker**
+   ```bash
+   # Ubuntu/Debian
+   curl -fsSL https://get.docker.com -o get-docker.sh
+   sudo sh get-docker.sh
+   sudo usermod -aG docker $USER
+   
+   # 重新登录或运行
+   newgrp docker
+   ```
+
+3. **系统服务配置**
+   ```bash
+   # 设置Docker开机自启
+   sudo systemctl enable docker
+   sudo systemctl start docker
+   ```
+
+## 📞 技术支持
+
+如果遇到问题，请检查：
+
+1. Docker和Docker Compose版本是否符合要求
+2. 系统资源是否充足
+3. 网络连接是否正常
+4. 防火墙设置是否正确
+
+更多信息请参考项目文档或提交Issue。
 
 ---
 

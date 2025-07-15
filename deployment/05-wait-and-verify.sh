@@ -21,7 +21,7 @@ wait_for_services() {
     log_info "等待数据库启动..."
     timeout=60
     while [ $timeout -gt 0 ]; do
-        if docker compose -f "$COMPOSE_FILE" exec -T postgres pg_isready -U newland2_user -d newland2_db &>/dev/null; then
+        if docker compose -f "$COMPOSE_FILE" exec -T postgres pg_isready -U newland_user -d newland_db &>/dev/null; then
             log_success "数据库已就绪"
             break
         fi
@@ -85,7 +85,7 @@ show_deployment_info() {
     fi
     
     echo
-    log_success "🎉 NewLand2 Docker部署完成！"
+    log_success "🎉 NewLand Docker部署完成！"
     echo
     echo -e "${GREEN}📋 访问信息:${NC}"
     echo "   🌐 前端地址: http://$DOMAIN"

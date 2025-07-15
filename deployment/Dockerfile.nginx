@@ -1,8 +1,8 @@
-# Nginx Dockerfile for NewLand2 Frontend
+# Nginx Dockerfile for NewLand Frontend
 FROM nginx:alpine
 
 # 复制自定义nginx配置
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY deployment/nginx.conf /etc/nginx/nginx.conf
 
 # 复制前端文件
 COPY frontend/ /usr/share/nginx/html/frontend/
