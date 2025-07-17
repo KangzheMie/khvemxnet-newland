@@ -51,6 +51,8 @@ restart_services() {
     sleep 2
     
     echo "🚀 启动服务..."
+    cd_to_project_root
+    cd deployment/
     ./04-start-services.sh
     
     if [ $? -eq 0 ]; then
@@ -101,6 +103,8 @@ rebuild_services() {
     
     # 重新构建
     echo "重新构建镜像..."
+    cd_to_project_root
+    cd deployment/
     ./03-build-images.sh
     
     if [ $? -eq 0 ]; then

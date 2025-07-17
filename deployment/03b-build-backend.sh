@@ -89,9 +89,16 @@ main() {
     echo "═══════════════════════════════════════════════════════════════"
     echo
     
+    # 切换到项目根目录
+    cd_to_project_root
+    
     # 检查必要文件
     if [ ! -f "backend/package.json" ]; then
         log_error "找不到 backend/package.json 文件"
+        log_info "当前目录内容:"
+        ls -la
+        log_info "backend目录内容:"
+        ls -la backend/ 2>/dev/null || echo "backend目录不存在"
         exit 1
     fi
     
