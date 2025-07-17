@@ -79,10 +79,26 @@ main() {
     echo "═══════════════════════════════════════════════════════════════"
     echo
     
+    # 进行网络检测，为后续构建做准备
+    echo "🌐 网络环境检测"
+    echo "───────────────────────────────────────────────────────────────"
+    check_network_quality > /dev/null
+    show_network_optimization
+    echo
+    
     setup_environment
     
     log_success "✅ 步骤2完成！环境变量已设置"
     echo "下一步: 运行 ./03-build-images.sh 构建Docker镜像"
+    
+    # 根据网络状况给出建议
+    if [ "$NETWORK_QUALITY" = "poor" ]; then
+        echo
+        log_warning "⚠️  由于网络状况较差，建议："
+        echo "  • 在构建前运行 ./diagnose-network.sh 进行详细网络诊断"
+        echo "  • 考虑在网络状况较好时进行构建"
+        echo "  • 构建过程将自动使用轻量级配置以提高成功率"
+    fi
 }
 
 # 运行主函数

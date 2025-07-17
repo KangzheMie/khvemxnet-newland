@@ -1,65 +1,92 @@
 # 🐳 NewLand Docker 部署指南
 
-本目录包含了 NewLand 项目的模块化 Docker 部署脚本，支持分步骤执行和一键部署。
+本目录包含了 NewLand 项目的智能化 Docker 部署脚本，支持分步骤执行和一键部署，具备网络自适应构建能力。
 
 ## 📁 文件结构
 
 ```
 deployment/
-├── common.sh              # 通用函数库
+├── common.sh               # 通用函数库 (包含智能网络检测)
 ├── 01-check-docker.sh      # 步骤1: 检查Docker环境
-├── 02-setup-environment.sh # 步骤2: 设置环境变量
-├── 03-build-images.sh      # 步骤3: 构建Docker镜像
+├── 02-setup-environment.sh # 步骤2: 设置环境变量 + 网络检测
+├── 03-build-images.sh      # 步骤3: 构建Docker镜像 (统一入口)
+├── 03a-pull-base-images.sh # 步骤3a: 拉取基础镜像
+├── 03b-build-backend.sh    # 步骤3b: 智能构建后端镜像
+├── 03c-build-nginx.sh      # 步骤3c: 构建前端镜像
 ├── 04-start-services.sh    # 步骤4: 启动服务
 ├── 05-wait-and-verify.sh   # 步骤5: 等待服务就绪并验证
 ├── deploy-all.sh           # 一键部署脚本
 ├── manage-services.sh      # 服务管理脚本
+├── diagnose-network.sh     # 网络诊断工具
 ├── docker-compose.yml      # Docker Compose配置
 ├── Dockerfile.nginx        # Nginx Dockerfile
 ├── nginx.conf              # Nginx配置
 └── README.md               # 本文档
 ```
 
+## 🌟 新特性
+
+### 🧠 智能网络自适应构建
+- **自动网络检测**: 在环境设置阶段自动检测网络质量
+- **智能Dockerfile选择**: 根据网络状况自动选择最适合的构建配置
+  - 网络良好 (≥75%): 使用完整版 `backend/Dockerfile`
+  - 网络一般 (≥50%): 使用优化版 `backend/Dockerfile`
+  - 网络较差 (<50%): 使用轻量级 `backend/Dockerfile.lite`
+- **构建优化**: 自动配置国内镜像源，提高构建成功率
+- **重试机制**: 构建失败时自动重试，包含缓存清理和故障排除建议
+
+### 🔧 增强的故障排除
+- **网络诊断工具**: `./diagnose-network.sh` 提供详细的网络连接诊断
+- **智能错误处理**: 根据网络状况提供针对性的解决建议
+- **构建日志优化**: 更清晰的构建过程反馈和错误信息
+
 ## 🚀 快速开始
 
-### 方式一: 一键部署 (推荐)
+### 一键部署 (推荐)
 
 ```bash
 # 进入部署目录
-cd deployment
+cd deployment/
 
-# 给脚本添加执行权限
-chmod +x *.sh
-
-# 执行一键部署
+# 一键部署 (包含智能网络检测和优化)
 ./deploy-all.sh
 ```
 
-### 方式二: 分步骤部署
+**智能化特性**:
+- 🌐 **自动网络检测**: 在部署开始时检测网络质量
+- 🎯 **智能Dockerfile选择**: 根据网络状况自动选择最优构建方式
+- 🔄 **自动重试机制**: 构建失败时自动重试，提高成功率
+- 📊 **实时进度反馈**: 详细的构建进度和状态信息
+- 🛠️ **智能故障排除**: 提供针对性的错误解决建议
 
-如果某个步骤失败，可以从失败的步骤重新开始，无需从头执行：
+### 分步骤部署
+
+如果需要更细粒度的控制：
 
 ```bash
-# 进入部署目录
-cd deployment
-
-# 给脚本添加执行权限
-chmod +x *.sh
-
-# 步骤1: 检查Docker环境
+# 1. 检查Docker环境
 ./01-check-docker.sh
 
-# 步骤2: 设置环境变量
+# 2. 设置环境变量 + 网络检测
 ./02-setup-environment.sh
 
-# 步骤3: 构建Docker镜像
+# 3. 构建Docker镜像 (智能化)
 ./03-build-images.sh
 
-# 步骤4: 启动服务
+# 4. 启动服务
 ./04-start-services.sh
 
-# 步骤5: 等待服务就绪并验证
+# 5. 等待服务就绪并验证
 ./05-wait-and-verify.sh
+```
+
+### 网络诊断 (可选)
+
+如果遇到网络相关问题：
+
+```bash
+# 运行网络诊断工具
+./diagnose-network.sh
 ```
 
 ## 🛠️ 服务管理
@@ -94,16 +121,23 @@ chmod +x *.sh
 - 检查 Docker 服务是否运行
 - 显示版本信息
 
-### 步骤2: 设置环境变量
+### 步骤2: 设置环境变量 + 网络检测
+- **🌐 智能网络检测**: 自动检测网络质量，为后续构建做准备
 - 生成安全密钥
 - 创建 `.env` 配置文件
 - 配置域名和数据库信息
 - 如果 `.env` 已存在，则跳过创建
+- **网络状况评估**: 根据检测结果提供优化建议
 
-### 步骤3: 构建Docker镜像
-- 拉取基础镜像 (PostgreSQL, Redis)
-- 构建自定义应用镜像
-- 显示构建结果
+### 步骤3: 构建Docker镜像 (智能化)
+- **步骤3a**: 拉取基础镜像 (PostgreSQL, Redis, Node.js, Nginx)
+- **步骤3b**: 智能构建后端镜像
+  - 根据网络状况自动选择最适合的Dockerfile
+  - 自动配置国内镜像源 (阿里云、淘宝npm)
+  - 包含重试机制和缓存清理
+  - 提供详细的构建进度反馈
+- **步骤3c**: 构建前端镜像 (Nginx + 静态文件)
+- 显示构建结果摘要
 
 ### 步骤4: 启动服务
 - 停止现有服务
@@ -126,7 +160,26 @@ chmod +x *.sh
 
 ## 🔧 故障排除
 
-### 常见问题
+### 🌐 网络相关问题
+
+1. **网络连接诊断**
+   ```bash
+   # 运行网络诊断工具
+   ./diagnose-network.sh
+   ```
+
+2. **网络状况较差时的解决方案**
+   - 系统会自动使用轻量级Dockerfile (`backend/Dockerfile.lite`)
+   - 建议在网络状况较好时重新构建
+   - 考虑使用VPN或更换网络环境
+   - 手动清理Docker缓存: `docker system prune -a`
+
+3. **构建超时或失败**
+   - 系统自动重试2次，每次间隔30秒
+   - 自动清理失败的构建缓存
+   - 查看详细错误信息并按提示操作
+
+### 🐳 Docker相关问题
 
 1. **端口冲突**
    ```bash
@@ -158,30 +211,41 @@ chmod +x *.sh
    - 所有相对路径都基于 `deployment/` 目录
    - 前端和后端文件路径使用 `../` 前缀
 
-6. **数据库依赖不匹配**
-   - 后端已配置使用PostgreSQL (`pg`包)
-   - 确保不要使用SQLite相关配置
+### 🔄 重新部署选项
 
-### 重新部署
+1. **完全重新部署**
+   ```bash
+   # 清理所有容器和数据
+   ./manage-services.sh clean
+   
+   # 重新执行部署
+   ./deploy-all.sh
+   ```
 
-如果需要完全重新部署：
+2. **仅重新构建应用**
+   ```bash
+   # 重新构建并启动 (保留数据)
+   ./manage-services.sh rebuild
+   ```
 
-```bash
-# 清理所有容器和数据
-./manage-services.sh clean
+3. **分步骤重新构建**
+   ```bash
+   # 仅重新构建后端
+   ./03b-build-backend.sh
+   
+   # 仅重新构建前端
+   ./03c-build-nginx.sh
+   ```
 
-# 重新执行部署
-./deploy-all.sh
-```
+### 🚨 常见错误及解决方案
 
-### 仅重新构建应用
-
-如果只是代码更新，无需清理数据：
-
-```bash
-# 重新构建并启动
-./manage-services.sh rebuild
-```
+| 错误类型 | 可能原因 | 解决方案 |
+|---------|---------|---------|
+| 网络超时 | 网络连接不稳定 | 运行 `./diagnose-network.sh` 诊断 |
+| 构建失败 | 依赖下载失败 | 系统自动重试，或手动重新运行 |
+| 端口占用 | 其他服务占用端口 | 停止冲突服务或修改端口配置 |
+| 权限错误 | 脚本无执行权限 | 运行 `chmod +x deployment/*.sh` |
+| 磁盘空间不足 | Docker镜像占用过多空间 | 运行 `docker system prune -a` |
 
 ## 📝 环境变量说明
 

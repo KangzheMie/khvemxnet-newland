@@ -58,3 +58,103 @@ cd_to_project_root() {
     cd "$(dirname "$0")/.."
     log_info "当前工作目录: $(pwd)"
 }
+
+# 全局网络质量变量
+NETWORK_QUALITY=""
+DOCKERFILE_CHOICE=""
+
+# 检测网络质量
+check_network_quality() {
+    if [ -n "$NETWORK_QUALITY" ]; then
+        # 如果已经检测过，直接返回结果
+        echo "$NETWORK_QUALITY"
+        return
+    fi
+    
+    log_info "🌐 检测网络状况..."
+    
+    local score=0
+    local total_tests=4
+    
+    # 测试1: DNS解析速度
+    if timeout 5 nslookup mirrors.aliyun.com > /dev/null 2>&1; then
+        score=$((score + 1))
+        echo "  ✅ 阿里云镜像源DNS解析正常"
+    else
+        echo "  ❌ 阿里云镜像源DNS解析失败"
+    fi
+    
+    # 测试2: 阿里云镜像连接
+    if timeout 10 curl -s https://mirrors.aliyun.com > /dev/null 2>&1; then
+        score=$((score + 1))
+        echo "  ✅ 阿里云镜像源连接正常"
+    else
+        echo "  ❌ 阿里云镜像源连接失败"
+    fi
+    
+    # 测试3: npm镜像连接
+    if timeout 10 curl -s https://registry.npmmirror.com > /dev/null 2>&1; then
+        score=$((score + 1))
+        echo "  ✅ npm淘宝镜像源连接正常"
+    else
+        echo "  ❌ npm淘宝镜像源连接失败"
+    fi
+    
+    # 测试4: Docker Hub连接
+    if timeout 10 curl -s https://hub.docker.com > /dev/null 2>&1; then
+        score=$((score + 1))
+        echo "  ✅ Docker Hub连接正常"
+    else
+        echo "  ❌ Docker Hub连接失败"
+    fi
+    
+    local quality_percentage=$((score * 100 / total_tests))
+    
+    if [ $quality_percentage -ge 75 ]; then
+        NETWORK_QUALITY="good"
+        DOCKERFILE_CHOICE="backend/Dockerfile"
+        log_success "网络状况良好 ($quality_percentage%)，将使用完整版Dockerfile"
+    elif [ $quality_percentage -ge 50 ]; then
+        NETWORK_QUALITY="fair"
+        DOCKERFILE_CHOICE="backend/Dockerfile"
+        log_warning "网络状况一般 ($quality_percentage%)，将使用优化版Dockerfile"
+    else
+        NETWORK_QUALITY="poor"
+        DOCKERFILE_CHOICE="backend/Dockerfile.lite"
+        log_warning "网络状况较差 ($quality_percentage%)，将使用轻量级Dockerfile"
+    fi
+    
+    echo "$NETWORK_QUALITY"
+}
+
+# 获取推荐的Dockerfile路径
+get_dockerfile_choice() {
+    if [ -z "$DOCKERFILE_CHOICE" ]; then
+        check_network_quality > /dev/null
+    fi
+    echo "$DOCKERFILE_CHOICE"
+}
+
+# 显示网络优化建议
+show_network_optimization() {
+    case "$NETWORK_QUALITY" in
+        "poor")
+            echo
+            log_info "🔧 网络优化建议："
+            echo "  1. 检查网络连接是否稳定"
+            echo "  2. 尝试使用VPN或更换网络环境"
+            echo "  3. 考虑使用国内镜像源"
+            echo "  4. 如果问题持续，可运行 ./diagnose-network.sh 进行详细诊断"
+            ;;
+        "fair")
+            echo
+            log_info "💡 网络提示："
+            echo "  网络状况一般，构建过程可能需要更长时间"
+            echo "  如遇到问题，可尝试重新运行或使用 ./diagnose-network.sh 诊断"
+            ;;
+        "good")
+            echo
+            log_success "🚀 网络状况良好，预期构建过程顺利"
+            ;;
+    esac
+}
