@@ -11,9 +11,8 @@ source "$(dirname "$0")/common.sh"
 # 设置项目根目录
 setup_project_root
 
-# 智能构建函数
+# 构建函数
 build_backend() {
-    cd_to_project_root # 确保在项目根目录
     local project_root=$(pwd)
     log_info "当前工作目录: $project_root"
     
@@ -27,9 +26,8 @@ build_backend() {
     show_network_optimization
     
     # 修改docker-compose.yml临时使用指定的Dockerfile
-    # 使用绝对路径确保准确性
-    local compose_file="${project_root}/deployment/docker-compose.yml"
-    local backup_file="${project_root}/deployment/docker-compose.yml.backup"
+    local compose_file="deployment/docker-compose.yml"
+    local backup_file="deployment/docker-compose.yml.backup"
     
     # 验证compose文件存在
     if [ ! -f "$compose_file" ]; then
