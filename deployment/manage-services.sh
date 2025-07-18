@@ -32,13 +32,14 @@ stop_services() {
     echo "🛑 停止 NewLand 服务..."
     
     cd_to_project_root
-    cd deployment/
     
-    if [ -f "docker-compose.yml" ]; then
-        docker compose -f docker-compose.yml down
+    COMPOSE_FILE="deployment/docker-compose.yml"
+
+    if [ -f "$COMPOSE_FILE" ]; then
+        docker compose -f "$COMPOSE_FILE" down
         echo "✅ 服务已停止"
     else
-        echo "❌ 找不到 docker-compose.yml 文件"
+        log_error "找不到 docker-compose.yml 文件，路径: $(pwd)/$COMPOSE_FILE"
         exit 1
     fi
 }
@@ -51,8 +52,7 @@ restart_services() {
     sleep 2
     
     echo "🚀 启动服务..."
-    cd_to_project_root
-    cd deployment/
+    # 04-start-services.sh 内部会自己切换目录
     ./04-start-services.sh
     
     if [ $? -eq 0 ]; then
@@ -103,8 +103,7 @@ rebuild_services() {
     
     # 重新构建
     echo "重新构建镜像..."
-    cd_to_project_root
-    cd deployment/
+    # 03-build-images.sh 内部会自己切换目录
     ./03-build-images.sh
     
     if [ $? -eq 0 ]; then
@@ -130,15 +129,16 @@ show_status() {
     echo "==================="
     
     cd_to_project_root
-    cd deployment/
+
+    COMPOSE_FILE="deployment/docker-compose.yml"
     
-    if [ -f "docker-compose.yml" ]; then
-        docker compose -f docker-compose.yml ps
+    if [ -f "$COMPOSE_FILE" ]; then
+        docker compose -f "$COMPOSE_FILE" ps
         echo ""
         echo "📈 资源使用情况:"
         docker stats --no-stream --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}"
     else
-        echo "❌ 找不到 docker-compose.yml 文件"
+        log_error "找不到 docker-compose.yml 文件，路径: $(pwd)/$COMPOSE_FILE"
         exit 1
     fi
 }
@@ -149,9 +149,10 @@ show_logs() {
     echo "=================="
     
     cd_to_project_root
-    cd deployment/
+
+    COMPOSE_FILE="deployment/docker-compose.yml"
     
-    if [ -f "docker-compose.yml" ]; then
+    if [ -f "$COMPOSE_FILE" ]; then
         echo "选择要查看的服务日志:"
         echo "1) 所有服务"
         echo "2) 数据库 (postgres)"
@@ -163,19 +164,19 @@ show_logs() {
         
         case $choice in
             1)
-                docker compose -f docker-compose.yml logs -f
+                docker compose -f "$COMPOSE_FILE" logs -f
                 ;;
             2)
-                docker compose -f docker-compose.yml logs -f postgres
+                docker compose -f "$COMPOSE_FILE" logs -f postgres
                 ;;
             3)
-                docker compose -f docker-compose.yml logs -f backend
+                docker compose -f "$COMPOSE_FILE" logs -f backend
                 ;;
             4)
-                docker compose -f docker-compose.yml logs -f nginx
+                docker compose -f "$COMPOSE_FILE" logs -f nginx
                 ;;
             5)
-                docker compose -f docker-compose.yml logs -f redis
+                docker compose -f "$COMPOSE_FILE" logs -f redis
                 ;;
             *)
                 echo "❌ 无效选择"
@@ -183,7 +184,7 @@ show_logs() {
                 ;;
         esac
     else
-        echo "❌ 找不到 docker-compose.yml 文件"
+        log_error "找不到 docker-compose.yml 文件，路径: $(pwd)/$COMPOSE_FILE"
         exit 1
     fi
 }

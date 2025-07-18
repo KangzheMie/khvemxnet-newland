@@ -22,11 +22,21 @@ build_backend() {
     show_network_optimization
     
     # 修改docker-compose.yml临时使用指定的Dockerfile
-    local compose_file="deployment/docker-compose.yml"
-    local backup_file="deployment/docker-compose.yml.backup"
+    # 使用绝对路径确保准确性
+    local project_root=$(pwd)
+    local compose_file="${project_root}/deployment/docker-compose.yml"
+    local backup_file="${project_root}/deployment/docker-compose.yml.backup"
+    
+    # 验证compose文件存在
+    if [ ! -f "$compose_file" ]; then
+        log_error "找不到docker-compose.yml文件，路径: $compose_file"
+        log_info "当前目录内容:"
+        ls -la "${project_root}/deployment"
+        exit 1
+    fi
     
     # 备份原文件
-    cp "$compose_file" "$backup_file"
+    cp -v "$compose_file" "$backup_file"
     
     # 修改dockerfile路径
     sed -i "s|dockerfile: backend/Dockerfile|dockerfile: $dockerfile|g" "$compose_file"
