@@ -52,11 +52,31 @@ generate_secret() {
     fi
 }
 
-# 切换到项目根目录
-cd_to_project_root() {
-    # 从deployment目录切换到项目根目录
-    cd "$(dirname "$0")/.."
+# 定义项目根目录变量
+PROJECT_ROOT=""
+
+# 设置并切换到项目根目录
+# 这个函数应该在每个主脚本的开头被调用一次
+setup_project_root() {
+    if [ -z "$PROJECT_ROOT" ]; then
+        # 使用readlink -f来获取脚本的绝对路径，然后找到根目录
+        local script_path=$(readlink -f "${BASH_SOURCE[0]}")
+        local deployment_dir=$(dirname "$script_path")
+        PROJECT_ROOT=$(dirname "$deployment_dir")
+        log_info "项目根目录已设置为: $PROJECT_ROOT"
+    fi
+    cd "$PROJECT_ROOT"
     log_info "当前工作目录: $(pwd)"
+}
+
+# 兼容旧的函数名，但现在它只做cd操作
+cd_to_project_root() {
+    if [ -z "$PROJECT_ROOT" ]; then
+        echo "Error: PROJECT_ROOT is not set. Please call setup_project_root() first."
+        exit 1
+    fi
+    cd "$PROJECT_ROOT"
+    # log_info "Switched to project root: $(pwd)" # 减少重复日志
 }
 
 # 全局网络质量变量

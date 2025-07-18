@@ -8,6 +8,9 @@ set -e  # 遇到错误立即退出
 # 导入通用函数
 source "$(dirname "$0")/common.sh"
 
+# 设置项目根目录
+setup_project_root
+
 # 启动服务
 start_services() {
     # 切换到项目根目录

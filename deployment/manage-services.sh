@@ -6,6 +6,9 @@
 # 导入通用函数
 source "$(dirname "$0")/common.sh"
 
+# 设置项目根目录
+setup_project_root
+
 # 显示帮助信息
 show_help() {
     echo "🛠️ NewLand 服务管理脚本"
