@@ -55,7 +55,6 @@ restart_services() {
     sleep 2
     
     echo "🚀 启动服务..."
-    # 04-start-services.sh 内部会自己切换目录
     ./04-start-services.sh
     
     if [ $? -eq 0 ]; then

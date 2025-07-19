@@ -5,7 +5,8 @@
 
 // 📋 配置中心
 const CONFIG = {
-    STRAPI_URL: 'http://localhost:1337',
+    // 智能检测API URL：如果是通过nginx访问（端口80），使用相对路径；否则使用localhost:1337
+    STRAPI_URL: window.location.port === '80' || window.location.port === '' ? '' : 'http://localhost:1337',
     PAGE_SIZE: 100,
     SORT_ORDER: 'PublishedDate:desc',
     CACHE_TTL: 5 * 60 * 1000, // 5分钟缓存
