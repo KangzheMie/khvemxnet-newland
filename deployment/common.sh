@@ -132,17 +132,16 @@ check_network_quality() {
     
     if [ $quality_percentage -ge 75 ]; then
         NETWORK_QUALITY="good"
-        DOCKERFILE_CHOICE="backend/Dockerfile"
-        log_success "网络状况良好 ($quality_percentage%)，将使用完整版Dockerfile"
+        log_success "网络状况良好 ($quality_percentage%)"
     elif [ $quality_percentage -ge 50 ]; then
         NETWORK_QUALITY="fair"
-        DOCKERFILE_CHOICE="backend/Dockerfile"
-        log_warning "网络状况一般 ($quality_percentage%)，将使用优化版Dockerfile"
+        log_warning "网络状况一般 ($quality_percentage%)"
     else
         NETWORK_QUALITY="poor"
-        DOCKERFILE_CHOICE="backend/Dockerfile.lite"
-        log_warning "网络状况较差 ($quality_percentage%)，将使用轻量级Dockerfile"
+        log_warning "网络状况较差 ($quality_percentage%)"
     fi
+
+    DOCKERFILE_CHOICE="backend/Dockerfile"
     
     echo "$NETWORK_QUALITY"
 }

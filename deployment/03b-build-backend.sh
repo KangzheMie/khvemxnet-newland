@@ -118,6 +118,12 @@ main() {
         log_error "找不到 backend/Dockerfile 文件"
         exit 1
     fi
+
+    # 检查 node 
+    if ! command -v node >/dev/null 2>&1; then
+        log_error "未检测到Node.js，请先安装Node.js并配置环境变量。"
+        exit 1
+    fi
     
     # 验证package.json
     # 验证package.json
