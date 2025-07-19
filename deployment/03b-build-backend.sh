@@ -120,10 +120,11 @@ main() {
     fi
     
     # 验证package.json
+    # 验证package.json
     log_info "验证package.json语法..."
-    if ! node -e "JSON.parse(require('fs').readFileSync('backend/package.json', 'utf8'))" 2>/dev/null; then
-        log_error "backend/package.json 语法错误"
-        exit 1
+    if ! node -e "try { JSON.parse(require('fs').readFileSync('backend/package.json', 'utf8')); } catch(e) { console.error('❌ package.json 解析失败:', e.message); process.exit(1); }"; then
+    log_error "backend/package.json 语法错误，详情见上方Node.js输出"
+    exit 1
     fi
     log_success "package.json 语法验证通过"
     
