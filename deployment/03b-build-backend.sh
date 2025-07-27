@@ -59,6 +59,15 @@ build_backend() {
         
         if timeout $timeout_duration docker compose -f "$compose_file" build --no-cache backend; then
             log_success "后端镜像构建成功！"
+            
+            # 验证构建产物
+            log_info "验证管理面板构建..."
+            if docker run --rm deployment-backend ls -la /app/build/ >/dev/null 2>&1; then
+                log_success "✅ 管理面板构建产物验证成功"
+            else
+                log_warning "⚠️  管理面板构建产物可能缺失，但继续执行"
+            fi
+            
             break
         else
             retry_count=$((retry_count + 1))

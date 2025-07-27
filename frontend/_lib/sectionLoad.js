@@ -5,8 +5,20 @@
 
 // 📋 配置中心
 const CONFIG = {
-    // 智能检测API URL：如果是通过nginx访问（端口80），使用相对路径；否则使用localhost:1337
-    STRAPI_URL: window.location.port === '80' || window.location.port === '' ? '' : 'http://localhost:1337',
+    // 智能检测API URL：支持开发环境和生产环境的自动切换
+    STRAPI_URL: (() => {
+        const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
+        
+        // 开发环境：localhost 或 127.0.0.1
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+            return 'http://localhost:1337';
+        }
+        
+        // 生产环境：使用当前域名的1337端口
+        // 如果是通过nginx代理，也可以使用相对路径（空字符串）
+        return `${protocol}//${hostname}:1337`;
+    })(),
     PAGE_SIZE: 100,
     SORT_ORDER: 'PublishedDate:desc',
     CACHE_TTL: 5 * 60 * 1000, // 5分钟缓存

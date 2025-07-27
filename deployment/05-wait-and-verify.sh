@@ -137,6 +137,16 @@ main() {
     show_deployment_info
     
     log_success "✅ 步骤5完成！所有服务已就绪"
+    
+    # 自动验证管理面板
+    echo
+    log_info "正在验证管理面板..."
+    if [ -f "deployment/06-verify-admin-panel.sh" ]; then
+        ./deployment/06-verify-admin-panel.sh
+    else
+        log_warning "管理面板验证脚本不存在，请手动检查 http://localhost:1337/admin"
+    fi
+    
     echo "🎉 部署流程全部完成！"
 }
 

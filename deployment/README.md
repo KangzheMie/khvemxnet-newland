@@ -15,12 +15,15 @@ deployment/
 ├── 03c-build-nginx.sh      # 步骤3c: 构建前端镜像
 ├── 04-start-services.sh    # 步骤4: 启动服务
 ├── 05-wait-and-verify.sh   # 步骤5: 等待服务就绪并验证
+├── 06-verify-admin-panel.sh # 步骤6: 验证和修复管理面板
+├── 07-data-import.sh       # 数据导入工具
 ├── deploy-all.sh           # 一键部署脚本
 ├── manage-services.sh      # 服务管理脚本
 ├── diagnose-network.sh     # 网络诊断工具
 ├── docker-compose.yml      # Docker Compose配置
 ├── Dockerfile.nginx        # Nginx Dockerfile
 ├── nginx.conf              # Nginx配置
+├── DATA_IMPORT_GUIDE.md    # 数据导入详细指南
 └── README.md               # 本文档
 ```
 
@@ -34,6 +37,18 @@ deployment/
   - 网络较差 (<50%): 使用轻量级 `backend/Dockerfile.lite`
 - **构建优化**: 自动配置国内镜像源，提高构建成功率
 - **重试机制**: 构建失败时自动重试，包含缓存清理和故障排除建议
+
+### 🎛️ 管理面板自动化
+- **自动构建验证**: Dockerfile 中包含管理面板构建和验证步骤
+- **智能修复**: `./06-verify-admin-panel.sh` 自动检测和修复管理面板问题
+- **部署后验证**: 部署完成后自动验证管理面板可用性
+- **一键修复**: 如果管理面板异常，提供自动修复功能
+
+### 📊 数据导入工具
+- **数据库内容自动导入**: 支持批量导入数据库记录
+- **文件内容批量导入**: 支持上传和导入各种文件类型
+- **导入状态验证**: 实时监控导入进度和状态
+- **详细的导入指南**: 提供完整的数据导入操作文档
 
 ### 🔧 增强的故障排除
 - **网络诊断工具**: `./diagnose-network.sh` 提供详细的网络连接诊断
@@ -78,6 +93,12 @@ cd deployment/
 
 # 5. 等待服务就绪并验证
 ./05-wait-and-verify.sh
+
+# 6. 验证管理面板 (可选，通常在步骤5中自动执行)
+./06-verify-admin-panel.sh
+
+# 7. 数据导入 (可选)
+./07-data-import.sh
 ```
 
 ### 网络诊断 (可选)
@@ -240,12 +261,39 @@ cd deployment/
 ### 🚨 常见错误及解决方案
 
 | 错误类型 | 可能原因 | 解决方案 |
-|---------|---------|---------|
+|---------|---------|---------||
 | 网络超时 | 网络连接不稳定 | 运行 `./diagnose-network.sh` 诊断 |
 | 构建失败 | 依赖下载失败 | 系统自动重试，或手动重新运行 |
 | 端口占用 | 其他服务占用端口 | 停止冲突服务或修改端口配置 |
 | 权限错误 | 脚本无执行权限 | 运行 `chmod +x deployment/*.sh` |
 | 磁盘空间不足 | Docker镜像占用过多空间 | 运行 `docker system prune -a` |
+| 数据导入失败 | 数据库连接或文件权限问题 | 运行 `./07-data-import.sh` 或查看 `DATA_IMPORT_GUIDE.md` |
+
+### 📊 数据导入故障排除
+
+1. **数据库连接问题**
+   ```bash
+   # 检查数据库连接
+   docker exec newland-postgres psql -U newland_user -d newland_db -c "SELECT 1;"
+   ```
+
+2. **文件上传权限问题**
+   ```bash
+   # 检查文件权限
+   docker exec newland-backend ls -la /app/public/uploads/
+   
+   # 修复权限
+   docker exec newland-backend chown -R node:node /app/public/uploads/
+   ```
+
+3. **导入工具使用**
+   ```bash
+   # 运行数据导入工具
+   ./07-data-import.sh
+   
+   # 查看详细导入指南
+   cat DATA_IMPORT_GUIDE.md
+   ```
 
 ## 📝 环境变量说明
 
