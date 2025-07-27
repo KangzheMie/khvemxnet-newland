@@ -1,0 +1,27 @@
+# Stage 1: Build frontend dependencies
+FROM node:20-alpine AS frontend-build
+
+# Set working directory
+WORKDIR /app
+
+# Copy frontend package files
+COPY frontend/package.json frontend/package-lock.json* ./
+
+# Install frontend dependencies
+RUN npm install
+
+# Copy frontend source files
+COPY frontend/ ./
+
+# Stage 2: Serve with Nginx
+FROM nginx:stable-alpine
+
+# Copy built frontend files to Nginx html directory
+COPY --from=frontend-build /app /usr/share/nginx/html/frontend
+COPY index.html /usr/share/nginx/html/
+
+# Expose port 80 for Nginx
+EXPOSE 80
+
+# Default command to start Nginx
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,5 +1,5 @@
 # 用户文件夹
-backup/
+_backup/
 
 # 操作系统生成的文件
 .DS_Store
