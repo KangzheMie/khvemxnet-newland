@@ -1,6 +1,12 @@
 # Stage 1: Build the application
 FROM node:20-alpine AS build
 
+# 国区特供傻逼换源
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+
+# Install Python and build dependencies to ensure build consistency
+RUN apk add --no-cache python3 make g++
+
 # Set the working directory
 WORKDIR /app
 
