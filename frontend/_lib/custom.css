@@ -1,0 +1,34 @@
+:root {
+    border-top: none;
+}
+
+body {
+    padding-top: 0.1px;
+
+    border-left: 1px dashed var(--lesslight);
+    border-right: 1px dashed var(--lesslight);
+}
+
+#header nav {
+    border-top: 1px dashed var(--lesslight);
+    border-bottom: 1px dashed var(--lesslight);
+}
+
+h2, h3, h4, h5 {
+    margin-top: 2em;
+}
+
+nav {
+    text-align: center;
+    color: color-mix(in srgb, var(--dark) 40%, transparent);
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+nav a {
+    color: var(--dark);
+}
+
+.af-element {
+    margin-top: 1em;
+}

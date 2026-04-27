@@ -1,7 +1,0 @@
-[submodule "backend"]
-	path = backend
-	url = https://github.com/KangzheMie/khvemxnet-newland-backend.git
-	branch = main
-[submodule "frontend"]
-	path = frontend
-	url = https://github.com/KangzheMie/khvemxnet-newland-frontend.git

@@ -1,0 +1,7 @@
+{
+    "log_path": "./api_server.log",
+    "blog_path": "./blog",
+    "db_path": "./blog.db",
+    "backend_host": "127.0.0.1",
+    "backend_port": 8000
+}
