@@ -60,16 +60,21 @@ for linux:
 ## api list
 
 - '/api/ping' 
-  - Dict[str, str]
-  - {"data": "ping"}
+```python
+	Dict[str, str]
+	{"data": "ping"}
+```
 
 - '/api/blogs'
-  - Dict[str, List[Dict[str, str]]]
-  - {"data": [{"id": "1","name": "blog1"}]}
+```python
+	Dict[str, List[Dict[str, str]]]
+	{"data": [{"id": "1","name": "blog1"}]}
+```
 
 - '/api/blogs/<id>'
-  - Dict[str, Blog]
-  - {"data": 
+```python
+	Dict[str, Blog]
+	{"data": 
     - {"id": "1",
     - "name": "blog1", 
     - "hash": "123456", 
@@ -78,19 +83,28 @@ for linux:
     - "summary": "this is blog1", 
     - "tags": ["tech", "blog"], 
     - "content": "this is blog1 content"}}
+```
   
 - '/api/blogs/category/<category>'
-  - Dict[str, List[Dict[str, str]]]
-  - {"data": [{"id": "1","name": "blog1"}]}
+```python
+	Dict[str, List[Dict[str, str]]]
+	{"data": [{"id": "1","name": "blog1"}]}
+```
 
 - '/api/blogs/content/<id>'
-  - Dict[str, str]
-  - {"data": "this is blog1 content"}
+```python
+	Dict[str, str]
+	{"data": "this is blog1 content"}
+```
 
 - '/api/blogs/tags/<id>'
-  - Dict[str, List[str]]
-  - {"data": ["tech", "blog"]}
+```python
+	Dict[str, List[str]]
+	{"data": ["tech", "blog"]}
+```
 
 - '/api/tags'
-  - Dict[str, List[str]]
-  - {"data": ["tech", "blog"]}
+```python
+	Dict[str, List[str]]
+	{"data": ["tech", "blog"]}
+```

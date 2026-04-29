@@ -28,18 +28,4 @@ the api is based on [NewLand backend](https://github.com/KangzheMie/khvemxnet-ne
 3. local file
 you can add local pages in the `./_pages` directory.
 
-### Debug
-
-if you want to debug the frontend, you can use below files
-
-in linux:
-``` sh
-./debug.sh
-```
-
-in windows:
-``` sh
-./debug.bat
-```
-
 

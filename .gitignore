@@ -5,7 +5,7 @@ __pycache__/
 *.egg-info/
 node_modules/
 !data/blog/.gitkeep
-data/blog/
+data/blog/*
 
 # file
 *.db
