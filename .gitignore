@@ -1,1 +1,14 @@
-.backup
+# dir
+__pycache__/
+.venv/
+.backup/
+*.egg-info/
+node_modules/
+!data/blog/.gitkeep
+data/blog/
+
+# file
+*.db
+*.log
+test*
+config.json

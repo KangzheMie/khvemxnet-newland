@@ -1,7 +1,5 @@
 <h1 align="center"> 新大陆发现部 </h1>
 
-## 项目介绍
-
-「这里是新大陆发现部的档案馆, 用于陈放我们在星海中观察和发掘到的知识. 这些知识作为笔记留存在这里, 是我们继续在宇宙中探索的力量.」
+Hello, here is newland. Here is used as a archive for our knowledge. Those knowledge is used to help us to explore the universe.
 
 url：https://newland.khvemx.work/

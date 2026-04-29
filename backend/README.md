@@ -2,6 +2,8 @@
 
 A small and simple api server based on python for NewLand project.
 
+The only thing the backend to do, is read out the database and serve the api.
+
 ## Installation
 
 ### config the path

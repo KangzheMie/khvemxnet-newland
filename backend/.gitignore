@@ -1,8 +1,0 @@
-.venv
-__pycache__
-test.*
-blog/*
-!blog/.gitkeep
-*.log
-*.db
-config.json

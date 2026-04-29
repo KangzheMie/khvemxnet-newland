@@ -3,10 +3,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from typing import List, Dict, Any
-import blogdb
+import blogDatabaseLib as blogdb
 import uvicorn
 
-settings = blogdb.load_settings()
+settings = blogdb.load_settings(Path(__file__).parent / "config.json")   
 log_path = settings["log_path"]
 blog_db_path = settings["db_path"]
 backend_host = settings["backend_host"]
