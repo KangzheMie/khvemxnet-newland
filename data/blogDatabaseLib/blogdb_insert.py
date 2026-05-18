@@ -56,6 +56,8 @@ def blog_list_insert(
 
     db_path = Path(db_path)
     # excluded is the values in the ON CONFLICT clause
+    # if blog's name is already in the database, it will trigger the conflict clause
+    # in the conflict clause, update the contents
     sql = (
         "INSERT INTO blog_list (name, hash, category, create_time, summary, tags, content) "
         "VALUES (?, ?, ?, ?, ?, ?, ?) "
@@ -71,6 +73,7 @@ def blog_list_insert(
         conn.commit()
 
         # if data is inserted, lastrowid is the id of the inserted row
+        # if data is updated, lastrowid is 0
         if cur.lastrowid > 0:
             logger.info(f"insert blog list success: name={blog.name}, id={cur.lastrowid}")
             return "inserted", f"{blog.name} id= {cur.lastrowid}"

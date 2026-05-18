@@ -22,15 +22,15 @@ def blog_sync(
 
     for file in blog_dir.rglob('*.md'): 
         a_blog = blog_reader(file)
-        blog_list_insert(a_blog, db_path=db_path)
-        blog_tags_insert(a_blog, db_path=db_path)
-        logger.info(f"insert blog {a_blog.name} success")
-        logger.info(f"insert blog tags {a_blog.name} success")
+        blog_insert_result = blog_list_insert(a_blog, db_path=db_path)
+        tags_insert_result = blog_tags_insert(a_blog, db_path=db_path)
+        logger.info(f"{blog_insert_result}")
+        logger.info(f"{tags_insert_result}")
 
     logger.info(f"blog sync finished")
     
-    check_result, check_set = blog_list_check(blog_dir, db_path)
-    logger.info(f"blog list check result: {check_result}, check set: {check_set}")
+    check_result, _ = blog_list_check(blog_dir, db_path=db_path)
+    logger.info(f"blog list check result: {check_result}")
 
 # ==========================================
 # Blog List
@@ -49,7 +49,7 @@ def blog_list_sync(
         logger.error(f"blog dir not exists: {blog_dir}")
         raise FileNotFoundError(f"blog dir not exists: {blog_dir}")
 
-    for file in blog_dir.glob('*.md'):
+    for file in blog_dir.rglob('*.md'):
         a_blog = blog_reader(file)
         blog_list_insert(a_blog, db_path=db_path)
 
@@ -69,21 +69,25 @@ def blog_list_check_ghost(
     try:
         logger.debug(f"try to check ghost blog list")
         blog_set = set()
-        for file in blog_dir.glob('*.md'):
+        for file in blog_dir.rglob('*.md'):
             blog_set.add(file.stem)
-        database_set = set(blog_list_get_all_names(db_path=db_path))
+        logger.debug(f"blog dir blog list: {blog_set}")
+
+        blog_list = blog_list_get_all_names(db_path=db_path)
+        database_set = set([row["name"] for row in blog_list])
+        logger.debug(f"database blog list: {database_set}")
         ghost_set = database_set - blog_set or None
 
         if ghost_set is not None:
-            logger.info(f"have ghost blog list: {ghost_set}")
+            logger.debug(f"have ghost blog list: {ghost_set}")
             return "warning", ghost_set
         else:
-            logger.info(f"have no ghost blog list")
-            return "checked", set()
+            logger.debug(f"have no ghost blog list")
+            return "checked", set[Any]()
 
     except sqlite3.Error as e:
         logger.error(f"check ghost blog list failed: error={e}", exc_info=True)
-        return "error", set()
+        return "error", set[Any]()
     finally:
         conn.close()
 
@@ -92,7 +96,7 @@ def blog_list_check_outsync(
     blog_dir: Union[str, Path],
     *,
     db_path: Union[str, Path],
-    ) -> Tuple[Literal["checked", "warning", "error"], set]:
+    ) -> Tuple[Literal["checked", "warning", "error"], set[Any]]:
 
     '''outsync is the blog that is in the blog dir but not in the database'''
 
@@ -103,21 +107,23 @@ def blog_list_check_outsync(
     try:
         logger.debug(f"try to check out of sync blog list")
         blog_set = set()
-        for file in blog_dir.glob('*.md'):
+        for file in blog_dir.rglob('*.md'):
             blog_set.add(file.stem)
-        database_set = set(blog_list_get_all_names(db_path=db_path))
+
+        blog_list = blog_list_get_all_names(db_path=db_path)
+        database_set = set([row["name"] for row in blog_list])
         outsync_set = blog_set - database_set or None
 
         if outsync_set is not None:
-            logger.info(f"have out of sync blog list: {outsync_set}")
+            logger.debug(f"have out of sync blog list: {outsync_set}")
             return "warning", outsync_set
         else:
-            logger.info(f"have no out of sync blog list")
-            return "checked", set()
+            logger.debug(f"have no out of sync blog list")
+            return "checked", set[Any]()
 
     except sqlite3.Error as e:
         logger.error(f"check out of sync blog list failed: error={e}", exc_info=True)
-        return "error", set()
+        return "error", set[Any]()
     finally:
         conn.close()
 
@@ -139,14 +145,14 @@ def blog_list_check(
 
         if ghost_set[0] == "checked" and outsync_set[0] == "checked":
             logger.info(f"have no ghost blog list and out of sync blog list")
-            return "checked", set()
+            return "checked", set[Any]()
         else:
             logger.info(f"have ghost blog list: {ghost_set[1]} \n out of sync blog list: {outsync_set[1]}")
             return "warning", ghost_set[1] | outsync_set[1]
 
     except sqlite3.Error as e:
         logger.error(f"check blog list failed: error={e}", exc_info=True)
-        return "error", set()
+        return "error", set[Any]()
     finally:
         conn.close()
 
@@ -168,6 +174,6 @@ def blog_tags_sync(
         logger.error(f"blog dir not exists: {blog_dir}")
         raise FileNotFoundError(f"blog dir not exists: {blog_dir}")
 
-    for file in blog_dir.glob(pattern='*.md'):
+    for file in blog_dir.rglob('*.md'):
         a_blog = blog_reader(file)
         blog_tags_insert(a_blog, db_path=db_path)

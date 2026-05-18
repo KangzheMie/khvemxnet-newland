@@ -35,5 +35,18 @@ if exist "%ROOT%data\blogDatabaseLib\requirements.txt" (
   if errorlevel 1 exit /b 1
 )
 
-echo [OK   ] 虚拟环境已准备完成: %ROOT%.venv
+where npm >nul 2>nul
+if %errorlevel% equ 0 (
+  if exist "%ROOT%frontend\package.json" (
+    echo [INFO ] 正在安装前端依赖...
+    pushd "%ROOT%frontend"
+    call npm install
+    if errorlevel 1 exit /b 1
+    popd
+  )
+) else (
+  echo [WARN ] 未找到 npm，跳过前端依赖安装。
+)
+
+echo [OK   ] 环境已准备完成
 exit /b 0

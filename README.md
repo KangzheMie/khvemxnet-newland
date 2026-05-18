@@ -5,3 +5,18 @@ Hello, here is newland. Here is used as a archive for our knowledge. Those knowl
 url：https://newland.khvemx.work/
 
 By the way, you can install the virtual environment by 'install.bat' or 'install.sh', and then you can debug the project by 'debug.bat' or 'debug.sh'.
+
+for dabian users:
+``` shell
+sh install.sh
+```
+
+for ubuntu users:
+``` shell
+bash install.sh
+````
+
+for windows users:
+``` powershell
+./install.bat
+```

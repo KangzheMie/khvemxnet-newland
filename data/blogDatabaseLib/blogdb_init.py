@@ -2,10 +2,7 @@ import logging
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union, Literal, Dict, Any
-import json
-import sys
-
-from starlette.middleware import P
+import sqlite3
 
 @dataclass
 class Blog:
@@ -41,33 +38,6 @@ class Blog:
             tags=tags,
             content=content,
         )
-
-
-def load_settings(config_file: Path = None) -> Dict[str, Any]:
-    if config_file is None:
-        print(f"[Error] config_file is None", file=sys.stderr)
-        raise ValueError("config_file is None")
-    
-    if not config_file.exists():
-        print(f"[Error] Configuration file not found: {config_file}", file=sys.stderr)
-        raise FileNotFoundError(f"Configuration file not found: {config_file}")
-        
-    config_data = {}
-    with config_file.open("r", encoding="utf-8") as f:
-        try:
-            config_data = json.load(f)
-        except json.JSONDecodeError as e:
-            print(f"[Error] Invalid JSON in config file: {e}", file=sys.stderr)
-            raise ValueError(f"Invalid JSON in config file: {e}")
-            
-    # resolve is used to convert relative relative paths to absolute paths
-    log_path = (config_file.parent / config_data.get("log_path")).resolve()
-    blog_path = (config_file.parent / config_data.get("blog_path")).resolve()
-    db_path = (config_file.parent / config_data.get("db_path")).resolve()
-    backend_host = config_data.get("backend_host")
-    backend_port = int(config_data.get("backend_port"))
-    
-    return {"log_path": log_path, "blog_path": str(blog_path), "db_path": str(db_path), "backend_host": backend_host, "backend_port": backend_port}
 
 
 logger = logging.getLogger(__name__)

@@ -5,13 +5,22 @@ from pathlib import Path
 from typing import List, Dict, Any
 import blogDatabaseLib as blogdb
 import uvicorn
+import json
 
-settings = blogdb.load_settings(Path(__file__).parent / "config.json")   
-log_path = settings["log_path"]
-blog_db_path = settings["db_path"]
-backend_host = settings["backend_host"]
-backend_port = settings["backend_port"]
-
+config_file = Path(__file__).parent / "config.json"
+with config_file.open("r", encoding="utf-8") as f:
+    try:
+        config_data = json.load(f)
+    except json.JSONDecodeError as e:
+        import sys
+        print(f"[Error] Invalid JSON in config file: {e}", file=sys.stderr)
+        raise ValueError(f"Invalid JSON in config file: {e}")
+        
+log_path = Path(config_data.get("log_path")).resolve()
+blog_db_path = Path(config_data.get("db_path")).resolve()
+backend_host = config_data.get("backend_host")
+backend_port = int(config_data.get("backend_port"))
+    
 # lifespan is a context manager that is used to execute code before and after the application starts and stops
 # lifespan's execution order:
 # 1. When the application starts, it first executes the code in the lifespan context manager,

@@ -109,7 +109,7 @@ def blog_list_get_by_category(
 def blog_list_get_all_names(
     *,
     db_path: Union[str, Path],
-    ) -> Optional[list]:
+    ) -> Optional[list[Dict[str, Any]]]:
 
     db_path = Path(db_path)
     conn = sqlite3.connect(db_path)
@@ -124,11 +124,11 @@ def blog_list_get_all_names(
             return [{"id": row[0], "name": row[1]} for row in result]
         else:
             logger.warning(f"get all blog list names failed")
-            return None
+            return set[Any]()
 
     except sqlite3.Error as e:
         logger.error(f"get all blog list names failed: error={e}", exc_info=True)
-        return None
+        return set[Any]()
     finally:
         conn.close()
 
