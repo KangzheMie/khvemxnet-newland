@@ -75,7 +75,7 @@ function getBlogList(apiPath){
                 return;
             }
 
-            // map is a method of Array
+            // map is a method to operate on each element of the array
             const htmlList = blogArray.map(blog => {
                 return `
                     <li class="blog-list-item"> --
@@ -108,11 +108,11 @@ function getBlogContent(apiPath) {
             let dataWithoutMath = data.data;
 
             dataWithoutMath = dataWithoutMath.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
-                mathBlocks.push(match); // find all mathBlocks in dataWithoutMath
+                mathBlocks.push(match); // find all mathBlocks in data
                 return `@@MATH-${mathBlocks.length - 1}@@`; // using placeholder to replace mathBlocks
             });
             dataWithoutMath = dataWithoutMath.replace(/\$([^\$\n]+?)\$/g, (match) => {
-                mathBlocks.push(match); // find all inline mathBlocks in dataWithoutMath
+                mathBlocks.push(match); // find all inline mathBlocks in data
                 return `@@MATH-${mathBlocks.length - 1}@@`; // using placeholder to replace mathBlocks
             });
 
