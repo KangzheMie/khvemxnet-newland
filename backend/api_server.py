@@ -5,21 +5,16 @@ from pathlib import Path
 from typing import List, Dict, Any
 import blogDatabaseLib as blogdb
 import uvicorn
-import json
+import time
 
-config_file = Path(__file__).parent / "config.json"
-with config_file.open("r", encoding="utf-8") as f:
-    try:
-        config_data = json.load(f)
-    except json.JSONDecodeError as e:
-        import sys
-        print(f"[Error] Invalid JSON in config file: {e}", file=sys.stderr)
-        raise ValueError(f"Invalid JSON in config file: {e}")
+root_path = Path(__file__).parent.parent
+config_path = root_path / "config.json"
+config_data = blogdb.read_config(config_path)
         
-log_path = Path(config_data.get("log_path")).resolve()
 blog_db_path = Path(config_data.get("db_path")).resolve()
-backend_host = config_data.get("backend_host")
-backend_port = int(config_data.get("backend_port"))
+api_host = config_data.get("api_host")
+api_port = int(config_data.get("api_port"))
+api_log_path = Path(config_data.get("api_log_dir") + f"api_server_{time.strftime('%Y%m%d%H%M%S', time.localtime())}.log").resolve()
     
 # lifespan is a context manager that is used to execute code before and after the application starts and stops
 # lifespan's execution order:
@@ -36,7 +31,7 @@ async def lifespan(app: FastAPI):
     # in the asynchronous case: it will not block the application startup, and can await other asynchronous operations, such as database connections
     
     try:
-        blogdb.logger_init(log_level='INFO', log_path=log_path)
+        blogdb.logger_init(log_level='INFO', log_path=api_log_path)
         blogdb.logger.info('api server start')
 
         if not blog_db_path.exists():
@@ -139,5 +134,5 @@ def tag_list() -> Dict[str, List[Dict[str, str]]]:
 
 if __name__ == "__main__":
     # run the API server using uvicorn
-    print(f"fastapi doc: http://{backend_host}:{backend_port}/docs")
-    uvicorn.run("api_server:app", host=backend_host, port=backend_port, reload=True)
+    print(f"fastapi doc: http://{api_host}:{api_port}/docs")
+    uvicorn.run("api_server:app", host=api_host, port=api_port, reload=True)

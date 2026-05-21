@@ -1,5 +1,5 @@
 # 暴露核心初始化模块
-from .blogdb_init import blogdb_init, logger_init, Blog, logger
+from .blogdb_init import blogdb_init, logger_init, Blog, logger, read_config
 
 # 暴露数据写入与解析模块
 from .blogdb_insert import blog_reader, blog_list_insert, blog_tags_insert
@@ -30,6 +30,7 @@ from .blogdb_sync import (
 )
 
 __all__ = [
+    "read_config",
     "blogdb_init",
     "logger_init",
     "Blog",

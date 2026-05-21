@@ -17,11 +17,12 @@ if [[ -z "$VENV_DIR" ]]; then
   exit 1
 fi
 
+echo "使用虚拟环境: $VENV_DIR"
 source "$VENV_DIR/bin/activate"
 
-if [[ ! -f "$ROOT/backend/config.json" ]]; then
-  echo "[WARN ] backend/config.json 不存在，api_server.py 可能无法启动。"
-  echo "        你可以参考 backend/config_demo.json 创建 config.json"
+if [[ ! -f "$ROOT/config.json" ]]; then
+  echo "[WARN ] config.json 不存在，api_server.py 可能无法启动。"
+  echo "        你可以参考 config_demo.json 创建 config.json"
 fi
 
 api_pid=""

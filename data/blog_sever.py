@@ -1,24 +1,19 @@
 import blogDatabaseLib as blogdb
 from pathlib import Path
-import json
+import time
 
-config_file = Path(__file__).parent / "config.json"
-with config_file.open("r", encoding="utf-8") as f:
-    try:
-        config_data = json.load(f)
-    except json.JSONDecodeError as e:
-        import sys
-        print(f"[Error] Invalid JSON in config file: {e}", file=sys.stderr)
-        raise ValueError(f"Invalid JSON in config file: {e}")
+root_path = Path(__file__).parent.parent
+config_path = root_path / "config.json"
+config_data = blogdb.read_config(config_path)
         
-log_path = Path(config_data.get("log_path")).resolve()
 blog_db_path = Path(config_data.get("db_path")).resolve()
 blog_path = Path(config_data.get("blog_path")).resolve()
+db_log_path = Path(config_data.get("db_log_dir") + f"blog_db_{time.strftime('%Y%m%d%H%M%S', time.localtime())}.log").resolve()
 
 def blog_server_init():
     # creat log file
-    blogdb.logger_init(log_level='INFO', log_path=log_path)
-    blogdb.logger.info(f'log ready at {log_path}')
+    blogdb.logger_init(log_level='INFO', log_path=db_log_path)
+    blogdb.logger.info(f'log ready at {db_log_path}')
 
     if not blog_db_path.exists():
         blogdb.blogdb_init(db_path=blog_db_path)

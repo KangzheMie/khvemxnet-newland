@@ -3,6 +3,7 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union, Literal, Dict, Any
 import sqlite3
+import json
 
 @dataclass
 class Blog:
@@ -39,8 +40,25 @@ class Blog:
             content=content,
         )
 
+def read_config(config_path: Union[str, Path]) -> Dict[str, Any]:
+    # convert the path to Path object
+    config_path = Path(config_path)
+    # check if the path exists
+    if not config_path.exists():
+        raise FileNotFoundError(f"config file not exists: {config_path}")
+    # read the config file
+    try:
+        with open(config_path, "r", encoding="utf-8") as f:
+            config = json.load(f)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Invalid JSON in config file: {config_path}: {e}")
+    return config
 
-logger = logging.getLogger(__name__)
+
+# create exclusive logger for this module
+# avoid conflict with other modules or global logger config
+logger = logging.getLogger(__name__) 
+
 def logger_init(log_level: str, log_path: Union[str, Path]) -> None:
     # convert the path to Path object
     log_path = Path(log_path)

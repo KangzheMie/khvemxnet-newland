@@ -18,9 +18,9 @@ if not defined VENV_DIR (
 
 call "%VENV_DIR%\Scripts\activate.bat"
 
-if not exist "%ROOT%backend\config.json" (
-  echo [WARN ] backend\config.json 不存在，api_server.py 可能无法启动。
-  echo         你可以参考 backend\config_demo.json 创建 config.json
+if not exist "%ROOT%\config.json" (
+  echo [WARN ] config.json 不存在，api_server.py 可能无法启动。
+  echo         你可以参考 config_demo.json 创建 config.json
 )
 
 start "api_server" cmd /k "cd /d ""%ROOT%backend"" && python api_server.py"
