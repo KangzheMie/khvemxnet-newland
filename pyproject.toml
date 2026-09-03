@@ -16,6 +16,6 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["./data/"]
+where = ["./src/"]
 include = ["blogDatabaseLib"]
 

@@ -7,12 +7,20 @@ config_path = Path(__file__).parent.parent / "config.json"
 config_data = blogdb.read_config(config_path)
 
 local_db_path = Path(config_data.get("db_path")).resolve()
+blog_path = Path(config_data.get("blog_path")).resolve()
 remote_host = config_data.get("upload_host").get("host")
 remote_port = config_data.get("upload_host").get("port")
 remote_path = config_data.get("upload_host").get("path")
 remote_username = config_data.get("upload_host").get("user")
 
+def sync_database():
+    """扫描文章目录，更新本地数据库"""
+    print(f"Syncing articles from {blog_path} to {local_db_path}...")
+    blogdb.blog_sync(str(blog_path), db_path=str(local_db_path))
+    print("Sync completed!")
+
 def upload_database():
+    """将数据库上传到服务器"""
     if not local_db_path.exists():
         print(f"[Error] Local database file not found: {local_db_path}")
         return
@@ -24,7 +32,7 @@ def upload_database():
 
     target = f"{remote_username}@{remote_host}:{remote_path}"
     ssh_cmd = f"ssh -p {remote_port}" if remote_port else "ssh"
-    
+
     # 构造 rsync 命令
     cmd = [
         "rsync",
@@ -33,7 +41,7 @@ def upload_database():
         str(local_db_path),
         target
     ]
-    
+
     print(f"Uploading {local_db_path} to {target} using rsync...")
     try:
         # 执行命令
@@ -43,6 +51,5 @@ def upload_database():
         print(f"[Error] Failed to upload database via rsync: {e}")
 
 if __name__ == "__main__":
+    sync_database()
     upload_database()
-
-
