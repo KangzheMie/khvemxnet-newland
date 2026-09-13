@@ -1,10 +1,10 @@
 {
-    "blog_path": "../blog",
-    "db_path": "../blog/blog.db",
-    "db_log_dir": "../logs/",
+    "blog_path": "/path/to/blog",
+    "db_path": "/path/to/blog/blog.db",
+    "db_log_dir": "/path/to/logs/",
     "api_host": "127.0.0.1",
     "api_port": 8000,
-    "api_log_dir": "../logs/",
+    "api_log_dir": "/path/to/logs/",
     "upload_host": {
         "host": "example.com",
         "port": 22,

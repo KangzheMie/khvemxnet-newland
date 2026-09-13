@@ -133,6 +133,7 @@ def tag_list() -> Dict[str, List[Dict[str, str]]]:
     return {"data": data}
 
 if __name__ == "__main__":
-    # run the API server using uvicorn
     print(f"fastapi doc: http://{api_host}:{api_port}/docs")
+    # uvicorn is an ASGI(Async Server Gateway Interface) server 
+    # that is used to run FastAPI applications
     uvicorn.run("api_server:app", host=api_host, port=api_port, reload=True)

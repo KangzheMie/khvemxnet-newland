@@ -4,8 +4,7 @@ __pycache__/
 .backup/
 *.egg-info/
 node_modules/
-!data/blog/.gitkeep
-data/blog/*
+!logs/.gitkeep
 logs/
 
 # file
