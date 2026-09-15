@@ -64,7 +64,7 @@ app.add_middleware(
 
 # testing routes
 # this route is used to test the API server, and return a simple JSON response
-@app.get("/ping")
+@app.get("/api/ping")
 def ping() -> Dict[str, str]:
     return {"data": "Ciallo～(∠・ω<)⌒★"}
 

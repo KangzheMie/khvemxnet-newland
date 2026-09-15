@@ -37,6 +37,7 @@ def upload_database():
     cmd = [
         "rsync",
         "-avz",              # a: 归档模式, v: 详细输出, z: 传输时压缩
+        "-P",                # 显示传输进度
         "-e", ssh_cmd,       # 指定使用 ssh 及其端口
         str(local_db_path),
         target

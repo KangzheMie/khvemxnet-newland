@@ -4,11 +4,11 @@ __pycache__/
 .backup/
 *.egg-info/
 node_modules/
-!logs/.gitkeep
-logs/
 
 # file
+!*.gitkeep
 *.db
 *.log
+*.ini
 test*
 config.json
