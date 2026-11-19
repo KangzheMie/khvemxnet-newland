@@ -23,7 +23,7 @@ def file_hash(blog_Path: Union[str, Path],
             h.update(chunk)
     return h.hexdigest()
 
-def blog_reader(blog_path: Union[str, Path]) -> "Blog":
+def read_blog(blog_path: Union[str, Path]) -> "Blog":
     # convert the path to Path object
     blog_path = Path(blog_path)
     if not blog_path.is_file():
@@ -48,7 +48,7 @@ def blog_reader(blog_path: Union[str, Path]) -> "Blog":
         )
 
 
-def blog_list_insert(
+def insert_blog(
     blog: Blog,
     *,  # parameters after this must be passed by keyword, like db_path=xxx
     db_path: Union[str, Path],
@@ -59,17 +59,17 @@ def blog_list_insert(
     # if blog's name is already in the database, it will trigger the conflict clause
     # in the conflict clause, update the contents
     sql = (
-        "INSERT INTO blog_list (name, hash, category, create_time, summary, tags, content) "
-        "VALUES (?, ?, ?, ?, ?, ?, ?) "
+        "INSERT INTO BLOG_LIST (name, hash, category, create_time, summary, content) "
+        "VALUES (?, ?, ?, ?, ?, ?) "
         "ON CONFLICT(name) DO UPDATE SET hash = excluded.hash, category = excluded.category, "
         "create_time = excluded.create_time, summary = excluded.summary, "
-        "tags = excluded.tags, content = excluded.content"
+        "content = excluded.content"
     )
     conn = sqlite3.connect(db_path)
 
     try:
         logger.debug(f"try to insert blog list: name={blog.name}, hash={blog.hash}")
-        cur = conn.execute(sql, (blog.name, blog.hash, blog.category, blog.create_time, blog.summary, str(blog.tags), blog.content))
+        cur = conn.execute(sql, (blog.name, blog.hash, blog.category, blog.create_time, blog.summary, blog.content))
         conn.commit()
 
         # if data is inserted, lastrowid is the id of the inserted row
@@ -89,7 +89,7 @@ def blog_list_insert(
         conn.close()
 
 
-def blog_tags_insert(
+def insert_tags(
     blog: Blog,
     *,
     db_path: Union[str, Path],
@@ -102,12 +102,12 @@ def blog_tags_insert(
         # transaction make sure the update success or fail at the same time
         conn.execute("BEGIN TRANSACTION;")
         # delete all tags of the blog then reflesh the tags
-        conn.execute("DELETE FROM blog_tags WHERE blog_name = ?", (blog.name,))
+        conn.execute("DELETE FROM BLOG_TAGS WHERE blog_name = ?", (blog.name,))
         
         if blog.tags:
             logger.debug(f"insert blog tags: blog_name={blog.name}, tags={blog.tags}")
             insert_data = [(blog.name, tag) for tag in blog.tags]
-            conn.executemany("INSERT INTO blog_tags (blog_name, tag_name) VALUES (?, ?)", insert_data)
+            conn.executemany("INSERT INTO BLOG_TAGS (blog_name, tag_name) VALUES (?, ?)", insert_data)
         else:
             logger.debug(f"blog {blog.name} have no tags")
         conn.commit()

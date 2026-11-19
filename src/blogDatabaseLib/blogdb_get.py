@@ -5,7 +5,13 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union, Literal, Dict, Any
 
-def blog_list_get_by_name(
+def _get_tags_by_blog_name(conn: sqlite3.Connection, blog_name: str) -> list[str]:
+    result = conn.execute(
+        "SELECT tag_name FROM BLOG_TAGS WHERE blog_name = ?", (blog_name,)
+    ).fetchall()
+    return [row[0] for row in result]
+
+def get_blog_by_name(
     blog_name: str,
     *,
     db_path: Union[str, Path],
@@ -16,7 +22,7 @@ def blog_list_get_by_name(
 
     try:
         logger.debug(f"try to get blog list by name: name={blog_name}")
-        sql = "SELECT id, hash, category, create_time, summary, tags, content FROM blog_list WHERE name = ?"
+        sql = "SELECT id, hash, category, create_time, summary, content FROM BLOG_LIST WHERE name = ?"
         result = conn.execute(sql, (blog_name,)).fetchone()
 
         if result is not None:
@@ -28,8 +34,8 @@ def blog_list_get_by_name(
                 category=result[2],
                 create_time=result[3],
                 summary=result[4],
-                tags=result[5],
-                content=result[6],
+                tags=_get_tags_by_blog_name(conn, blog_name),
+                content=result[5],
             )
         else:
             logger.warning(f"get blog list failed: name={blog_name}")
@@ -42,7 +48,7 @@ def blog_list_get_by_name(
         conn.close()
 
 
-def blog_list_get_by_id(
+def get_blog_by_id(
     blog_id: int,
     *,
     db_path: Union[str, Path],
@@ -53,7 +59,7 @@ def blog_list_get_by_id(
 
     try:
         logger.debug(f"try to get blog list by id: id={blog_id}")
-        sql = "SELECT name, hash, category, create_time, summary, tags, content FROM blog_list WHERE id = ?"
+        sql = "SELECT name, hash, category, create_time, summary, content FROM BLOG_LIST WHERE id = ?"
         result = conn.execute(sql, (blog_id,)).fetchone()
 
         if result is not None:
@@ -65,8 +71,8 @@ def blog_list_get_by_id(
                 category=result[2],
                 create_time=result[3],
                 summary=result[4],
-                tags=result[5],
-                content=result[6],
+                tags=_get_tags_by_blog_name(conn, result[0]),
+                content=result[5],
             )
         else:
             logger.warning(f"get blog list failed: id={blog_id}")
@@ -79,7 +85,7 @@ def blog_list_get_by_id(
         conn.close()
 
 
-def blog_list_get_by_category(
+def get_blogs_by_category(
     category: str,
     *,
     db_path: Union[str, Path],
@@ -90,7 +96,7 @@ def blog_list_get_by_category(
 
     try:
         logger.debug(f"try to get blog list by category: category={category}")
-        sql = "SELECT id, name FROM blog_list WHERE category = ? ORDER BY create_time DESC"
+        sql = "SELECT id, name FROM BLOG_LIST WHERE category = ? ORDER BY create_time DESC"
         result = conn.execute(sql, (category,)).fetchall()
 
         if result is not None:
@@ -106,7 +112,7 @@ def blog_list_get_by_category(
         conn.close()
 
 
-def blog_list_get_all_names(
+def get_all_blogs(
     *,
     db_path: Union[str, Path],
     ) -> Optional[list[Dict[str, Any]]]:
@@ -116,7 +122,7 @@ def blog_list_get_all_names(
 
     try:
         logger.debug(f"try to get all blog list names")
-        sql = "SELECT id, name FROM blog_list"
+        sql = "SELECT id, name FROM BLOG_LIST"
         result = conn.execute(sql).fetchall()
 
         if result is not None:
@@ -132,7 +138,7 @@ def blog_list_get_all_names(
     finally:
         conn.close()
 
-def blog_tags_get_by_name(
+def get_tags_by_blog_name(
     blog_name: str,
     *,
     db_path: Union[str, Path],
@@ -142,7 +148,7 @@ def blog_tags_get_by_name(
     conn = sqlite3.connect(db_path)
     
     try:
-        sql = "SELECT tag_name FROM blog_tags WHERE blog_name = ?"
+        sql = "SELECT tag_name FROM BLOG_TAGS WHERE blog_name = ?"
         result = conn.execute(sql, (blog_name,)).fetchall()
         return [row[0] for row in result]
 
@@ -152,7 +158,7 @@ def blog_tags_get_by_name(
     finally:
         conn.close()
 
-def blog_name_get_by_tag(
+def get_blog_names_by_tag(
     tag_name: str,
     *,
     db_path: Union[str, Path],
@@ -162,7 +168,7 @@ def blog_name_get_by_tag(
     conn = sqlite3.connect(db_path)
     
     try:
-        sql = "SELECT blog_name FROM blog_tags WHERE tag_name = ?"
+        sql = "SELECT blog_name FROM BLOG_TAGS WHERE tag_name = ?"
         result = conn.execute(sql, (tag_name,)).fetchall()
         return [row[0] for row in result]
 
@@ -173,7 +179,7 @@ def blog_name_get_by_tag(
         conn.close()
 
 
-def blog_tags_get_by_id(
+def get_tags_by_blog_id(
     blog_id: int,
     *,
     db_path: Union[str, Path],
@@ -183,7 +189,7 @@ def blog_tags_get_by_id(
     conn = sqlite3.connect(db_path)
 
     try:
-        sql = "SELECT tag_name FROM blog_tags WHERE blog_name = (SELECT name FROM blog_list WHERE id = ?)"
+        sql = "SELECT tag_name FROM BLOG_TAGS WHERE blog_name = (SELECT name FROM BLOG_LIST WHERE id = ?)"
         result = conn.execute(sql, (blog_id,)).fetchall()
         return [row[0] for row in result]
 
@@ -194,7 +200,7 @@ def blog_tags_get_by_id(
         conn.close()
 
 
-def blog_tags_get_all(
+def get_all_tags(
     *,
     db_path: Union[str, Path],
     ) -> list[str]:
@@ -202,7 +208,7 @@ def blog_tags_get_all(
     conn = sqlite3.connect(db_path)
     
     try:
-        sql = "SELECT DISTINCT tag_name, COUNT(*) FROM blog_tags GROUP BY tag_name ORDER BY COUNT(*) DESC"
+        sql = "SELECT DISTINCT tag_name, COUNT(*) FROM BLOG_TAGS GROUP BY tag_name ORDER BY COUNT(*) DESC"
         result = conn.execute(sql).fetchall()
         return [{"tag_name": row[0], "count": row[1]} for row in result]
 

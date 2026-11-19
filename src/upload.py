@@ -16,7 +16,7 @@ remote_username = config_data.get("upload_host").get("user")
 def sync_database():
     """扫描文章目录，更新本地数据库"""
     print(f"Syncing articles from {blog_path} to {local_db_path}...")
-    blogdb.blog_sync(str(blog_path), db_path=str(local_db_path))
+    blogdb.sync_all(str(blog_path), db_path=str(local_db_path))
     print("Sync completed!")
 
 def upload_database():

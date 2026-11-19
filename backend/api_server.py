@@ -72,7 +72,7 @@ def ping() -> Dict[str, str]:
 # this route is used to get a list of all blogs in the database
 @app.get("/api/blogs")
 def blog_list() -> Dict[str, List[Dict[str, Any]]]:
-    data = blogdb.blog_list_get_all_names(db_path=blog_db_path)
+    data = blogdb.get_all_blogs(db_path=blog_db_path)
     if not data:
         blogdb.logger.warning("No blogs found")
         raise HTTPException(status_code=404, detail="No blogs found")
@@ -85,7 +85,7 @@ def blog_list() -> Dict[str, List[Dict[str, Any]]]:
 # this route is used to get the details of a blog, including its title, content, tags, and other metadata
 @app.get("/api/blogs/{blog_id}")
 def blog_detail(blog_id: int) -> Dict[str, Any]:
-    data = blogdb.blog_list_get_by_id(blog_id, db_path=blog_db_path)
+    data = blogdb.get_blog_by_id(blog_id, db_path=blog_db_path)
     if not data:
         blogdb.logger.warning(f"Blog not found: {blog_id}")
         raise HTTPException(status_code=404, detail="Blog not found")
@@ -96,7 +96,7 @@ def blog_detail(blog_id: int) -> Dict[str, Any]:
 # this route is used to get a list of all blogs in the database, filtered by category
 @app.get("/api/blogs/category/{category}")
 def blog_list_by_category(category: str) -> Dict[str, List[Dict[str, Any]]]:
-    data = blogdb.blog_list_get_by_category(category, db_path=blog_db_path)
+    data = blogdb.get_blogs_by_category(category, db_path=blog_db_path)
     if not data:
         blogdb.logger.warning(f"No blogs found in category: {category}")
         raise HTTPException(status_code=404, detail=f"No blogs found in category: {category}")
@@ -106,7 +106,7 @@ def blog_list_by_category(category: str) -> Dict[str, List[Dict[str, Any]]]:
 # this route is used to get the content of a blog
 @app.get("/api/blogs/content/{blog_id}")
 def blog_content(blog_id: int) -> Dict[str, str]:
-    data = blogdb.blog_list_get_by_id(blog_id, db_path=blog_db_path)
+    data = blogdb.get_blog_by_id(blog_id, db_path=blog_db_path)
     if not data:
         blogdb.logger.warning(f"Blog not found: {blog_id}")
         raise HTTPException(status_code=404, detail="Blog not found")
@@ -116,7 +116,7 @@ def blog_content(blog_id: int) -> Dict[str, str]:
 # this route is used to get the tags of a blog
 @app.get("/api/blogs/tags/{blog_id}")
 def blog_tags(blog_id: int) -> Dict[str, List[Dict[str, str]]]:
-    data = blogdb.blog_tags_get_by_id(blog_id, db_path=blog_db_path)
+    data = blogdb.get_tags_by_blog_id(blog_id, db_path=blog_db_path)
     if not data:
         blogdb.logger.warning(f"Blog tags not found: {blog_id}")
         raise HTTPException(status_code=404, detail="Blog tags not found")
@@ -126,7 +126,7 @@ def blog_tags(blog_id: int) -> Dict[str, List[Dict[str, str]]]:
 # this route is used to get a list of all tags and its count in the database
 @app.get("/api/tags")
 def tag_list() -> Dict[str, List[Dict[str, str]]]:
-    data = blogdb.blog_tags_get_all(db_path=blog_db_path)
+    data = blogdb.get_all_tags(db_path=blog_db_path)
     if not data:
             blogdb.logger.warning("No tags found")
             raise HTTPException(status_code=404, detail="No tags found")

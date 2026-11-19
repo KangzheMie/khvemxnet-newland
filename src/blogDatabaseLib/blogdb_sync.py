@@ -1,11 +1,40 @@
 from .blogdb_init import *
-from .blogdb_insert import blog_reader, blog_list_insert, blog_tags_insert
-from .blogdb_get import blog_list_get_all_names
+from .blogdb_insert import read_blog, insert_blog, insert_tags
+from .blogdb_get import get_all_blogs
 
 import sqlite3
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union, Literal, Dict, Any
+
+def sync_all(
+    blog_dir: Union[str, Path],
+    *,
+    db_path: Union[str, Path],
+    ) -> None:
+
+    blog_dir = Path(blog_dir)
+    db_path = Path(db_path)
+    # check if the path exists
+    if not blog_dir.exists():
+        logger.error(f"blog dir not exists: {blog_dir}")
+        raise FileNotFoundError(f"blog dir not exists: {blog_dir}")
+
+    for file in blog_dir.rglob('*.md'): 
+        blog = read_blog(file)
+        blog_result = insert_blog(blog, db_path=db_path)
+        tag_result = insert_tags(blog, db_path=db_path)
+        logger.info(f"{blog_result}")
+        logger.info(f"{tag_result}")
+
+    logger.info(f"blog sync finished")
+    
+    check_result, _ = check_blogs(blog_dir, db_path=db_path)
+    logger.info(f"blog list check result: {check_result}")
+
+# ==========================================
+# Blog List
+# ==========================================
 
 def blog_sync(
     blog_dir: Union[str, Path],
@@ -20,41 +49,12 @@ def blog_sync(
         logger.error(f"blog dir not exists: {blog_dir}")
         raise FileNotFoundError(f"blog dir not exists: {blog_dir}")
 
-    for file in blog_dir.rglob('*.md'): 
-        a_blog = blog_reader(file)
-        blog_insert_result = blog_list_insert(a_blog, db_path=db_path)
-        tags_insert_result = blog_tags_insert(a_blog, db_path=db_path)
-        logger.info(f"{blog_insert_result}")
-        logger.info(f"{tags_insert_result}")
-
-    logger.info(f"blog sync finished")
-    
-    check_result, _ = blog_list_check(blog_dir, db_path=db_path)
-    logger.info(f"blog list check result: {check_result}")
-
-# ==========================================
-# Blog List
-# ==========================================
-
-def blog_list_sync(
-    blog_dir: Union[str, Path],
-    *,
-    db_path: Union[str, Path],
-    ) -> None:
-
-    blog_dir = Path(blog_dir)
-    db_path = Path(db_path)
-    # check if the path exists
-    if not blog_dir.exists():
-        logger.error(f"blog dir not exists: {blog_dir}")
-        raise FileNotFoundError(f"blog dir not exists: {blog_dir}")
-
     for file in blog_dir.rglob('*.md'):
-        a_blog = blog_reader(file)
-        blog_list_insert(a_blog, db_path=db_path)
+        blog = read_blog(file)
+        insert_blog(blog, db_path=db_path)
 
 
-def blog_list_check_ghost(
+def check_ghost_blogs(
     blog_dir: Union[str, Path],
     *,
     db_path: Union[str, Path],
@@ -73,8 +73,8 @@ def blog_list_check_ghost(
             blog_set.add(file.stem)
         logger.debug(f"blog dir blog list: {blog_set}")
 
-        blog_list = blog_list_get_all_names(db_path=db_path)
-        database_set = set([row["name"] for row in blog_list])
+        blogs = get_all_blogs(db_path=db_path)
+        database_set = set([row["name"] for row in blogs])
         logger.debug(f"database blog list: {database_set}")
         ghost_set = database_set - blog_set or None
 
@@ -92,7 +92,7 @@ def blog_list_check_ghost(
         conn.close()
 
 
-def blog_list_check_outsync(
+def check_outsync_blogs(
     blog_dir: Union[str, Path],
     *,
     db_path: Union[str, Path],
@@ -110,8 +110,8 @@ def blog_list_check_outsync(
         for file in blog_dir.rglob('*.md'):
             blog_set.add(file.stem)
 
-        blog_list = blog_list_get_all_names(db_path=db_path)
-        database_set = set([row["name"] for row in blog_list])
+        blogs = get_all_blogs(db_path=db_path)
+        database_set = set([row["name"] for row in blogs])
         outsync_set = blog_set - database_set or None
 
         if outsync_set is not None:
@@ -128,7 +128,7 @@ def blog_list_check_outsync(
         conn.close()
 
 
-def blog_list_check(
+def check_blogs(
     blog_dir: Union[str, Path],
     *,
     db_path: Union[str, Path],
@@ -140,8 +140,8 @@ def blog_list_check(
 
     try:
         logger.debug(f"try to check blog list")
-        ghost_set = blog_list_check_ghost(blog_dir=blog_dir, db_path=db_path)
-        outsync_set = blog_list_check_outsync(blog_dir=blog_dir, db_path=db_path)
+        ghost_set = check_ghost_blogs(blog_dir=blog_dir, db_path=db_path)
+        outsync_set = check_outsync_blogs(blog_dir=blog_dir, db_path=db_path)
 
         if ghost_set[0] == "checked" and outsync_set[0] == "checked":
             logger.info(f"have no ghost blog list and out of sync blog list")
@@ -161,7 +161,7 @@ def blog_list_check(
 # Tags
 # ==========================================
 
-def blog_tags_sync(
+def tags_sync(
     blog_dir: Union[str, Path],
     *,
     db_path: Union[str, Path],
@@ -175,5 +175,5 @@ def blog_tags_sync(
         raise FileNotFoundError(f"blog dir not exists: {blog_dir}")
 
     for file in blog_dir.rglob('*.md'):
-        a_blog = blog_reader(file)
-        blog_tags_insert(a_blog, db_path=db_path)
+        blog = read_blog(file)
+        insert_tags(blog, db_path=db_path)

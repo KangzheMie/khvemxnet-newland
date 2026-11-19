@@ -89,7 +89,8 @@ def blogdb_init(db_path: Union[str, Path]) -> None:
         logger.error(f"blog db path not exists: {db_path.parent}")
         raise FileNotFoundError(f"blog db path not exists: {db_path.parent}")
 
-    if db_path.exists():
+    # a zero-byte file is treated as a new empty database
+    if db_path.exists() and db_path.stat().st_size > 0:
         logger.warning(f"blog db file already exists: {db_path}")
         return
 
@@ -103,14 +104,13 @@ def blogdb_init(db_path: Union[str, Path]) -> None:
     # the AUTOINCREMENT keyword ensures that the id column is always unique and increases by 1
     conn.execute(
         """
-        CREATE TABLE IF NOT EXISTS blog_list (
+        CREATE TABLE IF NOT EXISTS BLOG_LIST (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL UNIQUE,
             hash TEXT NOT NULL,
             category TEXT NOT NULL,
             create_time TEXT NOT NULL,
             summary TEXT NOT NULL,
-            tags TEXT NOT NULL,
             content TEXT NOT NULL
         );
         """
@@ -119,16 +119,16 @@ def blogdb_init(db_path: Union[str, Path]) -> None:
     # tag database settings (Many-to-Many mapping table)
     conn.execute(
         """
-        CREATE TABLE IF NOT EXISTS blog_tags (
+        CREATE TABLE IF NOT EXISTS BLOG_TAGS (
             blog_name TEXT NOT NULL,
             tag_name TEXT NOT NULL,
             PRIMARY KEY (blog_name, tag_name),
-            FOREIGN KEY (blog_name) REFERENCES blog_list(name) ON DELETE CASCADE
+            FOREIGN KEY (blog_name) REFERENCES BLOG_LIST(name) ON DELETE CASCADE
         );
         """
     )
     # create index for faster reverse lookup (tag -> blogs) 
-    conn.execute("CREATE INDEX IF NOT EXISTS idx_tag_name ON blog_tags(tag_name);")
+    conn.execute("CREATE INDEX IF NOT EXISTS IDX_TAG_NAME ON BLOG_TAGS(tag_name);")
 
     try:
         conn.commit()

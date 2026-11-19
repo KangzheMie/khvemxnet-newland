@@ -5,7 +5,7 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union, Literal, Dict, Any
 
-def blog_list_del_by_name(
+def delete_blog_by_name(
     blog_name: str,
     *,
     db_path: Union[str, Path],
@@ -16,7 +16,7 @@ def blog_list_del_by_name(
 
     try:
         logger.warning(f"try to delete blog list by name: name={blog_name}")
-        sql = "DELETE FROM blog_list WHERE name = ?"
+        sql = "DELETE FROM BLOG_LIST WHERE name = ?"
         cur = conn.execute(sql, (blog_name,))
         conn.commit()
 
@@ -35,7 +35,7 @@ def blog_list_del_by_name(
         conn.close()
 
 
-def blog_list_del_all(
+def delete_all_blogs(
     *,
     db_path: Union[str, Path],
     ) -> Tuple[Literal["deleted", "error"], str]:
@@ -45,7 +45,7 @@ def blog_list_del_all(
 
     try:
         logger.warning(f"try to delete all blog list")
-        sql = "DELETE FROM blog_list"
+        sql = "DELETE FROM BLOG_LIST"
         cur = conn.execute(sql)
         conn.commit()
 
