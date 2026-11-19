@@ -4,11 +4,5 @@
     "db_log_dir": "/path/to/logs/",
     "api_host": "127.0.0.1",
     "api_port": 8000,
-    "api_log_dir": "/path/to/logs/",
-    "upload_host": {
-        "host": "example.com",
-        "port": 22,
-        "user": "example",
-        "path": "/var/www/html/newland/data"
-    }
+    "api_log_dir": "/path/to/logs/"
 }

@@ -5,11 +5,14 @@ __pycache__/
 .backup/
 *.egg-info/
 node_modules/
+_admin/
 
 # file
 AGENTS.md
 !*.gitkeep
 *.db
+*.db-wal
+*.db-shm
 *.log
 *.ini
 test*
