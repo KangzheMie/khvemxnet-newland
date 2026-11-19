@@ -1,4 +1,5 @@
 # dir
+.neko/
 __pycache__/
 .venv/
 .backup/
@@ -6,6 +7,7 @@ __pycache__/
 node_modules/
 
 # file
+AGENTS.md
 !*.gitkeep
 *.db
 *.log
