@@ -213,7 +213,7 @@ function loadBlogContent(title, data) {
 // ======================= FUNCTION ======================= //
 function decorateImages() {
     sectionText.querySelectorAll('img').forEach(img => {
-        if (img.closest('figure')) return;
+        if (img.closest('figure') || img.closest('.friend-card')) return;
 
         const figure = document.createElement('figure');
         figure.className = 'blog-figure';

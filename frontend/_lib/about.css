@@ -1,0 +1,112 @@
+/* ---------- About：友链卡片 ---------- */
+#about-friends .friend-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75em;
+    margin: 1em 0 1.5em;
+}
+
+#about-friends .friend-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    padding: 0.75em 1em;
+    border: 1px solid var(--theme-line);
+    border-radius: 2px;
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+}
+
+#about-friends .friend-card-avatar {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border: 1px solid var(--theme-line);
+    border-radius: 2px;
+    background-color: var(--lesslight);
+}
+
+#about-friends .friend-card-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+#about-friends .friend-card::after {
+    content: "↗";
+    position: absolute;
+    top: 0.6em;
+    right: 0.8em;
+    font-size: 0.8em;
+    color: color-mix(in srgb, var(--dark) 40%, transparent);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+#about-friends .friend-card:hover {
+    border-color: color-mix(in srgb, var(--dark) 60%, transparent);
+    background: color-mix(in srgb, var(--dark) 4%, transparent);
+    transform: translateY(-2px);
+}
+
+#about-friends .friend-card:hover::after {
+    opacity: 1;
+}
+
+#about-friends .friend-card-name {
+    display: block;
+    font-weight: 600;
+}
+
+#about-friends .friend-card-url {
+    display: block;
+    margin-top: 0.25em;
+    font-size: 0.8em;
+    color: color-mix(in srgb, var(--dark) 55%, transparent);
+}
+
+/* ---------- About：联系方式 ---------- */
+#about-contact .contact-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6em;
+    margin: 1em 0 1.5em;
+}
+
+#about-contact .contact-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5em;
+    padding: 0.4em 0.85em;
+    border: 1px solid var(--theme-line);
+    border-radius: 2px;
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+#about-contact .contact-item:hover {
+    border-color: color-mix(in srgb, var(--dark) 60%, transparent);
+    background: color-mix(in srgb, var(--dark) 4%, transparent);
+}
+
+#about-contact .contact-name {
+    font-size: 0.8em;
+    color: color-mix(in srgb, var(--dark) 55%, transparent);
+}
+
+#about-contact .contact-handle {
+    font-size: 0.9em;
+}
+
+/* ---------- About：线下地址 ---------- */
+#about-address {
+    margin-top: 1.5em;
+    padding-left: 1em;
+    border-left: 0.25rem solid var(--theme-line);
+}
+
+#about-address p {
+    margin: 0.5em 0;
+}
