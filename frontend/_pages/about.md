@@ -1,14 +1,14 @@
 
 ---
 
-友链
+友链：
 
 - [⑨半分のLab](https://lab.9cirno.fun)
 - [摸鱼の客栈](https://blog.hanbaka.cn)  
 
 ---
 
-如果你想要联系我，那么可以给我发邮件联系：  
+联系我：  
 - khvemx@foxmail.com   
 - [QQ3313057313](https://qm.qq.com/q/2Oc9c059CE)
 - [哔哩哔哩](https://space.bilibili.com/32385828)  
@@ -18,6 +18,7 @@
 ---
 
 如果你不死心想要现实我，请到： 
+
 - 中国科学技术大学东校区  
 
 我会请你吃饭，然后找个地方单挑  

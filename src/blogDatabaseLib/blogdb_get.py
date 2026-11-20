@@ -22,13 +22,13 @@ def get_blog_by_name(
 
     try:
         logger.debug(f"try to get blog list by name: name={blog_name}")
-        sql = "SELECT id, hash, category, create_time, summary, content FROM BLOG_LIST WHERE name = ?"
+        sql = "SELECT blog_id, hash, category, create_time, summary, content FROM BLOG_LIST WHERE name = ?"
         result = conn.execute(sql, (blog_name,)).fetchone()
 
         if result is not None:
             logger.debug(f"get blog list success: name={blog_name}")
             return Blog(
-                id=result[0],
+                blog_id=result[0],
                 name=blog_name,
                 hash=result[1],
                 category=result[2],
@@ -58,14 +58,14 @@ def get_blog_by_id(
     conn = sqlite3.connect(db_path)
 
     try:
-        logger.debug(f"try to get blog list by id: id={blog_id}")
-        sql = "SELECT name, hash, category, create_time, summary, content FROM BLOG_LIST WHERE id = ?"
+        logger.debug(f"try to get blog list by id: blog_id={blog_id}")
+        sql = "SELECT name, hash, category, create_time, summary, content FROM BLOG_LIST WHERE blog_id = ?"
         result = conn.execute(sql, (blog_id,)).fetchone()
 
         if result is not None:
-            logger.debug(f"get blog list success: id={blog_id}")
+            logger.debug(f"get blog list success: blog_id={blog_id}")
             return Blog(
-                id=blog_id,
+                blog_id=blog_id,
                 name=result[0],
                 hash=result[1],
                 category=result[2],
@@ -75,11 +75,11 @@ def get_blog_by_id(
                 content=result[5],
             )
         else:
-            logger.warning(f"get blog list failed: id={blog_id}")
+            logger.warning(f"get blog list failed: blog_id={blog_id}")
             return None
 
     except sqlite3.Error as e:
-        logger.error(f"get blog list failed: id={blog_id}, error={e}", exc_info=True)
+        logger.error(f"get blog list failed: blog_id={blog_id}, error={e}", exc_info=True)
         return None
     finally:
         conn.close()
@@ -96,12 +96,12 @@ def get_blogs_by_category(
 
     try:
         logger.debug(f"try to get blog list by category: category={category}")
-        sql = "SELECT id, name FROM BLOG_LIST WHERE category = ? ORDER BY create_time DESC"
+        sql = "SELECT blog_id, name FROM BLOG_LIST WHERE category = ? ORDER BY create_time DESC"
         result = conn.execute(sql, (category,)).fetchall()
 
         if result is not None:
             logger.debug(f"get blog list by category success: category={category}")
-            return [{"id": row[0], "name": row[1]} for row in result]
+            return [{"blog_id": row[0], "name": row[1]} for row in result]
         else:
             logger.warning(f"get blog list by category failed: category={category}")
             return None
@@ -122,12 +122,12 @@ def get_all_blogs(
 
     try:
         logger.debug(f"try to get all blog list names")
-        sql = "SELECT id, name FROM BLOG_LIST"
+        sql = "SELECT blog_id, name FROM BLOG_LIST"
         result = conn.execute(sql).fetchall()
 
         if result is not None:
             logger.debug(f"get all blog list names success")
-            return [{"id": row[0], "name": row[1]} for row in result]
+            return [{"blog_id": row[0], "name": row[1]} for row in result]
         else:
             logger.warning(f"get all blog list names failed")
             return set[Any]()
@@ -189,7 +189,7 @@ def get_tags_by_blog_id(
     conn = sqlite3.connect(db_path)
 
     try:
-        sql = "SELECT tag_name FROM BLOG_TAGS WHERE blog_name = (SELECT name FROM BLOG_LIST WHERE id = ?)"
+        sql = "SELECT tag_name FROM BLOG_TAGS WHERE blog_name = (SELECT name FROM BLOG_LIST WHERE blog_id = ?)"
         result = conn.execute(sql, (blog_id,)).fetchall()
         return [row[0] for row in result]
 

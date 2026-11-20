@@ -59,8 +59,8 @@ def insert_blog(
     # if blog's name is already in the database, it will trigger the conflict clause
     # in the conflict clause, update the contents
     sql = (
-        "INSERT INTO BLOG_LIST (name, hash, category, create_time, summary, content) "
-        "VALUES (?, ?, ?, ?, ?, ?) "
+        "INSERT INTO BLOG_LIST (blog_id, name, hash, category, create_time, summary, content) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?) "
         "ON CONFLICT(name) DO UPDATE SET hash = excluded.hash, category = excluded.category, "
         "create_time = excluded.create_time, summary = excluded.summary, "
         "content = excluded.content"
@@ -69,17 +69,19 @@ def insert_blog(
 
     try:
         logger.debug(f"try to insert blog list: name={blog.name}, hash={blog.hash}")
-        cur = conn.execute(sql, (blog.name, blog.hash, blog.category, blog.create_time, blog.summary, blog.content))
+        existed = conn.execute("SELECT 1 FROM BLOG_LIST WHERE name = ?", (blog.name,)).fetchone() is not None
+        conn.execute(sql, (
+            blog_id_from_name(blog.name), blog.name, blog.hash,
+            blog.category, blog.create_time, blog.summary, blog.content,
+        ))
         conn.commit()
 
-        # if data is inserted, lastrowid is the id of the inserted row
-        # if data is updated, lastrowid is 0
-        if cur.lastrowid > 0:
-            logger.info(f"insert blog list success: name={blog.name}, id={cur.lastrowid}")
-            return "inserted", f"{blog.name} id= {cur.lastrowid}"
-        else:
+        if existed:
             logger.debug(f"update blog list success: name={blog.name}")
             return "updated", f"{blog.name}"
+        else:
+            logger.info(f"insert blog list success: name={blog.name}, blog_id={blog_id_from_name(blog.name)}")
+            return "inserted", f"{blog.name} blog_id= {blog_id_from_name(blog.name)}"
 
     except sqlite3.Error as e:
         logger.error(f"insert blog list failed: name={blog.name}, error={e}", exc_info=True)

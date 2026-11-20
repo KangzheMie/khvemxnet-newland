@@ -1,5 +1,6 @@
 :root {
     border-top: none;
+    --theme-line: color-mix(in srgb, var(--dark) 35%, transparent);
 }
 
 body {
@@ -31,4 +32,111 @@ nav a {
 
 .af-element {
     margin-top: 1em;
+}
+
+.blog-list-item{
+    margin-bottom: 0.3em;
+}
+
+/* ---------- 图片 ---------- */
+#section-text figure.blog-figure {
+    margin: 1.5em auto;
+    max-width: 80%;
+    text-align: center;
+}
+
+#section-text figure.blog-figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid var(--theme-line);
+    border-radius: 2px;
+}
+
+#section-text figure.blog-figure figcaption {
+    margin-top: 0.6em;
+    font-size: 0.85em;
+    line-height: 1.4;
+    color: color-mix(in srgb, var(--dark) 60%, transparent);
+}
+
+/* ---------- 表格 ---------- */
+#section-text table {
+    max-width: 80%;
+    margin: 1.5em auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--theme-line);
+    border-radius: 2px;
+    overflow: hidden;
+    font-size: 0.95em;
+    font-variant-numeric: tabular-nums;
+}
+
+#section-text thead th {
+    background: color-mix(in srgb, var(--dark) 20%, transparent);
+    font-weight: 600;
+    text-align: left;
+}
+
+#section-text th,
+#section-text td {
+    padding: 0.5em 0.75em;
+    border-bottom: 1px solid color-mix(in srgb, var(--dark) 10%, transparent);
+    vertical-align: top;
+}
+
+#section-text tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#section-text tbody tr:nth-child(even) td {
+    background: color-mix(in srgb, var(--dark) 4%, transparent);
+}
+
+/* 单格行/空格子：弱化占位，不参与斑马纹与分隔线 */
+#section-text tbody tr td:empty {
+    background: transparent;
+    border-bottom-color: transparent;
+}
+
+/* ---------- 代码块 ---------- */
+#section-text pre {
+    margin: 1.5em 0;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--theme-line);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+#section-text pre code.hljs {
+    display: block;
+    padding: 1.25em;
+    background: #1f2328;
+    font-family: Consolas, "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Droid Sans Fallback", monospace;
+    font-size: 0.8em;
+    line-height: 1.6;
+    tab-size: 4;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, #fff 25%, transparent) transparent;
+}
+
+#section-text pre code.hljs::-webkit-scrollbar {
+    height: 8px;
+}
+
+#section-text pre code.hljs::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, #fff 25%, transparent);
+    border-radius: 4px;
+}
+
+/* 行内代码 */
+#section-text :not(pre) > code {
+    padding: 0.15em 0.35em;
+    border-radius: 3px;
+    font-family: Consolas, "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Droid Sans Fallback", monospace;
+    font-size: 0.8em;
+    word-break: break-word;
 }

@@ -4,10 +4,15 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, Union, Literal, Dict, Any
 import sqlite3
 import json
+import zlib
+
+def blog_id_from_name(blog_name: str) -> int:
+    # deterministic across database rebuilds, unlike an auto-increment id
+    return zlib.crc32(blog_name.encode("utf-8"))
 
 @dataclass
 class Blog:
-    id: int = 0
+    blog_id: int = 0
     name: str = ""
     hash: str = ""
     category: str = ""
@@ -18,9 +23,8 @@ class Blog:
     
     @classmethod
     def new(
-        self,
+        cls,
         *,
-        id: int = 0,
         name: str,
         hash: str,
         category: str,
@@ -29,8 +33,8 @@ class Blog:
         create_time: Optional[str] = None,
         tags: list[str] = None,
     ) -> "Blog":
-        return self(
-            id=id,
+        return cls(
+            blog_id=blog_id_from_name(name),
             name=name,
             hash=hash,
             category=category,
@@ -101,11 +105,11 @@ def blogdb_init(db_path: Union[str, Path]) -> None:
     conn.execute("PRAGMA journal_mode = WAL;")
 
     # blog database settings
-    # the AUTOINCREMENT keyword ensures that the id column is always unique and increases by 1
+    # blog_id is derived from name (see blog_id_from_name), so it survives database rebuilds
     conn.execute(
         """
         CREATE TABLE IF NOT EXISTS BLOG_LIST (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            blog_id INTEGER PRIMARY KEY,
             name TEXT NOT NULL UNIQUE,
             hash TEXT NOT NULL,
             category TEXT NOT NULL,
