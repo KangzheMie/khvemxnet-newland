@@ -73,6 +73,34 @@ nav a {
     color: color-mix(in srgb, var(--dark) 60%, transparent);
 }
 
+/* ---------- 公式 ---------- */
+#section-text .katex-display {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: left;
+    padding-bottom: 0.3em;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--dark) 30%, transparent) transparent;
+}
+
+/* inner block keeps narrow formulas centered without clipping the left overflow */
+#section-text .katex-display > .katex {
+    display: inline-block;
+    min-width: 100%;
+    text-align: center;
+}
+
+#section-text .katex-display::-webkit-scrollbar {
+    height: 8px;
+}
+
+#section-text .katex-display::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--dark) 30%, transparent);
+    border-radius: 4px;
+}
+
 /* ---------- 表格 ---------- */
 #section-text table {
     max-width: 80%;

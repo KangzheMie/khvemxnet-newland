@@ -52,7 +52,7 @@ def insert_blog(
     blog: Blog,
     *,  # parameters after this must be passed by keyword, like db_path=xxx
     db_path: Union[str, Path],
-    ) -> Tuple[Literal["inserted", "updated", "error"], str]:
+    ) -> Tuple[Literal["inserted", "updated", "unchanged", "error"], str]:
 
     db_path = Path(db_path)
     # excluded is the values in the ON CONFLICT clause
@@ -69,19 +69,25 @@ def insert_blog(
 
     try:
         logger.debug(f"try to insert blog list: name={blog.name}, hash={blog.hash}")
-        existed = conn.execute("SELECT 1 FROM BLOG_LIST WHERE name = ?", (blog.name,)).fetchone() is not None
+        row = conn.execute("SELECT hash FROM BLOG_LIST WHERE name = ?", (blog.name,)).fetchone()
+
+        # the file hash covers the whole file, so an equal hash means nothing to write
+        if row is not None and row[0] == blog.hash:
+            logger.debug(f"blog list unchanged: name={blog.name}")
+            return "unchanged", f"{blog.name}"
+
         conn.execute(sql, (
             blog_id_from_name(blog.name), blog.name, blog.hash,
             blog.category, blog.create_time, blog.summary, blog.content,
         ))
         conn.commit()
 
-        if existed:
-            logger.debug(f"update blog list success: name={blog.name}")
+        if row is not None:
+            logger.info(f"update blog list success: name={blog.name}")
             return "updated", f"{blog.name}"
-        else:
-            logger.info(f"insert blog list success: name={blog.name}, blog_id={blog_id_from_name(blog.name)}")
-            return "inserted", f"{blog.name} blog_id= {blog_id_from_name(blog.name)}"
+
+        logger.info(f"insert blog list success: name={blog.name}, blog_id={blog_id_from_name(blog.name)}")
+        return "inserted", f"{blog.name}"
 
     except sqlite3.Error as e:
         logger.error(f"insert blog list failed: name={blog.name}, error={e}", exc_info=True)

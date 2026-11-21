@@ -20,15 +20,49 @@ def sync_all(
         logger.error(f"blog dir not exists: {blog_dir}")
         raise FileNotFoundError(f"blog dir not exists: {blog_dir}")
 
-    for file in blog_dir.rglob('*.md'): 
+    inserted = []
+    updated = []
+    unchanged = []
+    errors = []
+
+    for file in blog_dir.rglob('*.md'):
         blog = read_blog(file)
         blog_result = insert_blog(blog, db_path=db_path)
+
+        if blog_result[0] == "error":
+            errors.append(blog.name)
+            continue
+
+        # unchanged files keep their existing tags; tags_sync is the repair entry
+        if blog_result[0] == "unchanged":
+            unchanged.append(blog.name)
+            continue
+
         tag_result = insert_tags(blog, db_path=db_path)
-        logger.info(f"{blog_result}")
-        logger.info(f"{tag_result}")
+        if tag_result[0] == "error":
+            errors.append(blog.name)
+            continue
+
+        if blog_result[0] == "inserted":
+            inserted.append(blog.name)
+        else:
+            updated.append(blog.name)
+
+    logger.info(
+        f"sync summary: inserted={len(inserted)} updated={len(updated)} "
+        f"unchanged={len(unchanged)} errors={len(errors)}"
+    )
+    if inserted:
+        logger.info(f"inserted blogs: {inserted}")
+    if updated:
+        logger.info(f"updated blogs: {updated}")
+    if errors:
+        logger.warning(f"failed blogs: {errors}")
+    if unchanged:
+        logger.debug(f"unchanged blogs: {unchanged}")
 
     logger.info(f"blog sync finished")
-    
+
     check_result, _ = check_blogs(blog_dir, db_path=db_path)
     logger.info(f"blog list check result: {check_result}")
 
